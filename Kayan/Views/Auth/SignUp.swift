@@ -75,7 +75,7 @@ struct SignUp: View {
                         }
 //                        Spacer()
                         HStack{
-                            TextField("رقم الهاتف", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            TextField("5xxxxxxxx", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
                             Spacer()
                             Text("رقم الهاتف")
                         }
@@ -196,7 +196,7 @@ struct SignUp: View {
                     SendVarificationCode(completeSignUpPassed: $SignUpPassed, path:"is_come_form_login_operation", displayItem: $displayItem, phoneNumber: StringFunction().numberStrToEnglish(numberStr:phoneNumber))
                                
                        }
-        }
+        }.edgesIgnoringSafeArea(.all)
     }.onTapGesture {
         self.hideKeyboard()
 
@@ -209,7 +209,7 @@ struct SignUp: View {
     
     func checkUserSignUp(){
         
-        let prams = ["PhoneNo":StringFunction().numberStrToEnglish(numberStr: self.phoneNumber),"Password": StringFunction().numberStrToEnglish(numberStr:self.PassWord),"Name":self.fullname,"GanderID":checked ? "2" : "1"]
+        let prams = ["PhoneNo":StringFunction().numberStrToEnglish(numberStr: self.phoneNumber),"Password": self.PassWord,"Name":self.fullname,"GanderID":checked ? "2" : "1"]
         print(Connection().getUrl(word: "register"))
         print(prams)
         RestAPI().postData(endUrl: Connection().getUrl(word: "register"), parameters: prams) { result in

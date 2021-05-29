@@ -25,24 +25,29 @@ struct Home: View {
                     .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
 
         GeometryReader{geo in
-            VStack(spacing:0){
             
-                Navbars(isHome:true,page_titel: "كيان")
-                   
-            ZStack{
                 
-                LinearGradient(gradient: Gradient(colors: [Color.init(hex: "FCF1EF"), Color.init(hex: "BE9ECB"),Color.init(hex:"5461A7")]), startPoint: .topTrailing, endPoint: .bottomLeading)
-                       .edgesIgnoringSafeArea(.vertical)
+                ZStack{
+                    LinearGradient(gradient: Gradient(colors: [Color.init(hex: "FCF1EF"), Color.init(hex: "BE9ECB"),Color.init(hex:"5461A7")]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                           .edgesIgnoringSafeArea(.vertical)
+                   
+                    VStack(spacing:0){
+                
+                
+                    Navbars(isHome:true,page_titel: "كيان")
                 Spacer()
+                ScrollView(.horizontal) {
             HStack(spacing:45){
                 ForEach(0...menue.count-1,id:\.self){ index in
                     StoriesCards(imageName:imageName[index],storyName:menue[index].name, storyID: menue[index].id,width: geo.size.width*0.25,title: $title, selectdMenuID: $selectdMenuID, isSignIn: $isSignIn,isStory:false)
                 }
+                }//.flipsForRightToLeftLayoutDirection(true)
+                .environment(\.layoutDirection, .rightToLeft)
             }.padding(20)
                 Spacer()
         }
             
-        }// .fullScreenCover(isPresented: self.$isSignIn, content: {
+        }.edgesIgnoringSafeArea(.all)// .fullScreenCover(isPresented: self.$isSignIn, content: {
 //            Stories(id: 2, title: title)
 //        })
         }.navigationBarTitle(Text("Home"))

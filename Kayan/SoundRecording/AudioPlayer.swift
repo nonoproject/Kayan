@@ -35,6 +35,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audio)
+            
             audioPlayer.delegate = self
             audioPlayer.play()
             isPlaying = true

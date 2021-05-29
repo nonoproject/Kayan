@@ -77,8 +77,9 @@ struct SignIn: View {
                     VStack{
                         Spacer()
                         HStack{
-                            TextField(" أدخل رقم الهاتف", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                            TextField("5xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
                                 .textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                                .keyboardType(.phonePad)
                             Spacer()
                             Text("رقم الهاتف")
                         }
@@ -122,14 +123,14 @@ struct SignIn: View {
                 Spacer()
                 Image("kayanSide").resizable().frame(width: 220,height: geo.size.height)
             }
-        }
+        }.edgesIgnoringSafeArea(.all)
     }.alert(isPresented: self.$showsAlert) {
         Alert(title: Text(message))
     }
         .navigationBarTitle(Text("Home"))
         .navigationBarHidden(true)
         }.environment(\.horizontalSizeClass, .compact)
-        
+        .edgesIgnoringSafeArea(.all)
     }
     func onCommit() {
         
@@ -172,7 +173,7 @@ struct SignIn: View {
 //                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.mobileNo, Val:sectionR["response"]["customer"]["phone"].stringValue)
 //        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.fullName, Val:sectionR["response"]["customer"]["name"].stringValue)
 //
-//        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userId, Val:sectionR["response"]["customer"]["id"].intValue)
+                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userId, Val:sectionR["response"]["id"].intValue)
 //        print( VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))
 //
 //               VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.isLogin, Val:true)
@@ -193,6 +194,10 @@ struct SignIn: View {
             }
             else if sectionR["responseCode"].int == 406{//user not found
                 message = "خطاء في بيانات الحساب"
+                showsAlert=true
+            }
+            else{
+                message = sectionR["responseMasg"].stringValue
                 showsAlert=true
             }
             

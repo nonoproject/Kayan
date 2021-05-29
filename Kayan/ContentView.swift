@@ -10,37 +10,48 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
     var body: some View {
-        
-        if !isLogin{
-            SignIn().onTapGesture {
-                self.hideKeyboard()
-    //
-              }
-        }
-        else{
-//        AppIntro()
 //        SplashScreen()
-        
-//        NavigationView{
-                Home()
-//        StoriesSection()
-//        SamopleRecourding(audioRecorder: AudioRecorder())
-//        }.environment(\.horizontalSizeClass, .compact)
-//        Stories()
-//            StoryPage( page_story_id: 12)
-//        Test()//Reading Story
-//        Gift()
-        
-//        SignIn()
-        .onTapGesture {
-            self.hideKeyboard()
+//        if !isLogin{
 //
-          } // aproved pay Ayman
-//        SignUp() // aproved pay Ayman
-//            AccountSetting() // aproved pay Ayman
-//    ForgetPassword()
-//        VarificationCode()
+//            SignIn()
+////                .background(Color.red)
+//
+////                /.edgesIgnoringSafeArea(.all)
+//                .onTapGesture {
+//                self.hideKeyboard()
+//    //
+//              }.edgesIgnoringSafeArea(.all)
+////                Color.blue.edgesIgnoringSafeArea(.all)
+//
+//        }
+//        else{
+////        AppIntro()
+//        SplashScreen()
+//        
+////        NavigationView{
+        Home().onAppear{
+            
         }
+//        PlayRelacsation()
+        
+////        StoriesSection()
+////        SamopleRecourding(audioRecorder: AudioRecorder())
+////        }.environment(\.horizontalSizeClass, .compact)
+//        Stories()
+//            StoryPage( audioRecorder: AudioRecorder(), page_story_id: 2)
+////        Test()//Reading Story
+////        Gift()
+//        
+////        SignIn()
+//        .onTapGesture {
+//            self.hideKeyboard()
+////
+//          } // aproved pay Ayman
+////        SignUp() // aproved pay Ayman
+////            AccountSetting() // aproved pay Ayman
+////    ForgetPassword()
+////        VarificationCode()
+//        }
     }
 }
 

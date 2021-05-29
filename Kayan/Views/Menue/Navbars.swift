@@ -9,10 +9,14 @@ import SwiftUI
 
 struct Navbars: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
+    @State var isFavorate:Bool=false
     @State var isHome:Bool=false
     @State var isBackPressed:Bool=false
+    @State var isGoToFavoratePressed:Bool=false
+    
     
     @State var x_view_to_move:AnyView=AnyView(Home())
+    @State var Favorate_view_to_move:AnyView=AnyView(Favorate())
     @State var page_titel:String
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
@@ -23,7 +27,12 @@ struct Navbars: View {
             Image("logout").resizable().frame(width: 46, height: 46).padding(.leading,20).onTapGesture {
                 isLogin = false
             }
+            if !isFavorate{
+            NavigationLink(destination: Favorate_view_to_move.navigationBarTitle(Text("Home"))
+                    .navigationBarHidden(true), isActive: self.$isGoToFavoratePressed) {}.hidden()
+            }
            if !isHome {
+            
             NavigationLink(destination: x_view_to_move.navigationBarTitle(Text("Home"))
                     .navigationBarHidden(true), isActive: self.$isBackPressed) {}.hidden()
 
@@ -38,7 +47,15 @@ struct Navbars: View {
             Spacer()
             Text(page_titel).font(.system(size: 18, weight: .semibold, design: .monospaced))
             Spacer()
+            if !isFavorate{
             Image(systemName:"heart.circle.fill").resizable().backgroundFill(Color.red) .clipShape(Circle()).foregroundColor(.white).frame(width: 46, height:46)
+                .onTapGesture {
+                    
+                    self.presentationMode.wrappedValue.dismiss()
+                    isGoToFavoratePressed=true
+                    
+                }
+            }
             Image("profile").resizable().frame(width: 46, height: 46).padding(.trailing,20)
             
         }.frame(height:55).background(Color.AppPrimaryColor)

@@ -11,7 +11,7 @@ import Foundation
 import SwiftUI
 import Combine
 import AVFoundation
-
+import RealmSwift
 class AudioRecorder: NSObject, ObservableObject {
     
     override init() {
@@ -31,18 +31,19 @@ class AudioRecorder: NSObject, ObservableObject {
         }
     }
     
-    func startRecording() {
+    func startRecording(strory_page_record:String) {
         let recordingSession = AVAudioSession.sharedInstance()
         
         do {
             try recordingSession.setCategory(.playAndRecord, mode: .default)
             try recordingSession.setActive(true)
+            
         } catch {
             print("Failed to set up recording session")
         }
         
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilename = documentPath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY 'at' HH:mm:ss")).m4a")
+        let audioFilename = documentPath.appendingPathComponent("\(strory_page_record).m4a")
         
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -54,17 +55,27 @@ class AudioRecorder: NSObject, ObservableObject {
         do {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder.record()
-
+            
             recording = true
         } catch {
             print("Could not start recording")
         }
     }
     
-    func stopRecording() {
+    func stopRecording(strory_page_record:String) {
         audioRecorder.stop()
-        recording = false
         
+        recording = false
+        // // //
+        var realm: Realm = try! Realm()
+        let story = stories_table()
+        story.story_page_id = strory_page_record
+        story.strory_page_records=strory_page_record
+            try! realm.write {
+//                    realm.add(story.self)
+                realm.add(story.self, update: .modified)
+            }
+        // // //
         fetchRecording()
     }
     

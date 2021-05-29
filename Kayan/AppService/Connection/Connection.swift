@@ -30,19 +30,32 @@ class Connection:NSData
         case "GetMenu":
             link = baseUrl+"Story/GetMenu"
             break
+        case "GetClibs":
+            link = baseUrl+"Story/GetClibs/"
+            break
+            
         case "GetStoryCatogries":
-            link = baseUrl+"Story/GetStoryCatogries"
+            link = baseUrl+"Story/GetStoryCatogries/\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))"
             break
         case "GetStories":
             link = baseUrl+"Story/GetStories/"
             break
-            
-            
         case "GetStoryPages":
             link = baseUrl+"Story/GetStoryPages/"
             break
+        case "AddToFavourite":
+            link = baseUrl+"Story/AddToFavourite/"
+            break
+        case "GetMyFavouriteStory":
+            link = baseUrl+"Story/GetMyFavouriteStory/"
+            break
+        case "RemoveFromFavourite":
+            link = baseUrl+"Story/RemoveFromFavourite/"
+            break
+        case "StorySubscribe":
+            link = baseUrl+"Story/StorySubscribe"
+            break
             
-        //        https://kayanapp.ibtikar-soft.sa/api/Story/GetStories/2
             
 //        case "UpdateProfile":
 //            link = baseUrl+"Customers/UpdateProfile"
@@ -67,9 +80,7 @@ class Connection:NSData
 //                    link = baseUrl+"Customers/"
 //                    break
         //
-        case "Story":
-            link = baseUrl+"Story/GetMenu"
-            break
+       
           
 //        case "getShops":
 //                link = baseUrl+"shops/GetShopBySection/"

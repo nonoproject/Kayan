@@ -14,9 +14,11 @@ struct StoriesModal :Decodable ,Hashable{
        let ageFrom, ageTo: Int
        let createAt: String
        let updateAt: String?
-
+        let isSubscribed: Bool
+    
        enum CodingKeys: String, CodingKey {
            case id, name
+        case isSubscribed
            case imageURL = "imageUrl"
            case ageFrom, ageTo, createAt, updateAt
        }

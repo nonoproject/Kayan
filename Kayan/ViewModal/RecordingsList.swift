@@ -49,7 +49,16 @@ struct RecordingRow: View {
             Spacer()
             if audioPlayer.isPlaying == false {
                 Button(action: {
-                    self.audioPlayer.startPlayback(audio: self.audioURL)
+                    let fileManager = FileManager.default
+                    let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                    let directoryContents = try! fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+                    for audio in directoryContents {
+                        if "\(audio)".contains("\(self.audioURL.absoluteString)"){
+                            self.audioPlayer.startPlayback(audio: audio)
+                            return
+                        }
+                        
+                    }
                 }) {
                     Image(systemName: "play.circle")
                         .imageScale(.large)

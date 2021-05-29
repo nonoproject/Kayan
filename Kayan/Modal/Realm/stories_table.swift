@@ -5,18 +5,22 @@
 //  Created by Sandal on 11/10/1442 AH.
 //
 
-
+import SwiftUI
 import RealmSwift
-//
-//@objcMembers class ReminderList: Object, ObjectKeyIdentifiable {
-//   dynamic var title: String
-//   dynamic var reminders: List<Reminder>
-//}
-//
-//@objcMembers class Reminder: EmbeddedObject, ObjectKeyIdentifiable {
-//   dynamic var title: String
-//   dynamic var isCompleted: Bool
-//   dynamic var notes: String?
-//   dynamic var dueDate: Date?
-//   dynamic var priority: Int16
-//}
+class stories_table: Object{
+    
+    
+    @objc dynamic var story_page_id:String?
+    @objc dynamic var story_page_isPuse:Bool=false
+    @objc dynamic var story_page_status:String?
+    @objc dynamic var strory_page_records:String?
+    override static func primaryKey() -> String? {
+                 return "story_page_id"
+    }
+//    public func saveComicBook(_ comic: stories_table)
+//    {
+//        try! realm.write {
+//            realm.add(comic)
+//        }
+//    }
+}

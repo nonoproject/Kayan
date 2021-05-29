@@ -15,7 +15,7 @@ struct SamopleRecourding: View {
                 RecordingsList(audioRecorder: audioRecorder)
                 Spacer()
                 if audioRecorder.recording == false {
-                    Button(action: {self.audioRecorder.startRecording()}) {
+                    Button(action: {self.audioRecorder.startRecording(strory_page_record: "\(Date().toString(dateFormat: "dd-MM-YY 'at' HH:mm:ss"))")}) {
                         Image(systemName: "circle.fill")
                             .resizable()
                             
@@ -25,7 +25,10 @@ struct SamopleRecourding: View {
                             .padding(.bottom, 40)
                     }
                 } else {
-                    Button(action: {self.audioRecorder.stopRecording()}) {
+                    Button(action: {
+//                            self.audioRecorder.stopRecording()
+                        
+                    }) {
                         Image(systemName: "stop.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fill)

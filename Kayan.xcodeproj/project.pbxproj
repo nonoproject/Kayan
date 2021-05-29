@@ -42,8 +42,14 @@
 		FA241113265664CE0072B741 /* StroryModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA241112265664CE0072B741 /* StroryModal.swift */; };
 		FA241115265665CF0072B741 /* StoryCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA241114265665CF0072B741 /* StoryCards.swift */; };
 		FA2411172656680A0072B741 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2411162656680A0072B741 /* Stories.swift */; };
+		FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630C265D2AA000EE341D /* Favorate.swift */; };
+		FA2C630F265D310F00EE341D /* VaforaiteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630E265D310F00EE341D /* VaforaiteCard.swift */; };
 		FA308A762634D8230055DF88 /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A752634D8230055DF88 /* ForgetPassword.swift */; };
 		FA308A792634DBD40055DF88 /* VarificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A782634DBD40055DF88 /* VarificationCode.swift */; };
+		FA4BB6C5265E88580064419A /* Story_group_section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C4265E88580064419A /* Story_group_section.swift */; };
+		FA4BB6C7265EB59A0064419A /* ClibModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C6265EB59A0064419A /* ClibModal.swift */; };
+		FA4BB6C9265EB7110064419A /* clips_group_section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C8265EB7110064419A /* clips_group_section.swift */; };
+		FA4BB6CC265EB9C00064419A /* Play_Relacsation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6CB265EB9C00064419A /* Play_Relacsation.swift */; };
 		FA83A73226564B69002F814E /* SamopleRecourding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73126564B69002F814E /* SamopleRecourding.swift */; };
 		FA83A73426564BB1002F814E /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73326564BB1002F814E /* AudioRecorder.swift */; };
 		FA83A73626564C08002F814E /* DateExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73526564C08002F814E /* DateExtention.swift */; };
@@ -99,8 +105,14 @@
 		FA241112265664CE0072B741 /* StroryModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StroryModal.swift; sourceTree = "<group>"; };
 		FA241114265665CF0072B741 /* StoryCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCards.swift; sourceTree = "<group>"; };
 		FA2411162656680A0072B741 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
+		FA2C630C265D2AA000EE341D /* Favorate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorate.swift; sourceTree = "<group>"; };
+		FA2C630E265D310F00EE341D /* VaforaiteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaforaiteCard.swift; sourceTree = "<group>"; };
 		FA308A752634D8230055DF88 /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
 		FA308A782634DBD40055DF88 /* VarificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarificationCode.swift; sourceTree = "<group>"; };
+		FA4BB6C4265E88580064419A /* Story_group_section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story_group_section.swift; sourceTree = "<group>"; };
+		FA4BB6C6265EB59A0064419A /* ClibModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClibModal.swift; sourceTree = "<group>"; };
+		FA4BB6C8265EB7110064419A /* clips_group_section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clips_group_section.swift; sourceTree = "<group>"; };
+		FA4BB6CB265EB9C00064419A /* Play_Relacsation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play_Relacsation.swift; sourceTree = "<group>"; };
 		FA83A73126564B69002F814E /* SamopleRecourding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamopleRecourding.swift; sourceTree = "<group>"; };
 		FA83A73326564BB1002F814E /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		FA83A73526564C08002F814E /* DateExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtention.swift; sourceTree = "<group>"; };
@@ -174,6 +186,9 @@
 				B1596A832612F4DD00D06B1A /* StoriesCards.swift */,
 				FA83A73C26564D07002F814E /* RecordingsList.swift */,
 				FA241114265665CF0072B741 /* StoryCards.swift */,
+				FA2C630E265D310F00EE341D /* VaforaiteCard.swift */,
+				FA4BB6C4265E88580064419A /* Story_group_section.swift */,
+				FA4BB6C8265EB7110064419A /* clips_group_section.swift */,
 			);
 			path = ViewModal;
 			sourceTree = "<group>";
@@ -281,6 +296,8 @@
 		B1713F46261228F600BCCCEE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA4BB6CA265EB9A30064419A /* Relacsation */,
+				FA2C630B265D2A7900EE341D /* Favorate */,
 				FAEDF912263B3D8C00D9593F /* LoadingAnimation */,
 				FAEDF90D263B3C1F00D9593F /* VarificationCode */,
 				B1995B95261C43BC00BA4225 /* Account */,
@@ -374,6 +391,22 @@
 			path = DownloadImage;
 			sourceTree = "<group>";
 		};
+		FA2C630B265D2A7900EE341D /* Favorate */ = {
+			isa = PBXGroup;
+			children = (
+				FA2C630C265D2AA000EE341D /* Favorate.swift */,
+			);
+			path = Favorate;
+			sourceTree = "<group>";
+		};
+		FA4BB6CA265EB9A30064419A /* Relacsation */ = {
+			isa = PBXGroup;
+			children = (
+				FA4BB6CB265EB9C00064419A /* Play_Relacsation.swift */,
+			);
+			path = Relacsation;
+			sourceTree = "<group>";
+		};
 		FA83A73026564AF6002F814E /* SoundRecording */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +443,7 @@
 				FA83A73726564C4C002F814E /* RecordingDataModel.swift */,
 				FA241112265664CE0072B741 /* StroryModal.swift */,
 				FA9AD06F2659339700E9A221 /* Story_Page_Modal.swift */,
+				FA4BB6C6265EB59A0064419A /* ClibModal.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -560,6 +594,7 @@
 			files = (
 				B1596A7E2612F26C00D06B1A /* SplashScreen.swift in Sources */,
 				B1678AF126160505001B0A9C /* ColorExt.swift in Sources */,
+				FA4BB6C5265E88580064419A /* Story_group_section.swift in Sources */,
 				FA83A73B26564CD3002F814E /* HelperFunction.swift in Sources */,
 				FA308A792634DBD40055DF88 /* VarificationCode.swift in Sources */,
 				B1678AE92615B462001B0A9C /* RoundedCorner.swift in Sources */,
@@ -573,7 +608,10 @@
 				B1E27D822612712E00012D4B /* StoryPage.swift in Sources */,
 				FA83A73826564C4C002F814E /* RecordingDataModel.swift in Sources */,
 				FA1FF0F32648752400233FFF /* StoriesModal.swift in Sources */,
+				FA4BB6C9265EB7110064419A /* clips_group_section.swift in Sources */,
 				FA0220DF2638D1B80088C93A /* TextBindingManager.swift in Sources */,
+				FA4BB6C7265EB59A0064419A /* ClibModal.swift in Sources */,
+				FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */,
 				FAB56379265A8CBE009C7D55 /* stories_table.swift in Sources */,
 				B1713F312611C6BD00BCCCEE /* SceneDelegate.swift in Sources */,
 				FA24110F2656573D0072B741 /* TemporaryImageCache.swift in Sources */,
@@ -581,6 +619,7 @@
 				B1678AED2615F73D001B0A9C /* SignUp.swift in Sources */,
 				FA241113265664CE0072B741 /* StroryModal.swift in Sources */,
 				FA83A73F26564DB2002F814E /* AudioPlayer.swift in Sources */,
+				FA4BB6CC265EB9C00064419A /* Play_Relacsation.swift in Sources */,
 				B1811D382613314F0021E0A0 /* TextVIewStyle.swift in Sources */,
 				FADD264C264752580060BA3D /* MenueModal.swift in Sources */,
 				B1995B97261C43D400BA4225 /* AccountSetting.swift in Sources */,
@@ -598,6 +637,7 @@
 				B1678AE02615A96D001B0A9C /* Navbars.swift in Sources */,
 				FA241115265665CF0072B741 /* StoryCards.swift in Sources */,
 				FA0220D32638CD9F0088C93A /* RestAPI.swift in Sources */,
+				FA2C630F265D310F00EE341D /* VaforaiteCard.swift in Sources */,
 				B1596A9126130BFF00D06B1A /* AppIntro.swift in Sources */,
 				FA24110B265656D20072B741 /* AsyncImage.swift in Sources */,
 				FA83A73226564B69002F814E /* SamopleRecourding.swift in Sources */,

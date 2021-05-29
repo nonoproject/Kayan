@@ -7,25 +7,38 @@
 
 import SwiftUI
 import SwiftyJSON
-
+import RealmSwift
 import AVFoundation
 struct StoryPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // timer
     
      var uAnimationDuration: Double { return 3.0 }
-//    @State var timeRemaining = 3
-//       let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    
+    /// player
+    @ObservedObject var audioRecorder: AudioRecorder
+    @ObservedObject var audioPlayer = AudioPlayer()
+    ///
+    @State var story_from_table:stories_table?
     @State var page_indecator:Int=1
-    @State var page_story_id:Int
+    @State var page_story_id:Int=0
     
     @State var show_no_data:Bool=false
-    @State var musicSound:Bool=true
-    @State var spekerSound:Bool=true
+    @State var musicSound:Bool=false
+    @State var spekerSound:Bool=false
     @State var isPlaying:Bool=false
+    
+    
     @State var story_sound:[String]=["https://kayanapp.ibtikar-soft.sa/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3","https://www.english-room.com/audio/p1_listening_term1_02.mp3","https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"]
     @State var story_pages:[Story_Page_Modal]=[]
+    
+    
+    var olympicStatus: String {
+           return "page_story_id_\(page_story_id)_\(story_pages[page_indecator-1].id!)"
+        }
+    var selected_image: String {
+           return story_pages[page_indecator].imageURL!
+        }
     var body: some View {
         ZStack{
 //            if story_pages.count > 0{
@@ -33,7 +46,9 @@ struct StoryPage: View {
                    
                     HStack(spacing:0){
                         
-          
+          // Left Controller
+                        
+                        
                             VStack( spacing: 15){
                                 Spacer()
                                 Image("home").resizable().frame(width: 42,height: 42).onTapGesture {
@@ -41,30 +56,77 @@ struct StoryPage: View {
                                     self.presentationMode.wrappedValue.dismiss()
                                 }
                                 VStack{
-                                    
-                                    Image(systemName: "music.mic").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
-                                    
-                                    Image(systemName: "play.fill").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
-                                }.frame(width: 40,height: 90).background(Color.AppPrimaryColor).cornerRadius(5)
-                                Spacer()
+                                    if story_from_table?.strory_page_records ?? "" == ""{
+//                                        stopSound()
+                                        if audioRecorder.recording == false {
+                                            Button(action: {
+                                                print("will rigester")
+                                                stopSound()
+                                                    self.audioRecorder.startRecording(strory_page_record: olympicStatus)
+                                            }) {
+                                                Image(systemName: "music.mic")
+                                                    .resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                            }
+                                        } else {
+                                            Button(action: {
+                                                    self.audioRecorder.stopRecording(strory_page_record: olympicStatus)
+                                                
+                                            }) {
+                                                Image(systemName: "record.circle.fill")
+                                                    .resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        Image(systemName: "play.fill").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
+                                           play_audio_from_local()
+                                        }
+                                    }
+                                   
+//                                    Image(systemName: "music.mic").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+//
+//
+                                }.frame(width: 40,height: 45).background(Color.AppPrimaryColor).cornerRadius(5).disabled(story_pages.count == 0)
+//                                Spacer()
+                                
+                                
+                                
+                                
+          
+                                
                                 VStack{
-                                Image(systemName: "mic.fill").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                    Image(systemName: "mic.slash.fill").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
+                                        
+                                        delet_audio_from_DB(page_story_id:olympicStatus)
+                                        delet_audio_from_local()
+
+                                    }
                             }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5)
+                                .padding(.top,20)
                                 Spacer()
                                 Spacer()
                                     Spacer()
                             }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
                         
-//                        Color.blue.opacity(0.5)
+                        // Left Controller End
+                        
+                        // Show Image Section
+                        
+                        
                         if story_pages.count > 0{
-                        AsyncImage(
-                            url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(self.story_pages[page_indecator-1].imageURL ?? "")" )! ),
-                                            placeholder: { Image("kayan_logo")},
-                                            image: { Image(uiImage: $0).resizable()//
-                                                
-                                            }
-                                         )
+                        if  (self.story_pages[page_indecator-1].imageURL != nil){
+                            self.story_pages[page_indecator-1].selected_image
+                            }
                         }
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         else{
                             
                             ZStack{
@@ -85,67 +147,100 @@ struct StoryPage: View {
                             }
 
                         }
+                        
+                        
+                        // End Of showing Image Section
+                        
+                        
+                        
+                        
+                        // Right Controller
+                        
                         VStack( spacing: 15){
                             Spacer()
                             VStack(spacing:6){
                             enable_disableBtn(imageName: "music.quarternote.3", isEnabel: $musicSound).onTapGesture {
-                                if isPlaying{
-                                if musicSound{
+
+                                musicSound.toggle()
+                            }
+                            enable_disableBtn(imageName: "speaker.wave.2.fill", isEnabel: $spekerSound )
+                            .onTapGesture {
+                                if ((player?.isPlaying) != nil) {
+                                if spekerSound{
                                     player?.pause()
                                 }
                                 else{
                                     player?.play()
                                 }
                                 }
-                                musicSound.toggle()
-                            }
-                            enable_disableBtn(imageName: "speaker.wave.2.fill", isEnabel: $spekerSound)
-                            .onTapGesture {
                                 spekerSound.toggle()
                             }
                             }.frame(width: 42,height: 132)
-                            Spacer()
+//                            Spacer()
         //                    if page_indecator == 4 {
                             VStack{
                             Image(systemName: "pause.fill").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
                                 .onTapGesture {
-                                    playSound()
+//                                    playSound()
                                 }
-                            }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5).padding(.top,25)
+                            }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5).padding(.top,35)
         //                    }
                             Spacer()
                             Spacer()
                                 Spacer()
                         }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
+                        
+                        // Right Controller End
+                        
 
                     }
+                    // Story Text Controller Starting
+                    
                     if story_pages.count > 0{
                     VStack(alignment: .leading){
 
                         Spacer()
-                        HStack{
+                        HStack( spacing: 0){
                             VStack{
+                                Spacer()
                                                 if page_indecator > 1 {
                             Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
                                 page_indecator -= 1
+                                
+                                spekerSound=true
+                                stopSound()
+                                Load_data_from_DB()
+                                if story_from_table?.strory_page_records ?? "" == ""{
                                 playSound()
+                                }
+                                
                             }
                                                 }
                             }.frame(width: 40,height: 15)//.offset(y:10)
+                            .padding(.bottom,20)
 //                            ZStack{
-                            if story_pages.count > 0{
+                         //   Color.blue
+                            Spacer()
                             HStack{
-                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى")//.padding(5).cornerRadius(20)
-
-                            }.background(Color.white.opacity(0.6))
+                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").font(.system(size: 18))
+                                //.padding(5).cornerRadius(20)
+                            }//.background(Color.white.opacity(0.6))
                             .padding(.horizontal,20).cornerRadius(20)
-                            }
+//                            Spacer()
 //}
                             VStack(spacing:4){
+                                Spacer()
                                 if page_indecator != story_pages.count {
                                     Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
                                         page_indecator += 1
+                                        
+                                        spekerSound=true
+                                        stopSound()
+                                        Load_data_from_DB()
+                                        if story_from_table?.strory_page_records ?? "" == ""{
                                         playSound()
+                                        }
+//                                        Load_data_from_DB()
                                     }
 
                                     HStack(spacing:1){
@@ -154,23 +249,25 @@ struct StoryPage: View {
                                         Text("\(story_pages.count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
 
 
-                                    }.frame(width: 40,height: 15)
+                                    }.frame(width: 40,height: 15).padding(.bottom,20)
                             }
-                        }.frame(width: 40,height: 15).offset(y:10)
-                        }.padding(.horizontal,10)
+                        }.frame(width: 40,height: 15)
+                        }.padding(.horizontal,10)//.padding(.bottom,20)
 
                     }.padding(.vertical,20).onAppear{
+                       if story_from_table?.strory_page_records ?? "" == ""{
                         playSound()
                         }
+                        }
                 }
+                    
+                    // Story Text Controller Starting
                 }
 //            }
 
-        }.onAppear{
+        }.edgesIgnoringSafeArea(.leading).onAppear{
             print(page_story_id)
             restartAnimation()
-            
-            
         }
     }
     func restartAnimation() {
@@ -184,12 +281,21 @@ struct StoryPage: View {
 //        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStories")+"\(id)", parameters: [:])
 //        \(page_story_id)
         RestAPI().getData(endUrl: Connection().getUrl(word: "GetStoryPages")+"\(page_story_id)", parameters: [:]){ result in
-            
+//        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStoryPages")+"2", parameters: [:]){ result in
            let sectionR = JSON(result!)
             print(sectionR)
+            
             if sectionR["responseCode"].int == 200{
                 let jsonDatas = try! JSONEncoder().encode(sectionR["response"])
                 story_pages = try! JSONDecoder().decode([Story_Page_Modal].self, from: jsonDatas)
+                if story_pages.count > 0{
+                if StoryPage.Load_DB_data(id: olympicStatus) != nil{
+//                    print(StoryPage.Load_DB_data(id: "\(page_story_id)"))
+//                    print("*********************************")
+                    Load_data_from_DB()
+//                    delet_audio_from_DB(page_story_id: "page_story_id_\(page_story_id)_\(story_pages[page_indecator].id!)")
+                }
+                }
                 
             }
         } onError: { error in
@@ -197,19 +303,23 @@ struct StoryPage: View {
         }
         
     }
+    func Load_data_from_DB() {
+        story_from_table=StoryPage.Load_DB_data(id: olympicStatus )
+    }
+    
  
     @State var player: AVAudioPlayer?
     func stopSound(){
-        if isPlaying{
+        if ((player?.isPlaying) != nil) {
             player!.stop()
             isPlaying=false
         }
     }
     func playSound(){
-        if isPlaying{
+        if ((player?.isPlaying) != nil || isPlaying) {
             stopSound()
         }
-         let radioURL = story_sound[page_indecator-1]
+        let radioURL = AppBase+story_pages[page_indecator-1].storyVoicePath!
         let urlstring = radioURL
         let url = NSURL(string: urlstring)
         print("the url = \(url!)")
@@ -243,6 +353,71 @@ struct StoryPage: View {
         
     }
     
+    
+    static func Load_DB_data(id: String) -> stories_table {
+        print("*********************************")
+        print(id)
+        print("*********************************")
+        let realm = try! Realm()
+//        let scope = realm.objects(stories_table.self).filter("story_page_id == %@", id)
+        
+        return realm.object(ofType: stories_table.self, forPrimaryKey: id) ?? stories_table()
+//        return scope.first!
+    }
+    func play_audio_from_local(){
+    let fileManager = FileManager.default
+    let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let directoryContents = try! fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+    for audio in directoryContents {
+        if "\(audio)".contains(olympicStatus){
+            self.audioPlayer.startPlayback(audio: audio)
+            return
+        }
+        
+    }
+}
+    func delet_audio_from_local(){
+    let fileManager = FileManager.default
+    let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let directoryContents = try! fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+    for audio in directoryContents {
+        if "\(audio)".contains(olympicStatus){
+//            self.audioPlayer.del
+                                                    self.audioRecorder.deleteRecording(urlsToDelete: [audio])
+            
+//            delet_audio_from_DB(page_story_id: "page_story_id_\(page_story_id)_\(story_pages[page_indecator].id!)")
+            break
+        }
+        
+    }
+}
+    func delet_audio_from_DB(page_story_id:String){
+//        do {
+//                let realm = try Realm()
+//                    let predicate = NSPredicate(format: "UUID == %@", "\(page_story_id)")
+//                if let obj = realm.objects(stories_table.self).filter("story_page_id= %@", page_story_id).first {
+//
+//                    //Delete must be perform in a write transaction
+//
+//                    try! realm.write {
+//                         realm.delete(obj)
+//                     }
+//                }
+////
+//            } catch let error {
+//                print("error - \(error.localizedDescription)")
+//            }
+        let person = stories_table()
+        person.story_page_id = page_story_id
+        person.strory_page_records=""
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(person, update: .modified)
+            
+            
+        }
+    }
 }
 //
 //struct Test_Previews: PreviewProvider {
@@ -250,3 +425,17 @@ struct StoryPage: View {
 //        StoryPage()
 //    }
 //}
+
+struct showImage : View {
+    @State var url:String
+    var body : some View{
+        
+        AsyncImage(
+            url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(url)" )! ),
+                            placeholder: { Image("kayan_logo").resizable()},
+                            image: { Image(uiImage: $0).resizable()
+                            }
+        )
+    }
+    
+}
