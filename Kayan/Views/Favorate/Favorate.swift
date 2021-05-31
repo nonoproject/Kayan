@@ -152,7 +152,7 @@ struct Favorate: View {
                 stories = stories.filter { $0.id != story_id }
             }
         } onError: { error in
-            print(error)
+            print(error as Any)
         }
         
     }

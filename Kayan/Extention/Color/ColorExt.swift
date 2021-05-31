@@ -12,7 +12,7 @@ extension Color {
     static let AppPrimaryColor = Color("PrimaryColor")
     static let AppSecoundryColor = Color("SecondaryColor")
     static let Appliver = Color("Appliver")
-//    static let gray = Color("strockColor")
+    static let AppDiscoverColor = Color("discoverColor")
 ////    static let black = Color("strockColor")
 //    
 //    static let AppShadow = Color("AppShadow")

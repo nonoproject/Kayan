@@ -28,7 +28,7 @@ struct StoryPage: View {
     @State var spekerSound:Bool=false
     @State var isPlaying:Bool=false
     
-    
+    @State var showing_image =  false
     @State var story_sound:[String]=["https://kayanapp.ibtikar-soft.sa/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3","https://www.english-room.com/audio/p1_listening_term1_02.mp3","https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"]
     @State var story_pages:[Story_Page_Modal]=[]
     
@@ -37,7 +37,7 @@ struct StoryPage: View {
            return "page_story_id_\(page_story_id)_\(story_pages[page_indecator-1].id!)"
         }
     var selected_image: String {
-           return story_pages[page_indecator].imageURL!
+           return story_pages[page_indecator-1].imageURL!
         }
     var body: some View {
         ZStack{
@@ -108,15 +108,17 @@ struct StoryPage: View {
                                     Spacer()
                             }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
                         
-                        // Left Controller End
-                        
-                        // Show Image Section
                         
                         
-                        if story_pages.count > 0{
-                        if  (self.story_pages[page_indecator-1].imageURL != nil){
+                        
+                        if story_pages.count>0{
+                        if showing_image {
                             self.story_pages[page_indecator-1].selected_image
                             }
+                        else{
+                            self.story_pages[page_indecator-1].selected_image
+                        }
+                        
                         }
                         
                         
@@ -125,10 +127,8 @@ struct StoryPage: View {
                         
                         
                         
-                        
-                        
                         else{
-                            
+
                             ZStack{
                                 HStack{
                                     Spacer()
@@ -140,7 +140,7 @@ struct StoryPage: View {
                                 else{
                                     Text("عفوا لاتوجد بيانات").font(.system(size: 50, weight: .heavy, design: .rounded))
                                             .foregroundColor(.Appliver)
-                                        
+
                                     }
                                     Spacer()
                                 }
@@ -213,7 +213,7 @@ struct StoryPage: View {
                                 if story_from_table?.strory_page_records ?? "" == ""{
                                 playSound()
                                 }
-                                
+                                showing_image = !showing_image
                             }
                                                 }
                             }.frame(width: 40,height: 15)//.offset(y:10)
@@ -240,6 +240,7 @@ struct StoryPage: View {
                                         if story_from_table?.strory_page_records ?? "" == ""{
                                         playSound()
                                         }
+                                        showing_image = !showing_image
 //                                        Load_data_from_DB()
                                     }
 
@@ -268,6 +269,7 @@ struct StoryPage: View {
         }.edgesIgnoringSafeArea(.leading).onAppear{
             print(page_story_id)
             restartAnimation()
+//            GetStoryPage()
         }
     }
     func restartAnimation() {

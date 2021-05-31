@@ -67,7 +67,7 @@ class AudioRecorder: NSObject, ObservableObject {
         
         recording = false
         // // //
-        var realm: Realm = try! Realm()
+        let realm: Realm = try! Realm()
         let story = stories_table()
         story.story_page_id = strory_page_record
         story.strory_page_records=strory_page_record

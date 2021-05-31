@@ -118,6 +118,7 @@ struct Stories_Card_Cards: View {
 //                    selectdMenuID=imageName.id
 //                    isSignIn=true
 //                }
+            if BackageHight > 200{
             ZStack{
                 Color.white.opacity(0.5)
             VStack{
@@ -134,7 +135,7 @@ struct Stories_Card_Cards: View {
                 Spacer()
             }
             }.frame(width: width*0.7, height:BackageHight*0.8).foregroundColor(Color.black).cornerRadius(10)
-
+            }
         }.frame(width: width, height: BackageHight).background(Color.white).cornerRadius(20)
        
             

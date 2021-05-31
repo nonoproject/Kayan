@@ -56,7 +56,7 @@ struct Story_group_section: View {
                     Spacer()
                     
                     Button(action: {
-                        if storyName.isSubscribed {
+                        if !storyName.isSubscribed {
                         add_story_to_supscription(story_id: storyName.id)
                         }
                         else{
@@ -66,11 +66,11 @@ struct Story_group_section: View {
                         }
 
                                                }) {
-                        Text( storyName.isSubscribed ?
+                        Text( !storyName.isSubscribed ?
                                                     
    
                                 "إشترك في الباقة"
-                                : "عرض"
+: "عرض"
                         ).frame(width: 145, height: 40).background(Color.AppPrimaryColor).foregroundColor(Color.black).cornerRadius(10)
                    
                                                }.offset(y:-10)
@@ -84,14 +84,15 @@ struct Story_group_section: View {
             if !storyName.isSubscribed {
             VStack{
                 Spacer()
-                Rectangle().fill(Color.Appliver).frame(width: 80, height: 30, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
-            HStack{
+                Rectangle().fill(Color.AppDiscoverColor).frame(width: 50, height: 40, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
+            VStack{
                 Spacer()
-                Text("إستكشف").foregroundColor(.black).fontWeight(.bold).font(.system(size: 14))
+                Text("إستكشف").foregroundColor(.white).fontWeight(.bold).font(.system(size:8))
+                Image("stargaze").resizable().frame(width: 20,height: 20)
                 Spacer()
             }
                 ).padding(.top,-60).onTapGesture {
-                    title=storyName.name
+                    title=storyName.name+" "+"إستكشف"
                     selectdMenuID=storyName.id
                     isSignIn=true
                 }
@@ -102,20 +103,17 @@ struct Story_group_section: View {
     }
     func add_story_to_supscription(story_id:Int){
         
-        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id]
+        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryCatogryID":story_id]
         print( Connection().getUrl(word: "StorySubscribe"))
         print(prams)
         RestAPI().postData(endUrl: Connection().getUrl(word: "StorySubscribe"), parameters: prams){ result in
-            
            let sectionR = JSON(result!)
             print(sectionR)
             if sectionR["responseCode"].int == 200{
                 print(sectionR["response"])
-                
-//                                        print(storyAge)
                 title=storyName.name
                 selectdMenuID=storyName.id
-                                                                  isSignIn=true
+                isSignIn=true
             }
         } onError: { error in
             print(error)

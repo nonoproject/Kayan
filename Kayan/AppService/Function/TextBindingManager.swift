@@ -22,6 +22,5 @@ class TextBindingManager: ObservableObject {
 
    init(limit: Int = 9){
        characterLimit = limit
-      
    }
 }

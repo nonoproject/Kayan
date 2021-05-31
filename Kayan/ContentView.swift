@@ -29,24 +29,23 @@ struct ContentView: View {
 //        SplashScreen()
 //        
 ////        NavigationView{
-        Home().onAppear{
-            
-        }
+//        Home()
 //        PlayRelacsation()
         
 ////        StoriesSection()
 ////        SamopleRecourding(audioRecorder: AudioRecorder())
 ////        }.environment(\.horizontalSizeClass, .compact)
-//        Stories()
-//            StoryPage( audioRecorder: AudioRecorder(), page_story_id: 2)
+        Stories()
+//            StoryPage( audioRecorder: AudioRecorder(), page_story_id: 13)
 ////        Test()//Reading Story
-////        Gift()
+//        Gift()
+//        QueestionPage()
 //        
 ////        SignIn()
-//        .onTapGesture {
-//            self.hideKeyboard()
-////
-//          } // aproved pay Ayman
+        .onTapGesture {
+            self.hideKeyboard()
+//
+          } // aproved pay Ayman
 ////        SignUp() // aproved pay Ayman
 ////            AccountSetting() // aproved pay Ayman
 ////    ForgetPassword()

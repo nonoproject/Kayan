@@ -47,7 +47,7 @@ struct StoriesSection: View {
                     Rectangle().fill(Color.AppSecoundryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
                         HStack{
                             Spacer()
-                            Text("هدايا").foregroundColor(.black).fontWeight(.bold).font(.system(size: 14))
+                            Text("هدايا").foregroundColor(.black).fontWeight(.heavy).font(.system(size: 14))
                                 
                             
                             Spacer()
@@ -59,7 +59,7 @@ struct StoriesSection: View {
                     Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topLeft, .bottomLeft]).overlay(
                         HStack{
                             Spacer()
-                            Text("قريبا").foregroundColor(.black).fontWeight(.bold).font(.system(size: 14))
+                            Text("قريبا").foregroundColor(.black).fontWeight(.heavy).font(.system(size: 14))
                             Spacer()
                         }
                     )

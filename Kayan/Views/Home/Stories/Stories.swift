@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-
 import SwiftyJSON
+
 var selectd_story_page_MenuID:Int=0
 struct Stories: View {
     @State var id:Int=0
@@ -21,12 +21,13 @@ struct Stories: View {
     var horizontalPaddig:CGFloat=30.0
     @Environment(\.presentationMode) var presentationModeEdit: Binding<PresentationMode>
     @State var stories:[StroryModal]=[]
-    
-    
     ////////////
     @State  var BackagePosition:[CGFloat]=[]
     @State  var BackageHight:[CGFloat]=[]
     @State private var CardIndecator=0//max number of item
+    
+    @State var kkkkkdsds:Double=0
+    @State var kkkkk:CGFloat=0
     var body: some View {
         GeometryReader{geo in
             
@@ -73,17 +74,18 @@ struct Stories: View {
                                                 DragGesture()
                                                     .onChanged(
                                                         { (value) in
-                                                            if value.translation.width < -100 {//&&                        self.BackagePosition[self.CardIndecator] == BackagePosition[index]  && BackagePosition.count > CardIndecator+1 {//swib left
+                                                            if value.translation.width > -50 {//&&                        self.BackagePosition[self.CardIndecator] == BackagePosition[index]  && BackagePosition.count > CardIndecator+1 {//swib left
                                                             
-//                                                            self.BackagePosition[self.CardIndecator] = value.translation.width
-//                                                                withAnimation(.easeIn(duration: 0.5)) {
+                                                            
+                                                                withAnimation(.easeIn(duration: 0.5)) {
 //                                                                    moveLeft()
 //                                                                BackagePosition.map { $0 + 200 }
-//                                                                }
+                                                                    self.BackagePosition[self.CardIndecator] = value.translation.width
+                                                                }
                                                             
-                                                            print("curent \(value.translation.width)")
+//                                                            print("curent \(value.translation.width)")
                                                         }
-                                                            else if value.translation.width > 200 {//&&                        self.BackagePosition[self.CardIndecator] == BackagePosition[index]  && BackagePosition.count > CardIndecator-1 {
+                                                            else if value.translation.width > 100 {//&&                        self.BackagePosition[self.CardIndecator] == BackagePosition[index]  && BackagePosition.count > CardIndecator-1 {
                                                             
 //                                                            self.BackagePosition[self.CardIndecator] = value.translation.width
 //                                                            print("+ \(value.translation.width)")
@@ -92,16 +94,21 @@ struct Stories: View {
                                                     }).onEnded({ (value) in
                                                         if value.translation.width < 0{
                                                             
-                                                            if value.translation.width < -200{
-                                                                moveLeft()
+                                                            if value.translation.width < -100{
+                                                                
+                                                              //                                                                BackagePosition.map { $0 + 200 }
+                                                                                   moveLeft()
                                                             }
+                                                                
+                                                            
+                                                        
                                                             else{
                                                                 resetView()
                                                             }
                                                         }
                                                         else if value.translation.width > 0{
                                                             
-                                                            if value.translation.width > 200{
+                                                            if value.translation.width > 100{
                                                                 moveRight()
                                                             }
                                                             else{
@@ -111,7 +118,54 @@ struct Stories: View {
                                                     })
                                                 
                                             )
-                                            Text("Awad sandal").opacity(self.BackagePosition[self.CardIndecator] == BackagePosition[index] ? 1 : 0)
+                                            if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
+                                                HStack(spacing:10){
+                                               Spacer()
+                                                    if !stories[index].isPaid!{
+                                                        Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft, .bottomRight]).overlay(
+                                                            HStack{
+                                                                Spacer()
+                                                                Text("شراء الأن").foregroundColor(.Appliver).fontWeight(.bold).font(.system(size: 14))
+                                                                Spacer()
+                                                            }
+                                                        )
+                                                        Rectangle().fill(Color.orange).frame(width: 70, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft,.bottomRight]).overlay(
+                                                    VStack{
+                                                        Spacer()
+                                                        Text("مدفوع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
+                                                        
+                                                        Text("$\(stories[index].subscribePrice!)").foregroundColor(.white).fontWeight(.bold).font(.system(size: 13))
+                                                        Spacer()
+                                                    }
+                                                )
+                                                    }
+                                                    else{
+//                                                        Spacer()
+                                                        Rectangle().fill(Color.green).cornerRadius(20, corners: [.bottomLeft,.bottomRight]).overlay(
+                                                    VStack{
+                                                        Spacer()
+                                                        Text("مجانية").foregroundColor(.white).fontWeight(.bold).font(.system(size: 12)).frame(width:50,height:10).padding(.top,3)
+//                                                        Spacer()
+                                                        Image(systemName:"gift").font(.system(size: 12, weight: .heavy)).foregroundColor(Color(#colorLiteral(red: 0.996468246, green: 0.6681806445, blue: 0.001119376859, alpha: 1))).frame(width:20,height:10).padding(.vertical,3)
+                                                        Spacer()
+                                                    }//.frame(width:50,height:34)
+                                                        ).frame(width:50,height:44)
+                                                    }
+                                                }.frame(width:170).offset(x:30,y:-kkkkk)
+                                                .opacity(kkkkkdsds)
+                                                .onAppear{
+                                                    print("dsds")
+                                                    kkkkkdsds=0
+                                                    kkkkk=0
+//                                                    kkkkkd=0
+                                                    withAnimation(.easeIn(duration: 2)) {
+                                                        kkkkk+=8
+                                                    }
+                                                    withAnimation(.easeIn(duration: 2)) {
+                                                        kkkkkdsds=0.9
+                                                    }
+                                                }
+                                            }
                                     }
                                         
                                     }
@@ -138,7 +192,9 @@ struct Stories: View {
         BackagePosition[CardIndecator] = 0//(UIScreen.screenWidth/2)
     }
     func moveLeft(){
-        
+        kkkkkdsds=0
+        withAnimation(.easeIn(duration: 0.8)) {//1.5
+                                                                          
         BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
         BackagePosition[CardIndecator] = -(UIScreen.screenWidth*0.4)-50
         
@@ -146,7 +202,7 @@ struct Stories: View {
         
         BackagePosition[CardIndecator] = 0
         BackageHight[CardIndecator] =   UIScreen.screenHeight*0.5
-        
+        }
         
         if stories.count > CardIndecator+1{
             BackagePosition[CardIndecator+1] = (UIScreen.screenWidth*0.4)+50
@@ -156,6 +212,7 @@ struct Stories: View {
                 BackagePosition[0] = (UIScreen.screenWidth*0.4)+50
             }
         }
+        
 //
         
     }
@@ -214,23 +271,21 @@ struct Stories: View {
                 let menus = try! JSONDecoder().decode([StroryModal].self, from: jsonDatas)
                 
                 BackagePosition=Array(repeating: CGFloat(UIScreen.screenWidth+200), count: (menus.count))
-                
-                //                BackagePosition[0]=230
+
                     BackageHight=Array(repeating:CGFloat(UIScreen.screenHeight*0.4), count: (menus.count))
-                //                    BackageHight[0]=0
                 stories=menus
                 CardIndecator=0
                 if stories.count > 0 {
-                    BackageHight[0]=UIScreen.screenHeight*0.5
-                    BackagePosition[0] = 0//(UIScreen.screenWidth/2)
+                    
                     print((UIScreen.screenWidth*0.4/2))
                     
                     if stories.count > 2{
-                        BackagePosition[1] = (UIScreen.screenWidth*0.4)+50//(UIScreen.screenWidth*0.6)+30
-//                        if stories.count >= 2{
-                            BackagePosition[stories.count-1] = -(UIScreen.screenWidth*0.4)-50
-//                        }
+                        BackagePosition[CardIndecator+1] = (UIScreen.screenWidth*0.4)+50
+                        BackagePosition[stories.count-1] = -(UIScreen.screenWidth*0.4)-50
                     }
+                    
+                    BackageHight[0]=UIScreen.screenHeight*0.5
+                    BackagePosition[0] = 0//(UIScreen.screenWidth/2)
                 }
             }
         } onError: { error in

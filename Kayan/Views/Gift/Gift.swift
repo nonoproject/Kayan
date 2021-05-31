@@ -20,7 +20,7 @@ struct Gift: View {
             VStack{
           HStack{
             VStack{
-                Image(systemName: "mic.fill").resizable().frame(width: 32, height: 40).background(Color.blue.opacity(0.7)).foregroundColor(.white).cornerRadius(5)
+                Image(systemName: "play").resizable().padding(10).frame(width: 25, height: 25).background(Color.brown).foregroundColor(.white).cornerRadius(5)
                 Spacer()
             }.padding(20)
             Spacer()
@@ -28,16 +28,16 @@ struct Gift: View {
                   VStack(spacing:0){
                       HStack(spacing:90){
                       
-                      Rectangle().fill(Color.blue.opacity(0.8)).frame(width:5,height: 17)
+                      Rectangle().fill(Color.AppPrimaryColor).frame(width:3,height: 12)
                       
-                      Rectangle().fill(Color.blue.opacity(0.8)).frame(width:5,height: 17)
+                      Rectangle().fill(Color.AppPrimaryColor).frame(width:2,height: 12)
                           
                   }.frame(width: 220)
-                      Rectangle().fill(Color.blue.opacity(0.8)).frame(width: 220,height: 80).overlay(
+                      Rectangle().fill(Color.AppPrimaryColor).frame(width: 220,height: 70).overlay(
                           VStack{
-                              Text("إهداء هدية")
-                          }.foregroundColor(.white).font(.system(size: 15), weight: .bold)
-                      )
+                              Text("هديتي لك")
+                          }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
+                      ).cornerRadius(10)
                       Spacer()
                   }
                   Spacer()
@@ -144,7 +144,7 @@ struct Gift: View {
                                         Spacer()
                                         HStack{
                                             Spacer()
-                                        TextField("32", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 60, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                                            Text("32").frame(width: 50,height: 30).background(Color.AppPrimaryColor).padding(5).cornerRadius(8)
                                         }.frame(width:200)
                                         Text("سعر القصة").frame(width: 90)
                                     }
@@ -158,7 +158,7 @@ struct Gift: View {
                                             Button(action: {
                                                 
                                             }, label: {
-                                                Text("إهداء الان").frame(width: 255,height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                                Text("إهداء الان").frame(width: 255,height: 40).background(Color.AppPrimaryColor).cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
                                             })
                              
                                 Spacer()
