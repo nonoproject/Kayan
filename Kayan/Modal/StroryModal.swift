@@ -8,13 +8,15 @@
 import Foundation
 import SwiftUI
 import Foundation
-struct StroryModal :Identifiable, Decodable ,Hashable{
+struct StroryModal : Identifiable, Decodable ,Hashable{
     let id: Int
    let name, imageURL: String?
    let subscribePrice: Int?
    let isPaid: Bool?
    let storyCatogryID: Int?
    let storyCatogry: String?
+    let isSubscribed: Bool?
+    let storyQuestionsList: [storyQuestionsList]?
    let createAt: String?
    let updateAt: String?
    let storyPages: [String]?
@@ -22,6 +24,10 @@ struct StroryModal :Identifiable, Decodable ,Hashable{
    enum CodingKeys: String, CodingKey {
        case id, name
        case imageURL = "imageUrl"
-       case subscribePrice, isPaid, storyCatogryID, storyCatogry, createAt, updateAt, storyPages
+       case subscribePrice,isSubscribed,storyQuestionsList, isPaid, storyCatogryID, storyCatogry, createAt, updateAt, storyPages
    }
+}
+struct storyQuestionsList:Hashable,Decodable {
+   let questionText: String
+   let id: Int
 }

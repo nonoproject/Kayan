@@ -103,13 +103,13 @@ var body: some View {
             .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 0.5))
             Spacer()
         }
-    }
+    }.ignoresSafeArea(.all, edges: .all)
   }
     func verifyOrder(){
-        var ds=Connection().getUrl(word: "ConfirmOrder")+""
+        let ds=Connection().getUrl(word: "ConfirmOrder")+""
         print(ds)
         
-        RestAPI().getData(endUrl: ds, parameters:   [:]) { result in
+        RestAPI().getData(endUrl: ds, parameters:   [:]) { result in
                let sectionR = JSON(result!)
                 print(sectionR)
                 showSandalLoadingIndicater=false
@@ -119,7 +119,7 @@ var body: some View {
                 else if sectionR["responseCode"].int == 406{ // user not active
                 }
                 else if sectionR["responseCode"].int == 404{//VerificationCode Not Correct
-                    ErrorMessage="كود التفعيل غير ضحيح"
+                    ErrorMessage = ValidationMessage().getMessage(word: "RowngCode")
                     IsError=true
                 }
             } onError: { error in
@@ -141,19 +141,22 @@ var body: some View {
             print(sectionR)
             showSandalLoadingIndicater=false
             if sectionR["responseCode"].int == 200{
-                
-                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.mobileNo, Val:sectionR["response"]["phone"].stringValue)
-        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.fullName, Val:sectionR["response"]["name"].stringValue)
-        
-        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userId, Val:sectionR["response"]["id"].intValue)
-        print( VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))
+               
 //                print(sectionR["response"]["userId"].int)
                 
                 if path=="is_come_form_login_operation"{
+                    
+                    VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.mobileNo, Val:sectionR["response"]["phone"].stringValue)
+            VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.fullName, Val:sectionR["response"]["name"].stringValue)
+            
+            VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userId, Val:sectionR["response"]["id"].intValue)
+            print( VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))
                     isLogin = true
                 }
-                else{
+                else {
                     
+                    VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userVarifyId, Val:sectionR["response"]["id"].intValue)
+                    completeSignUpPassed=true
                 }
                 
                 

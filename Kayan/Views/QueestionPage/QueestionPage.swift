@@ -6,25 +6,58 @@
 //
 
 import SwiftUI
-
+import SwiftyJSON
 struct QueestionPage: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var is_go_to_Home:Bool = false
+    @State var story_pages_count:Int=5
+    @State private var showing_alert = false
+    @State private var alert_message = ""
+    @State private var is_go_to_Gift = false
+    
+    
+    @State private var showShareSheet = false
+        
     var body: some View {
+//        VStack{
+        
+        NavigationView {
         ZStack{
+            
+//                if is_go_to_Home{
+//                    Home().navigationBarTitle(Text("Home"))
+//                        .navigationBarHidden(true)//.edgesIgnoringSafeArea(.all)
+//                }
+//                else{
             Image("head").resizable()
             HStack{
                 VStack{
-                    
-                        Spacer()
-                        Image("home").resizable().frame(width: 42,height: 42)
-                    
+                    NavigationLink(
+                                 destination: Home().navigationBarTitle(Text("Home"))
+                                    .navigationBarHidden(true),isActive: self.$is_go_to_Home
+                             ) {
+                        Image("home").resizable().frame(width: 42,height: 42).padding(.top,30).onTapGesture {
+                            
+                            is_go_to_Home=true
+                        }
+                             }.isDetailLink(false)
+                    .navigationBarTitle(Text("Home"))
+                            .navigationBarHidden(true)
+                        
+                  
+                    Spacer()
+                    Spacer()
+                    Spacer()
                     VStack{
-                        Image(systemName: "mic.slash.fill").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
-                }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5)
+                        Image(systemName: "play.fill").resizable().padding(2).frame(width: 22, height: 22).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
+                                                                    self.presentationMode.wrappedValue.dismiss()
+                        }.padding(.leading,5)
+                }.frame(width: 40,height: 40).background(Color.Appliver).cornerRadius(5)
                     .padding(.top,20)
-                    Spacer()
-                    Spacer()
+//                    Spacer()
+//                    Spacer()
                         Spacer()
-                }
+                }.padding(.horizontal,8)
                 
                 Spacer()
                 VStack{
@@ -43,73 +76,116 @@ struct QueestionPage: View {
                         ).cornerRadius(10)
 //                        Spacer()
                     }
-                    
-                    Rectangle().fill(Color.AppPrimaryColor).frame(width: UIScreen.screenWidth*0.6).overlay(
-                        VStack(spacing:20){
-                            Text("في اي عام ولد حسين؟")
-                            Text("في اي عام ولد حسين؟")
-                            Text("في اي عام ولد حسين؟")
-                            Spacer()
+                    ZStack{
+                        Rectangle().fill(Color.AppPrimaryColor)
+                        VStack(alignment:.trailing, spacing:20){
+                            ScrollView(.vertical, showsIndicators: false) {
+                                ForEach(story_Questions_List,id:\.self){ x in
+                                    HStack{
+                                        Spacer()
+                                        Text(x.questionText)
+                                        Text("\(x.id)")
+                                    }.padding(15)
+                                    
+                                }
+                            }
+//                            Spacer()
                         }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
-                    ).cornerRadius(10)
+                    }
+                    .frame(width: UIScreen.screenWidth*0.6)
+                    .cornerRadius(10)
                     
                     
-//                    Spacer()
+                    Spacer()
                 }
                 Spacer()
-                
-                
-                
-                
-                
-                
                 VStack{
                     Spacer()
                     HStack{
-                        Image(systemName: "play")
-                        Image(systemName: "play")
+                        Image(systemName:"heart.circle.fill").resizable().backgroundFill(Color.red) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35)
+                            .onTapGesture {
+                                add_story_to_favorit(story_id: selectd_story_page_MenuID)
+//                                isGoToFavoratePressed=true
+                                
+                            }
+                        Image(systemName:"gift.circle.fill").resizable().backgroundFill(Color.blue) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35)
+                            .onTapGesture {
+                                
+                                is_go_to_Gift=true
+                                
+                            }
+                    }.frame(height: 42).padding(.horizontal,10)
+                    HStack{
+                        Spacer()
+                        Image(systemName:"arrowshape.turn.up.right.circle.fill").resizable().backgroundFill(Color.black) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35).onTapGesture {
+                            self.showShareSheet = true
+                        }
+                        
+                    }.width(70) .sheet(isPresented: $showShareSheet) {
+                        ShareSheet(activityItems: ["App URL"])
                     }
-                    Image(systemName: "pause")
+                    
                     Spacer()
-                    
-                    
+                    Spacer()
+                    Spacer()
                     VStack(spacing:4){
                         Spacer()
-                            Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
-//                                page_indecator += 1
-                                
-//                                spekerSound=true
-//                                stopSound()
-//                                Load_data_from_DB()
-//                                if story_from_table?.strory_page_records ?? "" == ""{
-//                                playSound()
-//                                }
-//                                showing_image = !showing_image
-//                                        Load_data_from_DB()
-                            }
-
                             HStack(spacing:1){
-                                Text("\(5)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
+                                Text("\(story_pages_count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
 
-                                Text("\(1)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
+                                Text("\(story_pages_count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
 
 
-                            }.frame(width: 40,height: 15).padding(.bottom,20)
+                            }.frame(width: 40,height: 15).padding(.bottom,20).onAppear{
+                                print(story_pages_count)
+                            }
                     
                 }.frame(width: 40,height: 15)
-
                     Spacer()
-                    
                 }
-                
-                
             }
+//        }
         }.ignoresSafeArea(.all, edges: .all)
-    }
-}
+//        .sheet(isPresented: $is_go_to_Home) {
+//            //            NavView(isShowSheet: self.$isShowSheet)
+//
+//                Home()
+//    }
+//    }
+        .fullScreenCover(isPresented: self.$is_go_to_Gift){
+            Gift()
+        }
+//
+        }.navigationBarTitle(Text("Home"))
+        .navigationBarHidden(true).alert(isPresented: $showing_alert) {
+            Alert(title: Text("الحالة"), message: Text(alert_message), dismissButton: .default(Text("حسنا")))
+        }
 
-struct QueestionPage_Previews: PreviewProvider {
-    static var previews: some View {
-        QueestionPage()
+//        }
+
+    }
+    
+    func add_story_to_favorit(story_id:Int){
+
+        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id]
+        print( Connection().getUrl(word: "AddToFavourite")+"\(story_id)")
+        print(prams)
+        RestAPI().postData(endUrl: Connection().getUrl(word: "AddToFavourite"), parameters: prams){ result in
+
+            let sectionR = JSON(result!)
+            print(sectionR)
+            if sectionR["responseCode"].int == 200{
+                print(sectionR["response"])
+                //                let jsonDatas = try! JSONEncoder().encode(sectionR["response"])
+                //                let menus = try! JSONDecoder().decode([StroryModal].self, from: jsonDatas)
+                //                stories=menus
+                ////                print(stories)
+                alert_message = sectionR["responseMasg"].stringValue
+                showing_alert=true
+            }
+        } onError: { error in
+            print(error)
+        }
+
     }
 }

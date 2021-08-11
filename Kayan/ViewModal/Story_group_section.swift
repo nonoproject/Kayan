@@ -48,57 +48,57 @@ struct Story_group_section: View {
                 VStack{
                     
                     HStack(spacing:5){
-                        Text("\(storyName.ageFrom)"+"-"+"\(storyName.ageTo)").font(.system(size: 18, weight: .semibold, design: .monospaced)).frame(width: 50, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
+                        HStack(spacing:0){
+                            Text("سنة").font(.system(size: 12, weight: .semibold, design: .monospaced)).foregroundColor(.Appliver)
+                            Text("\(storyName.ageFrom)"+"-"+"\(storyName.ageTo)").font(.system(size: 14, weight: .semibold, design: .monospaced))
+                            
+                        }.frame( height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
                         
                         Text(storyName.name).font(.system(size: 18, weight: .semibold, design: .monospaced)).frame(width: 110, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
                     }.padding(.top,30)
                     
                     Spacer()
-                    
-                    Button(action: {
-                        if !storyName.isSubscribed {
-                        add_story_to_supscription(story_id: storyName.id)
-                        }
-                        else{
-                            title=storyName.name
-                            selectdMenuID=storyName.id
-                            isSignIn=true
-                        }
-
-                                               }) {
-                        Text( !storyName.isSubscribed ?
-                                                    
-   
-                                "إشترك في الباقة"
-: "عرض"
-                        ).frame(width: 145, height: 40).background(Color.AppPrimaryColor).foregroundColor(Color.black).cornerRadius(10)
-                   
-                                               }.offset(y:-10)
+                    //  it was abutton to view your data
+//                    Button(action: {
+//
+//                            title=storyName.name
+//                            selectdMenuID=storyName.id
+//                            isSignIn=true
+//
+//
+//                                               }) {
+//                        Text("عرض").frame(width: 145, height: 40).background(Color.AppPrimaryColor).foregroundColor(Color.black).cornerRadius(10)
+//
+//                                               }.offset(y:-10)
                 
                     
                 }.frame(height: 201)
        
-        }.onAppear{
-//            print(typeID)
+        }.onTapGesture {
+            title=storyName.name
+            selectdMenuID=storyName.id
+            isSignIn=true
+            PlayAppSound().AppPlayAppSound()
         }
-            if !storyName.isSubscribed {
-            VStack{
-                Spacer()
-                Rectangle().fill(Color.AppDiscoverColor).frame(width: 50, height: 40, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
-            VStack{
-                Spacer()
-                Text("إستكشف").foregroundColor(.white).fontWeight(.bold).font(.system(size:8))
-                Image("stargaze").resizable().frame(width: 20,height: 20)
-                Spacer()
-            }
-                ).padding(.top,-60).onTapGesture {
-                    title=storyName.name+" "+"إستكشف"
-                    selectdMenuID=storyName.id
-                    isSignIn=true
-                }
-                Spacer()
-            }
-        }
+            // it was discover sectoion
+//            if !storyName.isSubscribed {
+//            VStack{
+//                Spacer()
+//                Rectangle().fill(Color.AppDiscoverColor).frame(width: 50, height: 40, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
+//            VStack{
+//                Spacer()
+//                Text("إستكشف").foregroundColor(.white).fontWeight(.bold).font(.system(size:8))
+//                Image("stargaze").resizable().frame(width: 20,height: 20)
+//                Spacer()
+//            }
+//                ).padding(.top,-60).onTapGesture {
+//                    title=storyName.name+" "+"إستكشف"
+//                    selectdMenuID=storyName.id
+//                    isSignIn=true
+//                }
+//                Spacer()
+//            }
+//        }
         }
     }
     func add_story_to_supscription(story_id:Int){

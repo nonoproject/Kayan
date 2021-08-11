@@ -13,6 +13,7 @@ struct Gift: View {
     
     @State var name:String=""
     @State var checked:Bool=false
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
         
       GeometryReader{ geo in
@@ -20,7 +21,10 @@ struct Gift: View {
             VStack{
           HStack{
             VStack{
-                Image(systemName: "play").resizable().padding(10).frame(width: 25, height: 25).background(Color.brown).foregroundColor(.white).cornerRadius(5)
+                
+                Image(systemName: "play.fill").resizable().padding(5).frame(width: 32, height: 32).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
+                                                            self.presentationMode.wrappedValue.dismiss()
+                }.padding(.leading,5)
                 Spacer()
             }.padding(20)
             Spacer()

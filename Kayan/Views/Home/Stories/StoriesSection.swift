@@ -12,6 +12,7 @@ struct StoriesSection: View {
     @State var section_title:String=""
     @State var title:String=""
     
+    @State var ther_are_no_data = false
     var imageName=["quran","meditation","childrenStory"]
     var storyName=["قصص براعم","قصص الابطال","قصص القادة"]
     var storyAge=["5-3","8-6","9-12"]
@@ -28,6 +29,7 @@ struct StoriesSection: View {
     var body: some View {
 //        NavigationView{
 //        GeometryReader{geo in
+        ZStack{
         VStack(spacing:0){
             Navbars(x_view_to_move:AnyView(Home()), page_titel: section_title)
                 ZStack{
@@ -35,35 +37,34 @@ struct StoriesSection: View {
                            .edgesIgnoringSafeArea(.vertical)
                     
                     VStack(spacing:0){
-                        NavigationLink(destination: Stories(selected_id:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
+                        NavigationLink(destination: SandalStoryV2View(selected_id:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
                                 .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
 //                        NavigationLink(destination: PlayVedio(selected_url:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
 //                                .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
                         NavigationLink(destination:PlayRelacsation().navigationBarTitle(Text("Home"))
                                 .navigationBarHidden(true), isActive: self.$is_play_vedio) {}.hidden()
 
-                        if stories.count > 0 {
+                        
                 HStack{
-                    Rectangle().fill(Color.AppSecoundryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
+                    Rectangle().fill(Color.AppSecoundryColor).frame(width: 100, height: 40, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
                         HStack{
                             Spacer()
-                            Text("هدايا").foregroundColor(.black).fontWeight(.heavy).font(.system(size: 14))
-                                
-                            
+                            Text("الهدايا").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
                             Spacer()
                         }
                     )
                     
                     Spacer()
                     
-                    Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topLeft, .bottomLeft]).overlay(
+                    Rectangle().fill(Color(#colorLiteral(red: 0.9551857114, green: 0.8471567035, blue: 0.8317700028, alpha: 1))).frame(width: 100, height: 40, alignment: .center).cornerRadius(20, corners: [.topLeft, .bottomLeft]).overlay(
                         HStack{
                             Spacer()
-                            Text("قريبا").foregroundColor(.black).fontWeight(.heavy).font(.system(size: 14))
+                            Text("قريبا").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
                             Spacer()
                         }
                     )
                 }.padding(.vertical,5)
+                        if stories.count > 0 {
                             HStack{
                                 ScrollView(.horizontal, showsIndicators: false){
                                 HStack(spacing:45){
@@ -75,10 +76,10 @@ struct StoriesSection: View {
                                     }
                                 }.padding(20)
                                 }
-                }.padding(.horizontal,30)
+                }//.padding(.horizontal,30)
     //                        }
                         }
-                        if clibs.count > 0{
+                       else if clibs.count > 0{
                             VStack{
                                 Spacer()
                                 HStack{
@@ -97,6 +98,24 @@ struct StoriesSection: View {
                                 Spacer()
                             }
                         }
+                       else{
+                        VStack{
+                            Spacer()
+                            if ther_are_no_data{
+                                Text(" عفوا لاتوجد بيانات ").foregroundColor(.Appliver)
+                            }
+                            else{
+                                LoadinIndicator().onAppear{
+                                    let seconds = 4.0
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                                        // Put your code which should be executed with a delay here
+                                        ther_are_no_data = true
+                                    }
+                                }
+                            }
+                            Spacer()
+                        }
+                       }
                         Spacer()
             }
     //    }
@@ -111,6 +130,8 @@ struct StoriesSection: View {
                 
     //        }
             }.environment(\.horizontalSizeClass, .compact)
+        }
+            
         }.edgesIgnoringSafeArea(.all)
         
     }

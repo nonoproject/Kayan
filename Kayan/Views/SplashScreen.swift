@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SwiftyJSON
 struct SplashScreen: View {
    @State var logo_key=0
     var uAnimationDuration: Double { return 3.0 }
@@ -19,10 +19,20 @@ struct SplashScreen: View {
             
             if logo_key == 0{
                 Image("kayan_logo").resizable().frame(width: 400, height: 400, alignment: .center).onAppear{
+//                    checConnection()
                     restartAnimation()
+
                 }
             }
-            else if logo_key == 1{
+            else if logo_key >= 1{
+                if logo_key == 1 && !VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isFirestTime) {
+                    IntroVedio().onAppear{
+//                        uAnimationDuration = 5.0
+                        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.isFirestTime, Val: true)
+                        restartAnimation(video_time: 5.0)
+                    }
+                }
+                 else{
                 if !isLogin{
                     
                     SignIn()
@@ -60,6 +70,7 @@ struct SplashScreen: View {
         //    ForgetPassword()
         //        VarificationCode()
                 }
+                 }
             }
         }//.fullScreenCover(isPresented: ($isPresented), content: Home())
 //        .fullScreenCover(isPresented: self.$isPresented, content: {
@@ -67,20 +78,51 @@ struct SplashScreen: View {
 //        })
         
     }
-    func restartAnimation() {
-      var deadline: DispatchTime = .now() + uAnimationDuration
+    func restartAnimation(video_time:Double=0.0) {
+        let deadline: DispatchTime = video_time != 0.0 ? .now() + video_time :.now() + uAnimationDuration
       DispatchQueue.main.asyncAfter(deadline: deadline) {
         if self.logo_key+1 == 2{
           self.logo_key += 1
         }
         else{
-        withAnimation(.easeIn(duration: uAnimationDuration)) {
+//        withAnimation(.easeIn(duration: uAnimationDuration)) {
             self.logo_key += 1
 //            isPresented = self.logo_key == 2 ? true : false
 //            restartAnimation()
-           }
+//           }
         }
       }
+    }
+    func checConnection()  {
+        RestAPI().postData(endUrl: Connection().getUrl(word: "login"), parameters: [:]) { result in
+//            showSandalLoadingIndicater=false
+           let sectionR = JSON(result!)
+            print(Connection().getUrl(word: "login"))
+//                  print(prams)
+            print(sectionR)
+         
+            if sectionR["responseCode"].int == 200{
+                
+                
+                
+            }
+            else if sectionR["responseCode"].int == 405{ // user not active
+
+            }
+            else if sectionR["responseCode"].int == 404{//user not found
+                restartAnimation()
+            }
+            else if sectionR["responseCode"].int == 406{//user not found
+            }
+            else{
+            }
+            
+        } onError: { error in
+            print(error)
+
+        }
+
+        
     }
 }
 

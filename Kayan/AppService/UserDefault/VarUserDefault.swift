@@ -14,7 +14,10 @@ class VarUserDefault{
     var fullName: String = "fullName"
     var mobileNo: String = "mobileNo"
     var userId: String = "userId"
-   
+    var userVarifyId: String = "userVarifyId"
+    var spekerSound: String = "spekerSound"
+
+    var isFirestTime: String = "isFirestTime"
     func getGlobal(key:String) -> String{
         let preferences = UserDefaults.standard
         if preferences.object(forKey: key) != nil{

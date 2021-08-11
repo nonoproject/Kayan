@@ -16,7 +16,8 @@ public struct CTFStyleClearBackground : TextFieldStyle {
     @Binding var showError:Bool
    public func _body(configuration: TextField<Self._Label>) -> some View {
        configuration
-           .foregroundColor(.blue)
+        .modifier(customFountCB())
+           .foregroundColor(.Appliver)
            .multilineTextAlignment(.center)
            .frame(width: width, height:height)
            .background(

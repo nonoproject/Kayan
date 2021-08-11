@@ -25,6 +25,7 @@ struct Stories: View {
     @State  var BackagePosition:[CGFloat]=[]
     @State  var BackageHight:[CGFloat]=[]
     @State private var CardIndecator=0//max number of item
+//    @State  var storyQuestionsList:[storyQuestionsList]=[]
     
     @State var kkkkkdsds:Double=0
     @State var kkkkk:CGFloat=0
@@ -40,16 +41,19 @@ struct Stories: View {
                             .edgesIgnoringSafeArea(.vertical)
                         
                         VStack(spacing:0){
-                            if stories.count > 0 {
+                            
                                 HStack{
-                                    Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
-                                        HStack{
-                                            Spacer()
-                                            Text("هدايا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
-                                            Spacer()
-                                        }
-                                    )
                                     
+//                                    Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
+//                                        HStack{
+//                                            Spacer()
+//                                            Text("هدايا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
+//                                            Spacer()
+//                                        }
+//                                    )
+                                    Image(systemName: "play.fill").resizable().frame(width: 22, height: 22).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
+                                        self.presentationModeEdit.wrappedValue.dismiss()
+                                    }.padding(.leading,5)
                                     Spacer()
                                     
                                     Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topLeft, .bottomLeft]).overlay(
@@ -59,16 +63,17 @@ struct Stories: View {
                                             Spacer()
                                         }
                                     )
-                                }
-                             
+                                }.padding(.top,20)
+                            
+                             Spacer()
+                            if stories.count > 0 {
                                 ZStack(alignment: .center){
                                     ForEach(0...stories.count-1,id:\.self){ index in
                                         VStack{
                                             
-                                        
-                                        Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page).padding(.horizontal,30)
+//                                            ,storyQuestionsList:$storyQuestionsList
+                                            Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page).padding(.horizontal,30)
                                             .contentShape(Rectangle())
-                                            
                                             .offset(x:BackagePosition[index])
                                             .gesture(
                                                 DragGesture()
@@ -93,15 +98,9 @@ struct Stories: View {
                                                         }
                                                     }).onEnded({ (value) in
                                                         if value.translation.width < 0{
-                                                            
                                                             if value.translation.width < -100{
-                                                                
-                                                              //                                                                BackagePosition.map { $0 + 200 }
-                                                                                   moveLeft()
+                                                                moveLeft()
                                                             }
-                                                                
-                                                            
-                                                        
                                                             else{
                                                                 resetView()
                                                             }
@@ -121,14 +120,18 @@ struct Stories: View {
                                             if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
                                                 HStack(spacing:10){
                                                Spacer()
-                                                    if !stories[index].isPaid!{
-                                                        Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft, .bottomRight]).overlay(
-                                                            HStack{
-                                                                Spacer()
-                                                                Text("شراء الأن").foregroundColor(.Appliver).fontWeight(.bold).font(.system(size: 14))
-                                                                Spacer()
-                                                            }
-                                                        )
+                                                    if stories[index].isPaid!{
+                                                        if !stories[index].isSubscribed!{
+//                                                        Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft, .bottomRight]).overlay(
+//                                                            HStack{
+//                                                                Spacer()
+//                                                                Text("شراء الأن").foregroundColor(.Appliver).fontWeight(.bold).font(.system(size: 14))
+//
+//                                                                Spacer()
+//                                                            }
+//                                                        )//.onTapGesture {
+//                                                            add_story_to_supscription(story_id:stories[index].id)
+//                                                        }
                                                         Rectangle().fill(Color.orange).frame(width: 70, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft,.bottomRight]).overlay(
                                                     VStack{
                                                         Spacer()
@@ -138,6 +141,7 @@ struct Stories: View {
                                                         Spacer()
                                                     }
                                                 )
+                                                    }
                                                     }
                                                     else{
 //                                                        Spacer()
@@ -161,7 +165,7 @@ struct Stories: View {
                                                     withAnimation(.easeIn(duration: 2)) {
                                                         kkkkk+=8
                                                     }
-                                                    withAnimation(.easeIn(duration: 2)) {
+                                                    withAnimation(.easeIn(duration: 1.5)) {
                                                         kkkkkdsds=0.9
                                                     }
                                                 }
@@ -170,6 +174,7 @@ struct Stories: View {
                                         
                                     }
                                 }.ignoresSafeArea(.all)
+                                Spacer()
                             }
                         }
                         
@@ -177,11 +182,11 @@ struct Stories: View {
                 }
             }.edgesIgnoringSafeArea(.all)
             .fullScreenCover(isPresented:  self.$is_go_to_story_page ){
-                StoryPage( audioRecorder: AudioRecorder(), page_story_id: selectd_story_page_MenuID)
+                StoryPage( audioRecorder: AudioRecorder(), page_story_id: selectd_story_page_MenuID,storyQuestionsList:story_Questions_List)//,storyQuestionsList:storyQuestionsList)
             }
             
         }.onAppear{
-            //            print(id)
+//            print(story_Questions_List ?? "")
             GetStories()
             //        }
         }.environment(\.horizontalSizeClass, .compact)
@@ -193,7 +198,7 @@ struct Stories: View {
     }
     func moveLeft(){
         kkkkkdsds=0
-        withAnimation(.easeIn(duration: 0.8)) {//1.5
+        withAnimation(.easeIn(duration: 0.5)) {//1.5
                                                                           
         BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
         BackagePosition[CardIndecator] = -(UIScreen.screenWidth*0.4)-50
@@ -218,40 +223,42 @@ struct Stories: View {
     }
     func moveRight(){
         
+        kkkkkdsds=0
+        withAnimation(.easeIn(duration: 0.5)) {//1.5
+                                                                          
         BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
         BackagePosition[CardIndecator] = (UIScreen.screenWidth*0.4)+50
         
-//
-        CardIndecator = CardIndecator-1 > 0  ? CardIndecator-1 : stories.count-1
-//////
+        CardIndecator = (stories.count - 1 - CardIndecator) < stories.count-1 ? CardIndecator-1 : (stories.count - 1 - CardIndecator)
+        
         BackagePosition[CardIndecator] = 0
         BackageHight[CardIndecator] =   UIScreen.screenHeight*0.5
+        }
 //
-//
-        if CardIndecator-1 > 0  {
-            BackagePosition[CardIndecator-1] = -(UIScreen.screenWidth*0.4)-50
+        print(CardIndecator)
+        print((stories.count - 1 - CardIndecator))
+//        print(CardIndecator)
+        if (stories.count - 1 - CardIndecator) >  0{
+            BackagePosition[(stories.count - 1 - CardIndecator)] = -(UIScreen.screenWidth*0.4)-50
         }
         else{
-            if CardIndecator-1 < 1{
-                BackagePosition[0] = -(UIScreen.screenWidth*0.4)-50
-            }
+            BackagePosition[(stories.count - 1 - CardIndecator)] = -(UIScreen.screenWidth*0.4)-50
         }
+
+//
     }
-    func add_story_to_favorit(story_id:Int){
+    func add_story_to_supscription(story_id:Int){
         
         let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id]
-        print( Connection().getUrl(word: "AddToFavourite")+"\(story_id)")
+        print( Connection().getUrl(word: "StorySubscribe"))
         print(prams)
-        RestAPI().postData(endUrl: Connection().getUrl(word: "AddToFavourite"), parameters: prams){ result in
-            
-            let sectionR = JSON(result!)
+        RestAPI().postData(endUrl: Connection().getUrl(word: "StorySubscribe"), parameters: prams){ result in
+           let sectionR = JSON(result!)
             print(sectionR)
             if sectionR["responseCode"].int == 200{
-                print(sectionR["response"])
-                //                let jsonDatas = try! JSONEncoder().encode(sectionR["response"])
-                //                let menus = try! JSONDecoder().decode([StroryModal].self, from: jsonDatas)
-                //                stories=menus
-                ////                print(stories)
+                selectd_story_page_MenuID=story_id
+                story_Questions_List = stories[CardIndecator].storyQuestionsList!
+                is_go_to_story_page=true
             }
         } onError: { error in
             print(error)
@@ -268,24 +275,43 @@ struct Stories: View {
             print(sectionR)
             if sectionR["responseCode"].int == 200{
                 let jsonDatas = try! JSONEncoder().encode(sectionR["response"])
-                let menus = try! JSONDecoder().decode([StroryModal].self, from: jsonDatas)
-                
+                let users = try! JSONDecoder().decode([StroryModal].self, from: jsonDatas)
+//                menus.f
+                var menus=users.sorted  {
+                    $0.isPaid!  &&  $1.isPaid!
+                }
+                print(menus)
+                print("-----")
+                menus.reverse()
+//                menus = menus.sorted(by: { $0.isPaid! })
                 BackagePosition=Array(repeating: CGFloat(UIScreen.screenWidth+200), count: (menus.count))
-
                     BackageHight=Array(repeating:CGFloat(UIScreen.screenHeight*0.4), count: (menus.count))
                 stories=menus
-                CardIndecator=0
+                CardIndecator=stories.count/2
+                BackageHight[CardIndecator]=UIScreen.screenHeight*0.5
+                BackagePosition[CardIndecator] = 0//(UIScreen.screenWidth/2)
+//                stories = menus
                 if stories.count > 0 {
                     
-                    print((UIScreen.screenWidth*0.4/2))
+//                    print((UIScreen.screenWidth*0.4/2))
+//
+//                    if stories.count > 2{
+//                        BackagePosition[CardIndecator+1] = (UIScreen.screenWidth*0.4)+50
+//                        BackagePosition[stories.count-1] = -(UIScreen.screenWidth*0.4)-50
+//                    }
+                     for i in 0...menus.count-1{
+                                        if i != CardIndecator{
+                                            if i > CardIndecator{
+                                                BackagePosition[i]=BackagePosition[i-1]+(UIScreen.screenWidth*0.4)+50
+                                            }
+                                            else{
+                                                BackagePosition[i]=BackagePosition[i+1]-(UIScreen.screenWidth*0.4)-50
+                                            }
+                                            BackageHight[i]=UIScreen.screenHeight*0.4
+                                        }
+                                        
+                                    }
                     
-                    if stories.count > 2{
-                        BackagePosition[CardIndecator+1] = (UIScreen.screenWidth*0.4)+50
-                        BackagePosition[stories.count-1] = -(UIScreen.screenWidth*0.4)-50
-                    }
-                    
-                    BackageHight[0]=UIScreen.screenHeight*0.5
-                    BackagePosition[0] = 0//(UIScreen.screenWidth/2)
                 }
             }
         } onError: { error in
@@ -293,9 +319,4 @@ struct Stories: View {
         }
         
     }
-}
-extension UIScreen{
-    static let screenWidth = UIScreen.main.bounds.size.width
-    static let screenHeight = UIScreen.main.bounds.size.height
-    static let screenSize = UIScreen.main.bounds.size
 }

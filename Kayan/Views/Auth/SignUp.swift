@@ -10,6 +10,7 @@ import SwiftyJSON
 struct SignUp: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var checked:Bool=false
+    @State  var  view_loading:Bool=false
 //        HStack{
 //
 //            Button(action: {
@@ -75,7 +76,8 @@ struct SignUp: View {
                         }
 //                        Spacer()
                         HStack{
-                            TextField("5xxxxxxxx", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            TextField("05xxxxxxxx", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                                .keyboardType(.phonePad)
                             Spacer()
                             Text("رقم الهاتف")
                         }
@@ -149,17 +151,19 @@ struct SignUp: View {
 //                        Spacer()
                             if !showSandalLoadingIndicater{
                                 Button(action: {
-                                    showSandalLoadingIndicater=true
+                                    view_loading=true
+//                                    showSandalLoadingIndicater=true
                                     if FormValidation(){
                                         checkUserSignUp()
                                     }
                                     else{
                                         ////
-                                        showSandalLoadingIndicater=false
+                                        view_loading=false
+//                                        showSandalLoadingIndicater=false
                                     }
                                 }, label: {
                                     Text("هيا بنا").frame(width: 255,height: 40).background(Color.init(hex: "F1E6E0").opacity(0.97))
-                                        .cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+                                        .cornerRadius(10).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
                                 })
                                
                             }
@@ -196,6 +200,13 @@ struct SignUp: View {
                     SendVarificationCode(completeSignUpPassed: $SignUpPassed, path:"is_come_form_login_operation", displayItem: $displayItem, phoneNumber: StringFunction().numberStrToEnglish(numberStr:phoneNumber))
                                
                        }
+                if view_loading{
+                    ZStack{
+                        Color.Appliver
+                            .opacity(0.66)
+                LoadinIndicator()
+                    }.edgesIgnoringSafeArea(.all)
+                }
         }.edgesIgnoringSafeArea(.all)
     }.onTapGesture {
         self.hideKeyboard()
@@ -218,6 +229,7 @@ struct SignUp: View {
            let sectionR = JSON(result!)
             print(sectionR)
             print(prams)
+            view_loading=false
             if sectionR["responseCode"].int == 200{
 //                SignUpPassed=true
 
@@ -237,6 +249,7 @@ struct SignUp: View {
             print(error)
             message="عفوا حدث خطاء ما"
             showsAlert=true
+            view_loading=false
             showSandalLoadingIndicater=false
         }
 
@@ -245,7 +258,7 @@ struct SignUp: View {
     }
     func FormValidation() -> Bool {
         self.fullnameError = (self.fullname.isEmpty || self.fullname.count < 3) ? true : false
-        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 9) ? true : false
+        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 10 || !self.phoneNumber.hasPrefix("05")) ? true : false
 //        self.PassWordError = self.PassWord.isEmpty ? true : false
 //        self.RePassWordError = self.RePassWord.isEmpty ? true : false
         if  self.PassWord.isEmpty{//PassWord != RePassWord {//||

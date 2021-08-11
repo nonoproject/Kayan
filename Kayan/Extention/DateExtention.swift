@@ -17,7 +17,7 @@ extension Date
     }
 
 }
-
+// chang arabic Number to En Number
 class StringFunction{
     func numberStrToEnglish(numberStr: String )->String{
            let formatter: NumberFormatter = NumberFormatter()

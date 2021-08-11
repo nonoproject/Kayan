@@ -9,7 +9,7 @@ import SwiftUI
 
 import SwiftyJSON
 struct SignIn: View {
-    @State var password=""
+    @State var password="4324323"
     @State var passwordError:Bool=false
     @State var phoneNumber=""
     @State var phoneNumberError:Bool=false
@@ -21,8 +21,10 @@ struct SignIn: View {
 //    @State private var IsError=false
 //    @State private var  isForgetPassword=false
     @State  var  showsAlert:Bool=false
+    @State  var  view_loading:Bool=false
+    
     @State  var  message:String=""
-    @ObservedObject var textBindingManager = TextBindingManager(limit: 9)
+    @ObservedObject var textBindingManager = TextBindingManager(limit: 10)
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
     var body: some View {
         NavigationView{
@@ -43,6 +45,7 @@ struct SignIn: View {
                 
                 LinearGradient(gradient: Gradient(colors: [Color.init(hex: "FCF1EF"), Color.init(hex: "BE9ECB"),Color.init(hex:"5461A7")]), startPoint: .topTrailing, endPoint: .bottomLeading)
                        .edgesIgnoringSafeArea(.vertical)
+               
                 VStack{
                     HStack{
                         Spacer()
@@ -58,7 +61,7 @@ struct SignIn: View {
                                 VStack{
                                     Text("كيان")
                                     Text("قصص يغفو عليها الاطفال")
-                                }.foregroundColor(.black).font(.system(size: 15), weight: .bold)
+                                }.foregroundColor(.black).modifier(customFountCB())
                             )
                             Spacer()
                         }
@@ -77,42 +80,47 @@ struct SignIn: View {
                     VStack{
                         Spacer()
                         HStack{
-                            TextField("5xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                            TextField("05xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
                                 .textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                                .modifier(customFountCB())
+                                .foregroundColor(.Appliver)
                                 .keyboardType(.phonePad)
                             Spacer()
                             Text("رقم الهاتف")
-                        }
+                        }.modifier(customFountCB())
                         Spacer()
                         HStack{
-                            SecureField("", text: $password).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $passwordError))
+                            SecureField("", text: $password).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $passwordError)).modifier(customFountCB())
+                                .foregroundColor(.Appliver)
                             Spacer()
                             Text("كلمة المرور")
                             
-                        }
+                        }.modifier(customFountCB())
                         HStack{
                             Button(action: {
                                 isForgetPassword=true
                             }, label: {
-                                Text("هل نسيت كلمة المرور؟").foregroundColor(.black)
+                                Text("هل نسيت كلمة المرور؟").foregroundColor(.black).modifier(customFountCB())
                             })
                             
                             Spacer()
                         }
                         Spacer()
                         Text("هيا بنا").frame(width: 255,height: 40).background(Color.init(hex: "F1E6E0").opacity(0.97))
-                            .cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))).onTapGesture {
+                            .cornerRadius(10).modifier(customFountCB()).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))).onTapGesture {
                                 if FormValidation(){
+                                    view_loading = true
                                 checkUserSignIn()
                                 }
                             }
+                        
                         Spacer()
                         HStack{
                             Spacer()
                             Button(action: {
                                 isSignUp=true
                             }, label: {
-                                Text("إنشاء حساب جديد").foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+                                Text("إنشاء حساب جديد").foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))).modifier(customFountCB())
                             })
                             
                         }
@@ -123,9 +131,19 @@ struct SignIn: View {
                 Spacer()
                 Image("kayanSide").resizable().frame(width: 220,height: geo.size.height)
             }
+            
+                if view_loading{
+                    ZStack{
+                        Color.Appliver
+                            .opacity(0.66)
+                LoadinIndicator()
+                        
+                    }.edgesIgnoringSafeArea(.all)
+                
+            }
         }.edgesIgnoringSafeArea(.all)
     }.alert(isPresented: self.$showsAlert) {
-        Alert(title: Text(message))
+        Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )
     }
         .navigationBarTitle(Text("Home"))
         .navigationBarHidden(true)
@@ -141,7 +159,7 @@ struct SignIn: View {
        }
     func FormValidation() -> Bool {
         
-        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 9) ? true : false
+        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 10 || !self.textBindingManager.text.hasPrefix("05") ) ? true : false
         self.passwordError = self.password.isEmpty ? true : false
         if phoneNumberError{
             message="خطاء في رقم الجوال"
@@ -166,7 +184,7 @@ struct SignIn: View {
             print(Connection().getUrl(word: "login"))
                   print(prams)
             print(sectionR)
-         
+            view_loading=false
             if sectionR["responseCode"].int == 200{
 //
 ////                print(sectionR["response"]["userId"].int)
@@ -203,6 +221,7 @@ struct SignIn: View {
             
         } onError: { error in
             print(error)
+            view_loading=false
 //            showSandalLoadingIndicater=false
         }
 

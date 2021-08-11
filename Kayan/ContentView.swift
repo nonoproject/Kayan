@@ -10,7 +10,19 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
     var body: some View {
+        
 //        SplashScreen()
+        SandalStoryV2View(id:3)
+//        Image("Kyan_loader")
+            
+//            .font(.custom("Sukar black", size: 28))
+            
+//            StoryViewV4()
+//        TestViewsSandaScroolV3()
+        
+                //        SeeAllView()
+//        SnapCarousel().environmentObject(UIStateModel())
+//        TestCarusel()
 //        if !isLogin{
 //
 //            SignIn()
@@ -35,9 +47,9 @@ struct ContentView: View {
 ////        StoriesSection()
 ////        SamopleRecourding(audioRecorder: AudioRecorder())
 ////        }.environment(\.horizontalSizeClass, .compact)
-        Stories()
-//            StoryPage( audioRecorder: AudioRecorder(), page_story_id: 13)
-////        Test()//Reading Story
+//        Stories()
+//        StoryPage( audioRecorder: AudioRecorder(), page_story_id: 15, storyQuestionsList: [])
+//        Test()//Reading Story
 //        Gift()
 //        QueestionPage()
 //        

@@ -22,16 +22,17 @@ struct StoryPage: View {
     @State var story_from_table:stories_table?
     @State var page_indecator:Int=1
     @State var page_story_id:Int=0
+    @State var storyQuestionsList:[storyQuestionsList]
     
     @State var show_no_data:Bool=false
     @State var musicSound:Bool=false
-    @State var spekerSound:Bool=false
+    @State var spekerSound:Bool=VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.spekerSound)
     @State var isPlaying:Bool=false
     
     @State var showing_image =  false
     @State var story_sound:[String]=["https://kayanapp.ibtikar-soft.sa/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3","https://www.english-room.com/audio/p1_listening_term1_02.mp3","https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"]
     @State var story_pages:[Story_Page_Modal]=[]
-    
+    @State var is_going_to_question:Bool = false
     
     var olympicStatus: String {
            return "page_story_id_\(page_story_id)_\(story_pages[page_indecator-1].id!)"
@@ -39,6 +40,10 @@ struct StoryPage: View {
     var selected_image: String {
            return story_pages[page_indecator-1].imageURL!
         }
+    
+    @State  var  showsAlert:Bool=false
+    @State  var  message:String=""
+    
     var body: some View {
         ZStack{
 //            if story_pages.count > 0{
@@ -63,14 +68,15 @@ struct StoryPage: View {
                                                 print("will rigester")
                                                 stopSound()
                                                     self.audioRecorder.startRecording(strory_page_record: olympicStatus)
+                                                
                                             }) {
-                                                Image(systemName: "music.mic")
+                                                Image(systemName: "mic.fill")
                                                     .resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
                                             }
                                         } else {
                                             Button(action: {
                                                     self.audioRecorder.stopRecording(strory_page_record: olympicStatus)
-                                                
+                                                Load_data_from_DB()
                                             }) {
                                                 Image(systemName: "record.circle.fill")
                                                     .resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
@@ -79,11 +85,18 @@ struct StoryPage: View {
                                     }
                                     else{
                                         Image(systemName: "play.fill").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
-                                           play_audio_from_local()
+                                            if spekerSound{
+                                                play_audio_from_local()
+                                            }
+                                            else{
+                                                message="الرجاء تفعيل الصوت ثم المحاولة مرة اخرى"
+                                                showsAlert=true
+                                            }
+                                           
+                                            
                                         }
                                     }
                                    
-//                                    Image(systemName: "music.mic").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
 //
 //
                                 }.frame(width: 40,height: 45).background(Color.AppPrimaryColor).cornerRadius(5).disabled(story_pages.count == 0)
@@ -103,9 +116,26 @@ struct StoryPage: View {
                                     }
                             }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5)
                                 .padding(.top,20)
+//                                Image("replaysource_audio")
+                                Image(systemName: "music.mic")
+                                    
+                                    .resizable().frame(width: 30, height: 30).cornerRadius(5).foregroundColor(.Appliver).onTapGesture {
+                                        if spekerSound{
+                                            if audioPlayer.isPlaying {
+                                            paus_audio_from_DB()
+                                            }
+                                            stopSound()
+                                                playSound()
+                                        }
+                                        else{
+                                            message="الرجاء تفعيل الصوت ثم المحاولة مرة اخرى"
+                                            showsAlert=true
+                                        }
+                                    }
                                 Spacer()
                                 Spacer()
                                     Spacer()
+                                
                             }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
                         
                         
@@ -165,15 +195,13 @@ struct StoryPage: View {
                             }
                             enable_disableBtn(imageName: "speaker.wave.2.fill", isEnabel: $spekerSound )
                             .onTapGesture {
-                                if ((player?.isPlaying) != nil) {
-                                if spekerSound{
-                                    player?.pause()
+                                changeUsingSound()
+                                if !spekerSound{
+                                    stopSound()
                                 }
-                                else{
-                                    player?.play()
-                                }
-                                }
-                                spekerSound.toggle()
+//                                else{
+//                                    stopSound()
+//                                }
                             }
                             }.frame(width: 42,height: 132)
 //                            Spacer()
@@ -207,11 +235,16 @@ struct StoryPage: View {
                             Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
                                 page_indecator -= 1
                                 
-                                spekerSound=true
+//                                spekerSound=true
+                                if spekerSound{
                                 stopSound()
+                            }
                                 Load_data_from_DB()
                                 if story_from_table?.strory_page_records ?? "" == ""{
-                                playSound()
+                                    if spekerSound{
+                                    playSound()
+                                    }
+//                                playSound()
                                 }
                                 showing_image = !showing_image
                             }
@@ -222,25 +255,33 @@ struct StoryPage: View {
                          //   Color.blue
                             Spacer()
                             HStack{
-                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").font(.system(size: 18))
+                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").modifier(customFountCR())
                                 //.padding(5).cornerRadius(20)
+                                    .multilineTextAlignment(.trailing)
                             }//.background(Color.white.opacity(0.6))
                             .padding(.horizontal,20).cornerRadius(20)
 //                            Spacer()
 //}
                             VStack(spacing:4){
                                 Spacer()
-                                if page_indecator != story_pages.count {
+                                if page_indecator != story_pages.count || story_Questions_List.count > 0{
                                     Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
+                                        if page_indecator != story_pages.count{
                                         page_indecator += 1
                                         
-                                        spekerSound=true
-                                        stopSound()
+//                                        spekerSound=true
+//                                        stopSound()
                                         Load_data_from_DB()
                                         if story_from_table?.strory_page_records ?? "" == ""{
-                                        playSound()
+                                            if spekerSound{
+                                                playSound()
+                                            }
                                         }
                                         showing_image = !showing_image
+                                        }
+                                        else{
+                                            is_going_to_question=true
+                                        }
 //                                        Load_data_from_DB()
                                     }
 
@@ -248,8 +289,6 @@ struct StoryPage: View {
                                         Text("\(page_indecator)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
 
                                         Text("\(story_pages.count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
-
-
                                     }.frame(width: 40,height: 15).padding(.bottom,20)
                             }
                         }.frame(width: 40,height: 15)
@@ -257,7 +296,9 @@ struct StoryPage: View {
 
                     }.padding(.vertical,20).onAppear{
                        if story_from_table?.strory_page_records ?? "" == ""{
+                        if spekerSound{
                         playSound()
+                        }
                         }
                         }
                 }
@@ -267,11 +308,24 @@ struct StoryPage: View {
 //            }
 
         }.edgesIgnoringSafeArea(.leading).onAppear{
-            print(page_story_id)
+            print(storyQuestionsList)
             restartAnimation()
 //            GetStoryPage()
+            
+        }
+        .alert(isPresented: self.$showsAlert) {
+            Alert(title: Text(message))
+        }
+        .fullScreenCover(isPresented:  self.$is_going_to_question ){
+            QueestionPage(story_pages_count:story_pages.count).navigationBarTitle(Text("Home"))
+                .navigationBarHidden(true)
         }
     }
+    func changeUsingSound(){
+        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.spekerSound, Val: !spekerSound)
+        spekerSound.toggle()
+    }
+    
     func restartAnimation() {
       var deadline: DispatchTime = .now() + uAnimationDuration
       DispatchQueue.main.asyncAfter(deadline: deadline) {
@@ -283,7 +337,7 @@ struct StoryPage: View {
 //        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStories")+"\(id)", parameters: [:])
 //        \(page_story_id)
         RestAPI().getData(endUrl: Connection().getUrl(word: "GetStoryPages")+"\(page_story_id)", parameters: [:]){ result in
-//        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStoryPages")+"2", parameters: [:]){ result in
+
            let sectionR = JSON(result!)
             print(sectionR)
             
@@ -318,6 +372,7 @@ struct StoryPage: View {
         }
     }
     func playSound(){
+        
         if ((player?.isPlaying) != nil || isPlaying) {
             stopSound()
         }
@@ -326,6 +381,10 @@ struct StoryPage: View {
         let url = NSURL(string: urlstring)
         print("the url = \(url!)")
         downloadFileFromURL(url: url!)
+//        }
+//        else{
+//            stopSound()
+//        }
     }
     func downloadFileFromURL(url:NSURL){
 
@@ -393,6 +452,9 @@ struct StoryPage: View {
         
     }
 }
+    func paus_audio_from_DB(){
+        self.audioPlayer.stopPlayback()//startPlayback(audio: audio)
+    }
     func delet_audio_from_DB(page_story_id:String){
 //        do {
 //                let realm = try Realm()

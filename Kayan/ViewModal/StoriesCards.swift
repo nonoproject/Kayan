@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
+import SwiftyJSON
+import AVFoundation
 
+
+var player: AVAudioPlayer?
 struct StoriesCards: View {
     var imageName:String
     var storyName:String
@@ -19,9 +23,9 @@ struct StoriesCards: View {
     @Binding var selectdMenuID:Int
     
     @Binding var isSignIn:Bool
-
-    var isStory:Bool=true
     
+    var isStory:Bool=true
+    @ObservedObject var audioPlayer = AudioPlayer()
     var body: some View {
 //        geo.size.width*0.25
 //        geo.size.width*0.18
@@ -44,13 +48,16 @@ struct StoriesCards: View {
                 }.frame(width: width, height: 161, alignment: .center).cornerRadius(10)
             }
             if !isStory{
-                Text(storyName).font(.system(size: 18, weight: .semibold, design: .monospaced)).frame(width: 145, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
+//                .font(.custom("Sukar black", size: 20))
+                Text(storyName).font(.system(size: 18,weight: .semibold, design: .monospaced))
+                    .frame(width: 145, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
                 .offset(y:-30).onTapGesture {
                      title=storyName
                     print(storyID)
                     print(storyAge)
                     selectdMenuID=storyID
                     isSignIn=true
+                    PlayAppSound().AppPlayAppSound()
                 }
             }
             else{
@@ -78,7 +85,7 @@ struct StoriesCards: View {
         }
     }
 }
-
+ var story_Questions_List:[storyQuestionsList]=[]
 struct Stories_Card_Cards: View {
     var imageName:StroryModal
     @Binding var BackageHight:CGFloat
@@ -88,7 +95,6 @@ struct Stories_Card_Cards: View {
     @Binding var selectdMenuID:Int
     
     @Binding var isSignIn:Bool
-
     
     
     var body: some View {
@@ -96,9 +102,9 @@ struct Stories_Card_Cards: View {
 //        geo.size.width*0.18
         
 //        ZStack{
+             
+        ZStack(alignment: .top){
             
-        ZStack{
-           
                 Group{
                 AsyncImage(
                     url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(imageName.imageURL ?? "")" )! ),
@@ -108,8 +114,35 @@ struct Stories_Card_Cards: View {
                                     }
                                  )
                 }//.frame(width: width, height: BackageHight, alignment: .center).cornerRadius(10)
+                .onTapGesture {
+    //                     title=storyName
+    
+                    if imageName.isSubscribed ?? false{
+                    print(imageName.id)
+                    selectd_story_page_MenuID=imageName.id
+                    selectdMenuID=imageName.id
+                            print(imageName.storyQuestionsList)
+                        story_Questions_List=imageName.storyQuestionsList ?? []
+                        print(story_Questions_List)
+                        isSignIn=true
+                        PlayAppSound().AppPlayAppSound()
+                    }
+                    else{
+                        add_story_to_supscription(story_id:imageName.id)
+                    }
+                }
             
-            
+            HStack{
+                Spacer()
+                
+                Image(systemName:"headphones.circle.fill").resizable().backgroundFill(Color.red) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35)
+                    .onTapGesture {
+                        playSound()
+//                        add_story_to_favorit(story_id: selectd_story_page_MenuID)
+//                                isGoToFavoratePressed=true
+                        
+                    }
+            }
 //            Text(imageName.name!).frame(width: width-100, height: 60).background(Color.AppPrimaryColor).foregroundColor(Color.black).cornerRadius(10)
 //                .offset(y:-30).onTapGesture {
 ////                     title=storyName
@@ -118,24 +151,31 @@ struct Stories_Card_Cards: View {
 //                    selectdMenuID=imageName.id
 //                    isSignIn=true
 //                }
-            if BackageHight > 200{
-            ZStack{
-                Color.white.opacity(0.5)
-            VStack{
-                Text(imageName.name!).font(.system(size: 16, weight: .black, design: .rounded)).foregroundColor(.white)
-                .onTapGesture {
-//                     title=storyName
-                    print(imageName.id)
-                    selectd_story_page_MenuID=imageName.id
-                    selectdMenuID=imageName.id
-                    isSignIn=true
-                }.padding(10)
-                Spacer()
-                Text(" لايوجد تفصيل او مقدمة في هذه القصة")
-                Spacer()
-            }
-            }.frame(width: width*0.7, height:BackageHight*0.8).foregroundColor(Color.black).cornerRadius(10)
-            }
+//            if BackageHight > 200{
+//            ZStack{
+//                Color.white.opacity(0.5)
+//            VStack{
+//                Text(imageName.name!).font(.system(size: 16, weight: .black, design: .rounded)).foregroundColor(.white)
+//               .padding(10)
+//                Spacer()
+//                Text(" لايوجد تفصيل او مقدمة في هذه القصة")
+//                Spacer()
+//            }
+//            }.frame(width: width*0.7, height:BackageHight*0.8).foregroundColor(Color.black).cornerRadius(10)
+//            .onTapGesture {
+////                     title=storyName
+//
+//                if imageName.isSubscribed ?? false{
+//                print(imageName.id)
+//                selectd_story_page_MenuID=imageName.id
+//                selectdMenuID=imageName.id
+//                        print(imageName.storyQuestionsList)
+//                    story_Questions_List=imageName.storyQuestionsList ?? []
+//print(story_Questions_List)
+//                    isSignIn=true
+//                }
+//            }
+//            }
         }.frame(width: width, height: BackageHight).background(Color.white).cornerRadius(20)
        
             
@@ -143,6 +183,70 @@ struct Stories_Card_Cards: View {
 //        }
         
     }
+    
+    func add_story_to_supscription(story_id:Int){
+        
+        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id]
+        print( Connection().getUrl(word: "StorySubscribe"))
+        print(prams)
+        RestAPI().postData(endUrl: Connection().getUrl(word: "StorySubscribe"), parameters: prams){ result in
+           let sectionR = JSON(result!)
+            print(sectionR)
+//            if sectionR["responseCode"].int == 200{
+                selectd_story_page_MenuID=imageName.id
+                story_Questions_List = imageName.storyQuestionsList ?? []
+//                is_go_to_story_page=true
+                //////
+                selectdMenuID=imageName.id
+                        print(imageName.storyQuestionsList)
+                    story_Questions_List=imageName.storyQuestionsList ?? []
+                    print(story_Questions_List)
+                    isSignIn=true
+//            }
+        } onError: { error in
+            print(error)
+        }
+        
+    }
+    
+    func stopSound(){
+        if ((player?.isPlaying) != nil) {
+            player!.stop()
+        }
+    }
+    func playSound(){
+        if ((player?.isPlaying) != nil) {
+            stopSound()
+        }
+        let radioURL = "https://kayanapp.ibtikar-soft.sa/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3"
+        let urlstring = radioURL
+        let url = NSURL(string: urlstring)
+        print("the url = \(url!)")
+        downloadFileFromURL(url: url!)
+    }
+    func downloadFileFromURL(url:NSURL){
+
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url as URL, completionHandler: {(URL, response, error) -> Void in
+            self.play(url: URL as! NSURL)
+        })
+        downloadTask.resume()
+    }
+    func play(url:NSURL) {
+        print("playing \(url)")
+        do {
+            player = try AVAudioPlayer(contentsOf: url as URL)
+            player!.volume = 1.0
+            player!.play()
+        } catch let error as NSError {
+            //self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVAudioPlayer init failed")
+        }
+        
+    }
+//
 }
 
 struct RemoteImage: View {

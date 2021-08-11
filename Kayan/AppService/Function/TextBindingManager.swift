@@ -10,7 +10,7 @@ import Foundation
 class TextBindingManager: ObservableObject {
     
     
-   @Published var text = "" {
+   @Published var text = "0571816557" {
        didSet {
            if text.count > characterLimit && oldValue.count <= characterLimit {
                text = oldValue
@@ -20,7 +20,7 @@ class TextBindingManager: ObservableObject {
    }
    let characterLimit: Int
 
-   init(limit: Int = 9){
+   init(limit: Int = 10){
        characterLimit = limit
    }
 }

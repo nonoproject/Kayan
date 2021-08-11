@@ -192,7 +192,7 @@ struct Favorate: View {
 //                print(stories)
             }
         } onError: { error in
-            print(error)
+            print(error as Any)
         }
 
     }
