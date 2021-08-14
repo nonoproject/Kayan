@@ -9,12 +9,19 @@ import SwiftUI
 import SwiftyJSON
 struct SandalStoryV2View: View {
     @State var id:Int=0
+//    @StateObject var model = WebViewModel()
+    
     @State var selected_id=3
     @State var title:String=""
     var imageName=["quran","meditation","childrenStory"]
     var storyName=["قصص براعم","قصص الابطال","قصص القادة"]
     var storyAge=["5-3","8-6","9-12"]
     @State var is_go_to_story_page:Bool=false
+    @State var show_pay_modal:Bool=false
+//    @State var story_pay_url:String=""
+    
+    @State var add_story_to_supscription_binding:Bool=false
+    
     @Environment(\.presentationMode) var presentation
     var horizontalPaddig:CGFloat=30.0
     @Environment(\.presentationMode) var presentationModeEdit: Binding<PresentationMode>
@@ -31,6 +38,7 @@ struct SandalStoryV2View: View {
         GeometryReader{geo in
             
             ZStack{
+                
                 VStack( spacing: 0){
                     
                     Navbars(page_titel: title)
@@ -61,7 +69,18 @@ struct SandalStoryV2View: View {
                                 ZStack(alignment: .center){
                                     ForEach(0...stories.count-1,id:\.self){ index in
                                         VStack{
-                                            Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page).padding(.horizontal,30)
+//                                            if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
+////                                            HStack{
+////                                                Spacer()
+////                                                Image("Play_test_Sound").resizable().padding(5).frame(width: 32, height: 32)
+////                                                    //.background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180))
+////                                                    .onTapGesture {
+////
+//////                                                    view_story_to_supscription_binding=false
+////                                                }.offset(x: -5, y: -20)
+////                                            }
+//                                            }
+                                            Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page,add_story_to_supscription_binding:$add_story_to_supscription_binding).padding(.horizontal,30)
                                                 .contentShape(Rectangle())
                                                 .offset(x:BackagePosition[index])
                                                 .gesture(
@@ -89,7 +108,7 @@ struct SandalStoryV2View: View {
                                                             }).onEnded({ (value) in
                                                                 if value.translation.width < 0{
                                                                     if value.translation.width < -40 && self.CardIndecator+1 < BackagePosition.count{
-                                                                        moveLeft()
+                                                                        moveRight()
                                                                     }
                                                                     else{
                                                                         if self.CardIndecator-1 >= 0{
@@ -100,7 +119,7 @@ struct SandalStoryV2View: View {
                                                                 else if value.translation.width > 0{
                                                                     
                                                                     if value.translation.width > 40 &&  self.CardIndecator-1 >= 0 {
-                                                                        moveRight()
+                                                                        moveLeft()
                                                                     }
                                                                     else{
                                                                         if self.CardIndecator+1 < BackagePosition.count {
@@ -127,20 +146,20 @@ struct SandalStoryV2View: View {
 //                                                        )//.onTapGesture {
 //                                                            add_story_to_supscription(story_id:stories[index].id)
 //                                                        }
-                                                        Rectangle().fill(Color.orange).frame(width: 70, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft,.bottomRight]).overlay(
+                                                            Image("free_story").resizable().frame(width: 70, height: 50).overlay(
                                                     VStack{
                                                         Spacer()
-                                                        Text("مدفوع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
+                                                        Text("مدفوع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 12))
                                                         
-                                                        Text("$\(stories[index].subscribePrice!)").foregroundColor(.white).fontWeight(.bold).font(.system(size: 13))
+                                                        Text("$\(stories[index].subscribePrice!)").foregroundColor(.white).fontWeight(.bold).font(.system(size: 11))
                                                         Spacer()
-                                                    }
+                                                    }.padding()
                                                 )
                                                     }
                                                     }
                                                     else{
 //                                                        Spacer()
-                                                        Rectangle().fill(Color.green).cornerRadius(20, corners: [.bottomLeft,.bottomRight]).overlay(
+                                                        Image("payed_story").resizable().frame(width: 70, height: 50).overlay(
                                                     VStack{
                                                         Spacer()
                                                         Text("مجانية").foregroundColor(.white).fontWeight(.bold).font(.system(size: 12)).frame(width:50,height:10).padding(.top,3)
@@ -148,7 +167,7 @@ struct SandalStoryV2View: View {
                                                         Image(systemName:"gift").font(.system(size: 12, weight: .heavy)).foregroundColor(Color(#colorLiteral(red: 0.996468246, green: 0.6681806445, blue: 0.001119376859, alpha: 1))).frame(width:20,height:10).padding(.vertical,3)
                                                         Spacer()
                                                     }//.frame(width:50,height:34)
-                                                        ).frame(width:50,height:44)
+                                                        )
                                                     }
                                                 }.frame(width:170).offset(x:30,y:-kkkkk)
                                                 .opacity(kkkkkdsds)
@@ -157,10 +176,10 @@ struct SandalStoryV2View: View {
                                                     kkkkkdsds=0
                                                     kkkkk=0
 //                                                    kkkkkd=0
-                                                    withAnimation(.easeIn(duration: 2)) {
+                                                    withAnimation(.easeIn(duration: 0.5)) {
                                                         kkkkk+=8
                                                     }
-                                                    withAnimation(.easeIn(duration: 1.5)) {
+                                                    withAnimation(.easeIn(duration: 1)) {
                                                         kkkkkdsds=0.9
                                                     }
                                                 }
@@ -175,10 +194,41 @@ struct SandalStoryV2View: View {
                         
                     }
                 }
+            
+              if  add_story_to_supscription_binding && !show_pay_modal{
+                Pay_story(story: stories[CardIndecator], view_story_to_supscription_binding: $add_story_to_supscription_binding,show_pay_modal:$show_pay_modal)//,story_pay_url:$story_pay_url)
+//                Pay_story(view_story_to_supscription_binding:,story:)
+              }
+                if show_pay_modal{
+                    ZStack(alignment: .top){
+                        HStack{
+                        Image("close_button").resizable().padding(5).frame(width: 50, height: 40)
+                            //.background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180))
+                            .onTapGesture {
+                                                               
+                                show_pay_modal=false
+                        }.padding(.leading,5)
+                            Spacer()
+                        }.offset(x:63).zIndex(10)
+                        
+                        payment_WebView(request:URLRequest(url: URL(string:story_pay_url)!))
+                        
+                        .onTapGesture {
+                        self.hideKeyboard()
+            //
+                        }.frame(maxWidth:600)//.padding(.horizontal,80)
+                        
+                    }
+                }
             }.edgesIgnoringSafeArea(.all)
             .fullScreenCover(isPresented:  self.$is_go_to_story_page ){
                 StoryPage( audioRecorder: AudioRecorder(), page_story_id: selectd_story_page_MenuID,storyQuestionsList:story_Questions_List)//,storyQuestionsList:storyQuestionsList)
             }
+//            .fullScreenCover(isPresented:  self.$add_story_to_supscription_binding ){
+//                Rate(page_story_id:3)
+//                print(stories[CardIndecator])
+//                Pay_story(story:stories[CardIndecator])
+//            }
             
         }.onAppear{
             //            print(story_Questions_List ?? "")
@@ -204,7 +254,7 @@ struct SandalStoryV2View: View {
         }
         
     }
-    func moveLeft(){
+    func moveRight(){
         kkkkkdsds=0
 //        withAnimation(.easeIn(duration: 0.5)) {//1.5
             
@@ -226,7 +276,7 @@ struct SandalStoryV2View: View {
 //        }
         
     }
-    func moveRight(){
+    func moveLeft(){
         
         kkkkkdsds=0
 //        withAnimation(.easeIn(duration: 0.5)) {//1.5
@@ -266,6 +316,7 @@ struct SandalStoryV2View: View {
         //
     }
     
+    
     func GetStories(){
         //        https://kayanapp.ibtikar-soft.sa/api/Story/GetStories/2
         print( Connection().getUrl(word: "GetStories")+"\(selected_id)")
@@ -290,7 +341,7 @@ struct SandalStoryV2View: View {
                 BackageHight=Array(repeating:0, count: (menus.count))
                 
                 BackagePosition[CardIndecator]=0
-                BackageHight[CardIndecator]=UIScreen.screenHeight*0.6
+                BackageHight[CardIndecator]=UIScreen.screenHeight*0.5//UIScreen.screenHeight*0.6
                 
                 CardIndecator=0
                 
@@ -314,6 +365,7 @@ struct SandalStoryV2View: View {
         } onError: { error in
             print(error)
         }
-        
     }
+    
+    
 }

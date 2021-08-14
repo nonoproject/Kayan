@@ -264,7 +264,7 @@ struct StoryPage: View {
 //}
                             VStack(spacing:4){
                                 Spacer()
-                                if page_indecator != story_pages.count || story_Questions_List.count > 0{
+//                                if page_indecator != story_pages.count || story_Questions_List.count > 0{
                                     Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
                                         if page_indecator != story_pages.count{
                                         page_indecator += 1
@@ -280,6 +280,7 @@ struct StoryPage: View {
                                         showing_image = !showing_image
                                         }
                                         else{
+                                            stopSound()
                                             is_going_to_question=true
                                         }
 //                                        Load_data_from_DB()
@@ -290,7 +291,7 @@ struct StoryPage: View {
 
                                         Text("\(story_pages.count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
                                     }.frame(width: 40,height: 15).padding(.bottom,20)
-                            }
+//                            }
                         }.frame(width: 40,height: 15)
                         }.padding(.horizontal,10)//.padding(.bottom,20)
 
@@ -311,13 +312,15 @@ struct StoryPage: View {
             print(storyQuestionsList)
             restartAnimation()
 //            GetStoryPage()
+            print(page_story_id)
+//            print()
             
         }
         .alert(isPresented: self.$showsAlert) {
             Alert(title: Text(message))
         }
         .fullScreenCover(isPresented:  self.$is_going_to_question ){
-            QueestionPage(story_pages_count:story_pages.count).navigationBarTitle(Text("Home"))
+            QueestionPage(story_pages_count:story_pages.count,page_story_id:page_story_id).navigationBarTitle(Text("Home"))
                 .navigationBarHidden(true)
         }
     }

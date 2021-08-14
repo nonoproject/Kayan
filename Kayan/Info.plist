@@ -34,6 +34,10 @@
 		<string>Cairo-Regular.ttf</string>
 		<string>Jozoor Font.otf</string>
 	</array>
+    <key>UIStatusBarHidden</key>
+    <true/>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

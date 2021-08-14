@@ -18,6 +18,8 @@ class VarUserDefault{
     var spekerSound: String = "spekerSound"
 
     var isFirestTime: String = "isFirestTime"
+//    var story_pay_url: String = "story_pay_url"
+    
     func getGlobal(key:String) -> String{
         let preferences = UserDefaults.standard
         if preferences.object(forKey: key) != nil{

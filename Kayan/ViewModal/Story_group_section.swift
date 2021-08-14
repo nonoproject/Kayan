@@ -36,7 +36,7 @@ struct Story_group_section: View {
         
                 Group{
                     AsyncImage(
-                        url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(self.storyName.imageURL ?? "")" )! ),
+                        url: (URL(string:"\(AppBase)\(self.storyName.imageURL ?? "")" )! ),
                                         placeholder: { Image("kayan_logo").resizable()},
                                         image: { Image(uiImage: $0).resizable()//
 

@@ -9,10 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
+    
     var body: some View {
         
-//        SplashScreen()
-        SandalStoryV2View(id:3)
+        SplashScreen().edgesIgnoringSafeArea(.all)
+            .statusBar(hidden: true)
+//        SandalStoryV2View(id:3)
+        
+//        payment_WebView(webView: model.webView)
+//            Pay_story()
+//        Rate()
+        
 //        Image("Kyan_loader")
             
 //            .font(.custom("Sukar black", size: 28))

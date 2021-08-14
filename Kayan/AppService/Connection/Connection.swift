@@ -41,6 +41,10 @@ class Connection:NSData
         case "GetClibs":
             link = baseUrl+"Story/GetClibs/"
             break
+        case "Rate":
+            link = baseUrl+"Story/Rate"
+            break
+            
             
         case "GetStoryCatogries":
             link = baseUrl+"Story/GetStoryCatogries/\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))"

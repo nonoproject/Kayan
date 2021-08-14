@@ -21,8 +21,11 @@ struct StroryModal : Identifiable, Decodable ,Hashable{
    let updateAt: String?
    let storyPages: [String]?
     var x:CGFloat=0
+    
+    let rate: Double?
    enum CodingKeys: String, CodingKey {
        case id, name
+    case rate
        case imageURL = "imageUrl"
        case subscribePrice,isSubscribed,storyQuestionsList, isPaid, storyCatogryID, storyCatogry, createAt, updateAt, storyPages
    }

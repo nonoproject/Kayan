@@ -10,6 +10,7 @@ import SwiftyJSON
 import SwiftUIX
 import Combine
 struct Home: View {
+    
     var imageName=["quran","meditation","childrenStory"]
     var storyName=["تلاوة قرآنية","مقاطع إسترخاء","قصص"]
     @State var isSignIn = false
@@ -17,14 +18,17 @@ struct Home: View {
     @State var menue:[MenueModal]=[]
     @State var selectdMenuID:Int = 0
     var body: some View {
+        NavigationView{
+            GeometryReader{geo in
+                
+                    NavigationLink(destination: StoriesSection(id: selectdMenuID, section_title: title).navigationBarTitle(Text("Home"))
+                            .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
+
         VStack{
 //            NavigationLink(destination: Stories(id: 2, title: title), isActive: self.$isSignIn)
         if menue.count > 0 {
-        NavigationView{
-            NavigationLink(destination: StoriesSection(id: selectdMenuID, section_title: title).navigationBarTitle(Text("Home"))
-                    .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
-
-        GeometryReader{geo in
+        
+        
             
                 
                 ZStack{
@@ -36,26 +40,30 @@ struct Home: View {
                 
                     Navbars(isHome:true,page_titel: "كيان")
                 Spacer()
-                ScrollView(.horizontal) {
+                        ScrollView(.horizontal,showsIndicators:false) {
             HStack(spacing:45){
                 ForEach(0...menue.count-1,id:\.self){ index in
-                    StoriesCards(imageName:imageName[index],storyName:menue[index].name, storyID: menue[index].id,width: geo.size.width*0.25,title: $title, selectdMenuID: $selectdMenuID, isSignIn: $isSignIn,isStory:false)
+                    StoriesCards(imageName:imageName[index],storyName:menue[index].name, storyID: menue[index].id,width: geo.size.width*0.4,title: $title, selectdMenuID: $selectdMenuID, isSignIn: $isSignIn,isStory:false)
                 }
                 }//.flipsForRightToLeftLayoutDirection(true)
                 .environment(\.layoutDirection, .rightToLeft)
-            }.padding(20)
+                        }.padding(20)
                 Spacer()
         }
             
-        }.edgesIgnoringSafeArea(.all)// .fullScreenCover(isPresented: self.$isSignIn, content: {
+        }//.edgesIgnoringSafeArea(.all)// .fullScreenCover(isPresented: self.$isSignIn, content: {
 //            Stories(id: 2, title: title)
 //        })
-        }.navigationBarTitle(Text("Home"))
-        .navigationBarHidden(true)
         }
+        }//.environment(\.horizontalSizeClass, .compact).edgesIgnoringSafeArea(.all)
             
+        }.navigationBarTitle(Text("Home"))
+            .navigationBarHidden(true)
         }
-        }.onAppear{
+        .environment(\.horizontalSizeClass, .compact)
+        .edgesIgnoringSafeArea(.all)
+        
+        .onAppear{
             getSection()
             }
 //            else{

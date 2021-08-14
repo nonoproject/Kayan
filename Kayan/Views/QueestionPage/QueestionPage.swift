@@ -12,12 +12,15 @@ struct QueestionPage: View {
     @State private var is_go_to_Home:Bool = false
     @State var story_pages_count:Int=5
     @State private var showing_alert = false
+    @State private var show_rate = false
+    
     @State private var alert_message = ""
     @State private var is_go_to_Gift = false
     
     
     @State private var showShareSheet = false
         
+    @State var page_story_id:Int
     var body: some View {
 //        VStack{
         
@@ -29,7 +32,7 @@ struct QueestionPage: View {
 //                        .navigationBarHidden(true)//.edgesIgnoringSafeArea(.all)
 //                }
 //                else{
-            Image("head").resizable()
+            Image("head").resizable().padding(.horizontal,60)
             HStack{
                 VStack{
                     NavigationLink(
@@ -60,44 +63,48 @@ struct QueestionPage: View {
                 }.padding(.horizontal,8)
                 
                 Spacer()
-                VStack{
-                    VStack(spacing:0){
-                        HStack(spacing:90){
-                        
-                        Rectangle().fill(Color.AppPrimaryColor).frame(width:3,height: 12)
-                        
-                        Rectangle().fill(Color.AppPrimaryColor).frame(width:2,height: 12)
-                            
-                    }.frame(width: 220)
-                        Rectangle().fill(Color.AppPrimaryColor).frame(width: 220,height: 70).overlay(
-                            VStack{
-                                Text("لنفكر معا")
-                            }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
-                        ).cornerRadius(10)
-//                        Spacer()
-                    }
-                    ZStack{
-                        Rectangle().fill(Color.AppPrimaryColor)
-                        VStack(alignment:.trailing, spacing:20){
-                            ScrollView(.vertical, showsIndicators: false) {
-                                ForEach(story_Questions_List,id:\.self){ x in
-                                    HStack{
-                                        Spacer()
-                                        Text(x.questionText)
-                                        Text("\(x.id)")
-                                    }.padding(15)
+                        VStack{
+                            if story_Questions_List.count > 0{
+                            VStack(spacing:0){
+                                HStack(spacing:90){
+                                
+                                Rectangle().fill(Color.AppPrimaryColor).frame(width:3,height: 12)
+                                
+                                Rectangle().fill(Color.AppPrimaryColor).frame(width:2,height: 12)
                                     
-                                }
+                            }.frame(width: 220)
+                                Rectangle().fill(Color.AppPrimaryColor).frame(width: 220,height: 70).overlay(
+                                    VStack{
+                                        Text(story_Questions_List.count > 0 ? "لنفكر معا" : "إستمتع معنا")
+                                    }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
+                                ).cornerRadius(10)
+        //                        Spacer()
                             }
-//                            Spacer()
-                        }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
-                    }
-                    .frame(width: UIScreen.screenWidth*0.6)
-                    .cornerRadius(10)
-                    
-                    
-                    Spacer()
-                }
+                            
+                            ZStack{
+                                Rectangle().fill(Color.AppPrimaryColor)
+                                VStack(alignment:.trailing, spacing:20){
+                                    ScrollView(.vertical, showsIndicators: false) {
+                                        ForEach(story_Questions_List,id:\.self){ x in
+                                            HStack{
+                                                Spacer()
+                                                Text(x.questionText)
+                                                Text("\(x.id)")
+                                            }.padding(15)
+                                            
+                                        }
+                                    }
+        //                            Spacer()
+                                }.foregroundColor(.brown).font(.system(size: 17), weight: .heavy)
+                            }
+                            .frame(width: UIScreen.screenWidth*0.6)
+                            .cornerRadius(10)
+                            
+                            
+                            
+                            }
+                            Spacer()
+                        }
                 Spacer()
                 VStack{
                     Spacer()
@@ -116,7 +123,12 @@ struct QueestionPage: View {
                             }
                     }.frame(height: 42).padding(.horizontal,10)
                     HStack{
-                        Spacer()
+                        Image("rate").resizable()//.backgroundFill(Color.black)
+                            //.clipShape(Circle()).foregroundColor(.white)
+                            .frame(width: 35, height:35).onTapGesture {
+                            self.show_rate = true
+                        }
+                        
                         Image(systemName:"arrowshape.turn.up.right.circle.fill").resizable().backgroundFill(Color.black) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35).onTapGesture {
                             self.showShareSheet = true
                         }
@@ -154,6 +166,9 @@ struct QueestionPage: View {
 //    }
         .fullScreenCover(isPresented: self.$is_go_to_Gift){
             Gift()
+        }
+        .fullScreenCover(isPresented: self.$show_rate){
+            Rate(page_story_id: page_story_id)
         }
 //
         }.navigationBarTitle(Text("Home"))

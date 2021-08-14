@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView().font(.custom("Cairo-Black", size: 16))
+        let contentView = ContentView().font(.custom("Cairo-Black", size: 16)).edgesIgnoringSafeArea(.all)
+            .statusBar(hidden: true)
 //            .onTapGesture {
 //                self.hideKeyboard()
 //
@@ -29,10 +30,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
+            
+//            window.windowStyle(HiddenTitleBarWindowStyle())
             window.makeKeyAndVisible()
+            
         }
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

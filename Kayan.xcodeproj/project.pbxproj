@@ -59,6 +59,8 @@
 		FA4BB6C7265EB59A0064419A /* ClibModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C6265EB59A0064419A /* ClibModal.swift */; };
 		FA4BB6C9265EB7110064419A /* clips_group_section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C8265EB7110064419A /* clips_group_section.swift */; };
 		FA4BB6CC265EB9C00064419A /* Play_Relacsation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6CB265EB9C00064419A /* Play_Relacsation.swift */; };
+		FA4F549E26C53BA200E48AB6 /* payment_WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4F549D26C53BA200E48AB6 /* payment_WebView.swift */; };
+		FA4F54A026C53BC000E48AB6 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4F549F26C53BC000E48AB6 /* WebViewModel.swift */; };
 		FA56296D26C16F6B00291727 /* Kyan.gif in Resources */ = {isa = PBXBuildFile; fileRef = FA56296C26C16F6B00291727 /* Kyan.gif */; };
 		FA56296F26C1736300291727 /* LoadinIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA56296E26C1736300291727 /* LoadinIndicator.swift */; };
 		FA83A73226564B69002F814E /* SamopleRecourding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73126564B69002F814E /* SamopleRecourding.swift */; };
@@ -77,6 +79,9 @@
 		FAC5EEE126848C4300BF39E1 /* StoryViewV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5EEE026848C4300BF39E1 /* StoryViewV4.swift */; };
 		FAD34F5726764C1A006C73C7 /* IntroVedio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD34F5626764C1A006C73C7 /* IntroVedio.swift */; };
 		FADD264C264752580060BA3D /* MenueModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD264B264752580060BA3D /* MenueModal.swift */; };
+		FADE881A26C3BBEA00536ED3 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE881926C3BBEA00536ED3 /* Rate.swift */; };
+		FADE881C26C3C38500536ED3 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE881B26C3C38500536ED3 /* RatingView.swift */; };
+		FADE881F26C4080B00536ED3 /* Pay_story.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE881E26C4080B00536ED3 /* Pay_story.swift */; };
 		FAE819DF26678E4B0035C01D /* ScreenEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE819DE26678E4B0035C01D /* ScreenEx.swift */; };
 		FAE81A1A2667BC1F0035C01D /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE81A192667BC1F0035C01D /* ResetPassword.swift */; };
 		FAE81A1C2667C5BF0035C01D /* ValidationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE81A1B2667C5BF0035C01D /* ValidationMessage.swift */; };
@@ -144,6 +149,8 @@
 		FA4BB6C6265EB59A0064419A /* ClibModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClibModal.swift; sourceTree = "<group>"; };
 		FA4BB6C8265EB7110064419A /* clips_group_section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clips_group_section.swift; sourceTree = "<group>"; };
 		FA4BB6CB265EB9C00064419A /* Play_Relacsation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play_Relacsation.swift; sourceTree = "<group>"; };
+		FA4F549D26C53BA200E48AB6 /* payment_WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = payment_WebView.swift; sourceTree = "<group>"; };
+		FA4F549F26C53BC000E48AB6 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		FA56296C26C16F6B00291727 /* Kyan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = Kyan.gif; path = Assets.xcassets/Logos/Kayan_loader/Kyan_loader.dataset/Kyan.gif; sourceTree = "<group>"; };
 		FA56296E26C1736300291727 /* LoadinIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadinIndicator.swift; sourceTree = "<group>"; };
 		FA83A73126564B69002F814E /* SamopleRecourding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamopleRecourding.swift; sourceTree = "<group>"; };
@@ -162,6 +169,9 @@
 		FAC5EEE026848C4300BF39E1 /* StoryViewV4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewV4.swift; sourceTree = "<group>"; };
 		FAD34F5626764C1A006C73C7 /* IntroVedio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVedio.swift; sourceTree = "<group>"; };
 		FADD264B264752580060BA3D /* MenueModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenueModal.swift; sourceTree = "<group>"; };
+		FADE881926C3BBEA00536ED3 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
+		FADE881B26C3C38500536ED3 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		FADE881E26C4080B00536ED3 /* Pay_story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pay_story.swift; sourceTree = "<group>"; };
 		FAE819DE26678E4B0035C01D /* ScreenEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenEx.swift; sourceTree = "<group>"; };
 		FAE81A192667BC1F0035C01D /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
 		FAE81A1B2667C5BF0035C01D /* ValidationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationMessage.swift; sourceTree = "<group>"; };
@@ -235,6 +245,7 @@
 				FA2C630E265D310F00EE341D /* VaforaiteCard.swift */,
 				FA4BB6C4265E88580064419A /* Story_group_section.swift */,
 				FA4BB6C8265EB7110064419A /* clips_group_section.swift */,
+				FADE881B26C3C38500536ED3 /* RatingView.swift */,
 			);
 			path = ViewModal;
 			sourceTree = "<group>";
@@ -315,6 +326,7 @@
 		B1713F2D2611C6BD00BCCCEE /* Kayan */ = {
 			isa = PBXGroup;
 			children = (
+				FA4F549C26C53B8800E48AB6 /* payment_WebView */,
 				FAAD330626C2879C00BCE7AA /* kayan_gif.gif */,
 				FA56296C26C16F6B00291727 /* Kyan.gif */,
 				FA01781026820FB6001D6873 /* Fonts */,
@@ -348,6 +360,8 @@
 		B1713F46261228F600BCCCEE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FADE881D26C407F800536ED3 /* Pay_story */,
+				FADE881826C3BBD700536ED3 /* Rate */,
 				FA0E93D0267F94FB0075DCA4 /* Test_views */,
 				FAB555172666684B00B5DACD /* setting_And_profile */,
 				FA4218CB2663C052001FEA19 /* QueestionPage */,
@@ -504,6 +518,15 @@
 			path = Relacsation;
 			sourceTree = "<group>";
 		};
+		FA4F549C26C53B8800E48AB6 /* payment_WebView */ = {
+			isa = PBXGroup;
+			children = (
+				FA4F549D26C53BA200E48AB6 /* payment_WebView.swift */,
+				FA4F549F26C53BC000E48AB6 /* WebViewModel.swift */,
+			);
+			path = payment_WebView;
+			sourceTree = "<group>";
+		};
 		FA83A73026564AF6002F814E /* SoundRecording */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +560,22 @@
 				FAB56378265A8CBE009C7D55 /* stories_table.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		FADE881826C3BBD700536ED3 /* Rate */ = {
+			isa = PBXGroup;
+			children = (
+				FADE881926C3BBEA00536ED3 /* Rate.swift */,
+			);
+			path = Rate;
+			sourceTree = "<group>";
+		};
+		FADE881D26C407F800536ED3 /* Pay_story */ = {
+			isa = PBXGroup;
+			children = (
+				FADE881E26C4080B00536ED3 /* Pay_story.swift */,
+			);
+			path = Pay_story;
 			sourceTree = "<group>";
 		};
 		FAEDF909263B389400D9593F /* Modal */ = {
@@ -744,6 +783,7 @@
 				FA2411112656581C0072B741 /* ImageCacheKey.swift in Sources */,
 				B1811D3426130E4E0021E0A0 /* SignIn.swift in Sources */,
 				B1713F2F2611C6BD00BCCCEE /* AppDelegate.swift in Sources */,
+				FADE881C26C3C38500536ED3 /* RatingView.swift in Sources */,
 				FA308A762634D8230055DF88 /* ForgetPassword.swift in Sources */,
 				FA9AD0702659339700E9A221 /* Story_Page_Modal.swift in Sources */,
 				FAF41168263F63730056EF70 /* HideKeyboard.swift in Sources */,
@@ -759,6 +799,7 @@
 				B1713F312611C6BD00BCCCEE /* SceneDelegate.swift in Sources */,
 				FA24110F2656573D0072B741 /* TemporaryImageCache.swift in Sources */,
 				B145D56C26148B8F00FAFAA1 /* StoriesSection.swift in Sources */,
+				FA4F54A026C53BC000E48AB6 /* WebViewModel.swift in Sources */,
 				FAF8829B26776F8900C492FC /* ShareSheet.swift in Sources */,
 				B1678AED2615F73D001B0A9C /* SignUp.swift in Sources */,
 				FAE81A1C2667C5BF0035C01D /* ValidationMessage.swift in Sources */,
@@ -779,9 +820,11 @@
 				FA83A73426564BB1002F814E /* AudioRecorder.swift in Sources */,
 				FA83A73626564C08002F814E /* DateExtention.swift in Sources */,
 				FAEDF90B263B38B300D9593F /* UserSignUp.swift in Sources */,
+				FADE881F26C4080B00536ED3 /* Pay_story.swift in Sources */,
 				FA56296F26C1736300291727 /* LoadinIndicator.swift in Sources */,
 				FA83A73D26564D07002F814E /* RecordingsList.swift in Sources */,
 				FA118C622688B50700DCFCD6 /* customFount.swift in Sources */,
+				FADE881A26C3BBEA00536ED3 /* Rate.swift in Sources */,
 				FA0220E32638D29D0088C93A /* VarUserDefault.swift in Sources */,
 				B1596A842612F4DD00D06B1A /* StoriesCards.swift in Sources */,
 				B1678AE02615A96D001B0A9C /* Navbars.swift in Sources */,
@@ -798,6 +841,7 @@
 				FA963A4F267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift in Sources */,
 				B1596A882612F72000D06B1A /* Home.swift in Sources */,
 				B15B0AF6261B161C009A591C /* Gift.swift in Sources */,
+				FA4F549E26C53BA200E48AB6 /* payment_WebView.swift in Sources */,
 				FA24110D265657070072B741 /* ImageLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -953,7 +997,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -978,7 +1022,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

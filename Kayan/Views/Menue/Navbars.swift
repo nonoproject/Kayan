@@ -41,7 +41,8 @@ struct Navbars: View {
            if !isHome {
             
             NavigationLink(destination: x_view_to_move.navigationBarTitle(Text("Home"))
-                    .navigationBarHidden(true), isActive: self.$isBackPressed) {}.hidden()
+                           
+                    .navigationBarHidden(true).statusBar(hidden: true), isActive: self.$isBackPressed) {}.hidden()
 
                 Image("home").resizable().frame(width: 46, height: 46).onTapGesture {
 //                                        self.presentationMode.wrappedValue.dismiss()

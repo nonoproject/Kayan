@@ -65,6 +65,9 @@ struct StoriesSection: View {
                     )
                 }.padding(.vertical,5)
                         if stories.count > 0 {
+                            VStack{
+                                Spacer()
+                                
                             HStack{
                                 ScrollView(.horizontal, showsIndicators: false){
                                 HStack(spacing:45){
@@ -77,6 +80,9 @@ struct StoriesSection: View {
                                 }.padding(20)
                                 }
                 }//.padding(.horizontal,30)
+                                
+                                Spacer()
+                            }
     //                        }
                         }
                        else if clibs.count > 0{
@@ -129,7 +135,7 @@ struct StoriesSection: View {
                 }
                 
     //        }
-            }.environment(\.horizontalSizeClass, .compact)
+            }//.environment(\.horizontalSizeClass, .compact)
         }
             
         }.edgesIgnoringSafeArea(.all)

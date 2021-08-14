@@ -68,6 +68,8 @@ struct SignIn: View {
                         Spacer()
                     }
                 }
+                VStack{
+                Spacer()
             HStack{
 //            VStack{
 //                Image("fllower").resizable().frame(width: 189,height: 189)
@@ -75,10 +77,10 @@ struct SignIn: View {
 //            }
                 Spacer()
                 VStack{
-                    Spacer()
+//                    Spacer()
                     
                     VStack{
-                        Spacer()
+//                        Spacer()
                         HStack{
                             TextField("05xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
                                 .textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
@@ -124,14 +126,14 @@ struct SignIn: View {
                             })
                             
                         }
-                        Spacer()
+//                        Spacer()
                     }.frame(width:370,height: 250).padding(.bottom,30)
 //                    Spacer()
                 }
                 Spacer()
                 Image("kayanSide").resizable().frame(width: 220,height: geo.size.height)
             }
-            
+                Spacer()
                 if view_loading{
                     ZStack{
                         Color.Appliver
@@ -141,6 +143,8 @@ struct SignIn: View {
                     }.edgesIgnoringSafeArea(.all)
                 
             }
+                }
+                
         }.edgesIgnoringSafeArea(.all)
     }.alert(isPresented: self.$showsAlert) {
         Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )
@@ -230,12 +234,3 @@ struct SignIn: View {
     }
 }
 
-extension View {
-    func phoneOnlyStackNavigationView() -> some View {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return AnyView(self.navigationViewStyle(StackNavigationViewStyle()))
-        } else {
-            return AnyView(self)
-        }
-    }
-}

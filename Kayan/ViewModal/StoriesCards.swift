@@ -96,7 +96,7 @@ struct Stories_Card_Cards: View {
     
     @Binding var isSignIn:Bool
     
-    
+    @Binding var add_story_to_supscription_binding:Bool
     var body: some View {
 //        geo.size.width*0.25
 //        geo.size.width*0.18
@@ -107,7 +107,7 @@ struct Stories_Card_Cards: View {
             
                 Group{
                 AsyncImage(
-                    url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(imageName.imageURL ?? "")" )! ),
+                    url: (URL(string:"\(AppBase)\(imageName.imageURL ?? "")" )! ),
                                     placeholder: { Image("kayan_logo")},
                                     image: { Image(uiImage: $0).resizable()//
                                         
@@ -116,8 +116,8 @@ struct Stories_Card_Cards: View {
                 }//.frame(width: width, height: BackageHight, alignment: .center).cornerRadius(10)
                 .onTapGesture {
     //                     title=storyName
-    
-                    if imageName.isSubscribed ?? false{
+//                    if imageName.isPaid ?? false{
+                    if !imageName.isPaid! || ( imageName.isPaid! && imageName.isSubscribed!) {
                     print(imageName.id)
                     selectd_story_page_MenuID=imageName.id
                     selectdMenuID=imageName.id
@@ -128,8 +128,10 @@ struct Stories_Card_Cards: View {
                         PlayAppSound().AppPlayAppSound()
                     }
                     else{
-                        add_story_to_supscription(story_id:imageName.id)
+                        
+                        add_story_to_supscription_binding = true //(story_id:imageName.id)
                     }
+//                    }
                 }
             
             HStack{
@@ -184,31 +186,7 @@ struct Stories_Card_Cards: View {
         
     }
     
-    func add_story_to_supscription(story_id:Int){
-        
-        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id]
-        print( Connection().getUrl(word: "StorySubscribe"))
-        print(prams)
-        RestAPI().postData(endUrl: Connection().getUrl(word: "StorySubscribe"), parameters: prams){ result in
-           let sectionR = JSON(result!)
-            print(sectionR)
-//            if sectionR["responseCode"].int == 200{
-                selectd_story_page_MenuID=imageName.id
-                story_Questions_List = imageName.storyQuestionsList ?? []
-//                is_go_to_story_page=true
-                //////
-                selectdMenuID=imageName.id
-                        print(imageName.storyQuestionsList)
-                    story_Questions_List=imageName.storyQuestionsList ?? []
-                    print(story_Questions_List)
-                    isSignIn=true
-//            }
-        } onError: { error in
-            print(error)
-        }
-        
-    }
-    
+   
     func stopSound(){
         if ((player?.isPlaying) != nil) {
             player!.stop()
@@ -218,7 +196,7 @@ struct Stories_Card_Cards: View {
         if ((player?.isPlaying) != nil) {
             stopSound()
         }
-        let radioURL = "https://kayanapp.ibtikar-soft.sa/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3"
+        let radioURL = "\(AppBase)/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3"
         let urlstring = radioURL
         let url = NSURL(string: urlstring)
         print("the url = \(url!)")
