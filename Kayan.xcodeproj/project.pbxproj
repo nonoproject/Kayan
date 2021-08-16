@@ -50,10 +50,12 @@
 		FA241113265664CE0072B741 /* StroryModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA241112265664CE0072B741 /* StroryModal.swift */; };
 		FA241115265665CF0072B741 /* StoryCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA241114265665CF0072B741 /* StoryCards.swift */; };
 		FA2411172656680A0072B741 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2411162656680A0072B741 /* Stories.swift */; };
+		FA27594E26CA6020002C2F7A /* SignalRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27594D26CA6020002C2F7A /* SignalRService.swift */; };
 		FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630C265D2AA000EE341D /* Favorate.swift */; };
 		FA2C630F265D310F00EE341D /* VaforaiteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630E265D310F00EE341D /* VaforaiteCard.swift */; };
 		FA308A762634D8230055DF88 /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A752634D8230055DF88 /* ForgetPassword.swift */; };
 		FA308A792634DBD40055DF88 /* VarificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A782634DBD40055DF88 /* VarificationCode.swift */; };
+		FA31376C26C8FCC1007E690C /* StoriesTail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31376B26C8FCC1007E690C /* StoriesTail.swift */; };
 		FA4218CD2663C077001FEA19 /* QueestionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4218CC2663C077001FEA19 /* QueestionPage.swift */; };
 		FA4BB6C5265E88580064419A /* Story_group_section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C4265E88580064419A /* Story_group_section.swift */; };
 		FA4BB6C7265EB59A0064419A /* ClibModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4BB6C6265EB59A0064419A /* ClibModal.swift */; };
@@ -140,10 +142,12 @@
 		FA241112265664CE0072B741 /* StroryModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StroryModal.swift; sourceTree = "<group>"; };
 		FA241114265665CF0072B741 /* StoryCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCards.swift; sourceTree = "<group>"; };
 		FA2411162656680A0072B741 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
+		FA27594D26CA6020002C2F7A /* SignalRService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRService.swift; sourceTree = "<group>"; };
 		FA2C630C265D2AA000EE341D /* Favorate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorate.swift; sourceTree = "<group>"; };
 		FA2C630E265D310F00EE341D /* VaforaiteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaforaiteCard.swift; sourceTree = "<group>"; };
 		FA308A752634D8230055DF88 /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
 		FA308A782634DBD40055DF88 /* VarificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarificationCode.swift; sourceTree = "<group>"; };
+		FA31376B26C8FCC1007E690C /* StoriesTail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesTail.swift; sourceTree = "<group>"; };
 		FA4218CC2663C077001FEA19 /* QueestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueestionPage.swift; sourceTree = "<group>"; };
 		FA4BB6C4265E88580064419A /* Story_group_section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story_group_section.swift; sourceTree = "<group>"; };
 		FA4BB6C6265EB59A0064419A /* ClibModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClibModal.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 		B1596A802612F31D00D06B1A /* AppService */ = {
 			isa = PBXGroup;
 			children = (
+				FA27594C26CA6018002C2F7A /* SignalR */,
 				FAF8829926776F7100C492FC /* shareSheet */,
 				FA241109265656BB0072B741 /* DownloadImage */,
 				FA0220E12638D2890088C93A /* UserDefault */,
@@ -287,6 +292,7 @@
 		B1678AE72615B404001B0A9C /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				FA31376D26C8FEE6007E690C /* Enum */,
 				FA118C602688B4EF00DCFCD6 /* Founts */,
 				FAF41166263F63610056EF70 /* Views */,
 				B1678AEF261604F1001B0A9C /* Color */,
@@ -463,6 +469,7 @@
 				FA1185A2267E465C00359713 /* SandalStoryV2View.swift */,
 				FA0E93D1267F951D0075DCA4 /* TestViewsSandaScroolV3.swift */,
 				FAC5EEE026848C4300BF39E1 /* StoryViewV4.swift */,
+				FA31376B26C8FCC1007E690C /* StoriesTail.swift */,
 			);
 			path = Test_views;
 			sourceTree = "<group>";
@@ -494,12 +501,27 @@
 			path = DownloadImage;
 			sourceTree = "<group>";
 		};
+		FA27594C26CA6018002C2F7A /* SignalR */ = {
+			isa = PBXGroup;
+			children = (
+				FA27594D26CA6020002C2F7A /* SignalRService.swift */,
+			);
+			path = SignalR;
+			sourceTree = "<group>";
+		};
 		FA2C630B265D2A7900EE341D /* Favorate */ = {
 			isa = PBXGroup;
 			children = (
 				FA2C630C265D2AA000EE341D /* Favorate.swift */,
 			);
 			path = Favorate;
+			sourceTree = "<group>";
+		};
+		FA31376D26C8FEE6007E690C /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		FA4218CB2663C052001FEA19 /* QueestionPage */ = {
@@ -800,11 +822,13 @@
 				FA24110F2656573D0072B741 /* TemporaryImageCache.swift in Sources */,
 				B145D56C26148B8F00FAFAA1 /* StoriesSection.swift in Sources */,
 				FA4F54A026C53BC000E48AB6 /* WebViewModel.swift in Sources */,
+				FA27594E26CA6020002C2F7A /* SignalRService.swift in Sources */,
 				FAF8829B26776F8900C492FC /* ShareSheet.swift in Sources */,
 				B1678AED2615F73D001B0A9C /* SignUp.swift in Sources */,
 				FAE81A1C2667C5BF0035C01D /* ValidationMessage.swift in Sources */,
 				FA1185A1267E409500359713 /* TestCarusel.swift in Sources */,
 				FA241113265664CE0072B741 /* StroryModal.swift in Sources */,
+				FA31376C26C8FCC1007E690C /* StoriesTail.swift in Sources */,
 				FAD34F5726764C1A006C73C7 /* IntroVedio.swift in Sources */,
 				FA83A73F26564DB2002F814E /* AudioPlayer.swift in Sources */,
 				FA4BB6CC265EB9C00064419A /* Play_Relacsation.swift in Sources */,

@@ -137,7 +137,7 @@ struct Pay_story: View {
 }
     func add_story_to_supscription(story_id:Int){
         
-        let prams = ["CustomerID":3///VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
+        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
                      ,"StoryID":story_id]
         print( Connection().getUrl(word: "StorySubscribe"))
         print(prams)

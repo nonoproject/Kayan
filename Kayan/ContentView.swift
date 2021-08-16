@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         
         SplashScreen().edgesIgnoringSafeArea(.all)
-            .statusBar(hidden: true)
+//            .statusBar(hidden: true)
 //        SandalStoryV2View(id:3)
         
 //        payment_WebView(webView: model.webView)
@@ -31,6 +31,7 @@ struct ContentView: View {
 //        SnapCarousel().environmentObject(UIStateModel())
 //        TestCarusel()
 //        if !isLogin{
+//        Home(selectdMenuID:3)
 //
 //            SignIn()
 ////                .background(Color.red)
@@ -65,6 +66,14 @@ struct ContentView: View {
             self.hideKeyboard()
 //
           } // aproved pay Ayman
+            .onAppear{
+
+//                    var bgTask = UIBackgroundTaskIdentifier(rawValue: 1)
+//                                    UIApplication.shared.beginBackgroundTask { () -> Void in
+SignalRService(url:  URL(string: "\(AppBase)/NotificationHub?customerId=\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")!)
+                print("\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")
+                
+                }
 ////        SignUp() // aproved pay Ayman
 ////            AccountSetting() // aproved pay Ayman
 ////    ForgetPassword()

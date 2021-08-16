@@ -8,7 +8,10 @@
 import SwiftUI
 import SwiftyJSON
 struct SandalStoryV2View: View {
+    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
+    @State var timeRemaining = -1
     @State var id:Int=0
+    @State var ther_are_no_data = false
 //    @StateObject var model = WebViewModel()
     
     @State var selected_id=3
@@ -31,9 +34,10 @@ struct SandalStoryV2View: View {
     @State  var BackageHight:[CGFloat]=[]
     @State private var CardIndecator=0//max number of item
     //    @State  var storyQuestionsList:[storyQuestionsList]=[]
-    
-    @State var kkkkkdsds:Double=0
-    @State var kkkkk:CGFloat=0
+//    @ObservedObject var allMessages =  SignalRService(url:  URL(string: "\(AppBase)/NotificationHub?customerId=\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")!)
+
+//    @State var kkkkkdsds:Double=0
+//    @State var kkkkk:CGFloat=0
     var body: some View {
         GeometryReader{geo in
             
@@ -59,27 +63,43 @@ struct SandalStoryV2View: View {
                                         HStack{
                                             Spacer()
                                             Text("قريبا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
+                                                .onReceive(timer) { _ in
+                                                            if self.timeRemaining < 0 {
+                                                                // We don't need it when we start off
+                                                                self.timer.upstream.connect().cancel()
+                                                                return
+                                                            }
+                                                            if self.timeRemaining > 0 {
+                                                                if is_payment_success{
+                                                                    resetViewData()
+                                                                    self.timer.upstream.connect().cancel()
+                                                                    
+                                                                }
+                                                                else{
+                                                                    self.timeRemaining -= 1
+                                                                }
+                                                                
+                                                            } else {
+                                                                timeRemaining = 30
+//                                                                self.timer.upstream.connect().cancel()
+                                                                self.timer = Timer.publish (every: 1, on: .current, in:
+                                                                    .common).autoconnect()
+                                                                // Do the action on end of timer. Text would have been hidden by now
+                                                            }
+                                                      }
                                             Spacer()
                                         }
                                     )
                                 }.padding(.top,20)
                             
                                 Spacer()
+                            
+                            
+                                    
                             if stories.count > 0 {
                                 ZStack(alignment: .center){
                                     ForEach(0...stories.count-1,id:\.self){ index in
                                         VStack{
-//                                            if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
-////                                            HStack{
-////                                                Spacer()
-////                                                Image("Play_test_Sound").resizable().padding(5).frame(width: 32, height: 32)
-////                                                    //.background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180))
-////                                                    .onTapGesture {
-////
-//////                                                    view_story_to_supscription_binding=false
-////                                                }.offset(x: -5, y: -20)
-////                                            }
-//                                            }
                                             Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page,add_story_to_supscription_binding:$add_story_to_supscription_binding).padding(.horizontal,30)
                                                 .contentShape(Rectangle())
                                                 .offset(x:BackagePosition[index])
@@ -132,57 +152,9 @@ struct SandalStoryV2View: View {
                                                     
                                                 )
                                             if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
-                                                HStack(spacing:10){
-                                               Spacer()
-                                                    if stories[index].isPaid!{
-                                                        if !stories[index].isSubscribed!{
-//                                                        Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.bottomLeft, .bottomRight]).overlay(
-//                                                            HStack{
-//                                                                Spacer()
-//                                                                Text("شراء الأن").foregroundColor(.Appliver).fontWeight(.bold).font(.system(size: 14))
-//
-//                                                                Spacer()
-//                                                            }
-//                                                        )//.onTapGesture {
-//                                                            add_story_to_supscription(story_id:stories[index].id)
-//                                                        }
-                                                            Image("free_story").resizable().frame(width: 70, height: 50).overlay(
-                                                    VStack{
-                                                        Spacer()
-                                                        Text("مدفوع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 12))
-                                                        
-                                                        Text("$\(stories[index].subscribePrice!)").foregroundColor(.white).fontWeight(.bold).font(.system(size: 11))
-                                                        Spacer()
-                                                    }.padding()
-                                                )
-                                                    }
-                                                    }
-                                                    else{
-//                                                        Spacer()
-                                                        Image("payed_story").resizable().frame(width: 70, height: 50).overlay(
-                                                    VStack{
-                                                        Spacer()
-                                                        Text("مجانية").foregroundColor(.white).fontWeight(.bold).font(.system(size: 12)).frame(width:50,height:10).padding(.top,3)
-//                                                        Spacer()
-                                                        Image(systemName:"gift").font(.system(size: 12, weight: .heavy)).foregroundColor(Color(#colorLiteral(red: 0.996468246, green: 0.6681806445, blue: 0.001119376859, alpha: 1))).frame(width:20,height:10).padding(.vertical,3)
-                                                        Spacer()
-                                                    }//.frame(width:50,height:34)
-                                                        )
-                                                    }
-                                                }.frame(width:170).offset(x:30,y:-kkkkk)
-                                                .opacity(kkkkkdsds)
-                                                .onAppear{
-                                                    print("dsds")
-                                                    kkkkkdsds=0
-                                                    kkkkk=0
-//                                                    kkkkkd=0
-                                                    withAnimation(.easeIn(duration: 0.5)) {
-                                                        kkkkk+=8
-                                                    }
-                                                    withAnimation(.easeIn(duration: 1)) {
-                                                        kkkkkdsds=0.9
-                                                    }
-                                                }
+//                                                StoriesTail(isPaid: , isSubscribed: stories[CardIndecator].isSubscribed)
+                                                StoriesTail(isPaid: stories[CardIndecator].isPaid!, isSubscribed: stories[CardIndecator].isSubscribed!)
+//                                                free_payed_view(isPaid: stories[CardIndecator].isPaid!, subscribePrice: stories[CardIndecator].subscribePrice!, offsetY: 0, ViewOpacity: 0, isSubscribed: stories[CardIndecator].isSubscribed!)
                                             }
                                         }
                                         
@@ -190,12 +162,30 @@ struct SandalStoryV2View: View {
                                 }.ignoresSafeArea(.all)
                                 Spacer()
                             }
+                        else{
+                         VStack{
+                             Spacer()
+                             if ther_are_no_data{
+                                 Text(" عفوا لاتوجد بيانات ").foregroundColor(.Appliver)
+                             }
+                             else{
+                                 LoadinIndicator().onAppear{
+                                     let seconds = 4.0
+                                     DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                                         // Put your code which should be executed with a delay here
+                                         ther_are_no_data = true
+                                     }
+                                 }
+                             }
+                             Spacer()
+                         }
+                        }
                         }
                         
                     }
                 }
             
-              if  add_story_to_supscription_binding && !show_pay_modal{
+                if  add_story_to_supscription_binding {//|| !show_pay_modal{
                 Pay_story(story: stories[CardIndecator], view_story_to_supscription_binding: $add_story_to_supscription_binding,show_pay_modal:$show_pay_modal)//,story_pay_url:$story_pay_url)
 //                Pay_story(view_story_to_supscription_binding:,story:)
               }
@@ -203,9 +193,8 @@ struct SandalStoryV2View: View {
                     ZStack(alignment: .top){
                         HStack{
                         Image("close_button").resizable().padding(5).frame(width: 50, height: 40)
-                            //.background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180))
                             .onTapGesture {
-                                                               
+                                add_story_to_supscription_binding=false
                                 show_pay_modal=false
                         }.padding(.leading,5)
                             Spacer()
@@ -218,6 +207,13 @@ struct SandalStoryV2View: View {
             //
                         }.frame(maxWidth:600)//.padding(.horizontal,80)
                         
+                    }
+                    .onAppear{
+                         timeRemaining = 30
+//                        timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
+                        self.timer = Timer.publish (every: 1, on: .current, in:
+                                                                         .common).autoconnect()
+//                        timer.upstream.connect()
                     }
                 }
             }.edgesIgnoringSafeArea(.all)
@@ -235,6 +231,20 @@ struct SandalStoryV2View: View {
             GetStories()
             //        }
         }.environment(\.horizontalSizeClass, .compact)
+        
+    }
+    func resetViewData(){
+        BackagePosition.removeAll()
+        BackageHight.removeAll()
+        stories.removeAll()
+        is_payment_success=false
+        add_story_to_supscription_binding=false
+        show_pay_modal=false
+        
+//        let seconds = .0
+//        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        GetStories()
+//        }
         
     }
     func resetView(direction:Int?=1){
@@ -255,7 +265,7 @@ struct SandalStoryV2View: View {
         
     }
     func moveRight(){
-        kkkkkdsds=0
+//        kkkkkdsds=0
 //        withAnimation(.easeIn(duration: 0.5)) {//1.5
             
             BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
@@ -278,7 +288,7 @@ struct SandalStoryV2View: View {
     }
     func moveLeft(){
         
-        kkkkkdsds=0
+//        kkkkkdsds=0
 //        withAnimation(.easeIn(duration: 0.5)) {//1.5
             
             BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
@@ -290,7 +300,7 @@ struct SandalStoryV2View: View {
             BackageHight[CardIndecator] =   UIScreen.screenHeight*0.5
 //        }
         for i in 1...stories.count-1{
-                    if i != CardIndecator{5
+                    if i != CardIndecator{
                         if i > CardIndecator{
                             BackagePosition[i]=BackagePosition[i-1]+(UIScreen.screenWidth*0.4)+50
                         }
@@ -301,22 +311,7 @@ struct SandalStoryV2View: View {
                     }
             
         }
-//        for i in 0...CardIndecator{
-//
-//
-//        }
-        
-//        if CardIndecator-1 >  0{
-//            BackagePosition[CardIndecator-1] = -(UIScreen.screenWidth*0.4)-50
-//        }
-//        else{
-//            BackagePosition[(stories.count - 1 - CardIndecator)] = -(UIScreen.screenWidth*0.4)-50
-//        }
-        
-        //
     }
-    
-    
     func GetStories(){
         //        https://kayanapp.ibtikar-soft.sa/api/Story/GetStories/2
         print( Connection().getUrl(word: "GetStories")+"\(selected_id)")
@@ -369,3 +364,4 @@ struct SandalStoryV2View: View {
     
     
 }
+

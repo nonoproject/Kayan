@@ -18,7 +18,7 @@ struct SplashScreen: View {
             Color.white
             
             if logo_key == 0{
-                Image("kayan_logo").resizable().frame(width: 400, height: 400, alignment: .center).onAppear{
+                Image("kayan_logo").resizable().frame(width: UIScreen.card_width, height: UIScreen.card_heigh, alignment: .center).onAppear{
 //                    checConnection()
                     restartAnimation()
 

@@ -20,7 +20,7 @@ struct clips_group_section: View {
     @Binding var selectdMenuID:Int
     
     @Binding var is_play_vedio:Bool
-
+    @Binding var url_play_vedio:String
     
     
     var body: some View {
@@ -29,10 +29,6 @@ struct clips_group_section: View {
         HStack(spacing:0){
             
         ZStack{
-            
-        
-           
-        
                 Group{
                     AsyncImage(
                         url: (URL(string:"\(AppBase)\(self.storyName.imageURL ?? "")" )! ),
@@ -42,12 +38,10 @@ struct clips_group_section: View {
                                         }
                     )
                     
-                }.frame(width: width, height: 161, alignment: .center).cornerRadius(10).blur(radius: 2)
-                .onTapGesture {
-                    is_play_vedio=true
-                }
+                }.frame(width: UIScreen.card_width, height: UIScreen.card_heigh, alignment: .center).cornerRadius(10).blur(radius: 2)
+              
                 .overlay(VStack{
-                    Image(systemName: "play").font(.system(size: 52, weight: .medium, design: .rounded)).foregroundColor(.Appliver)//.backgroundFill(Color.AppPrimaryColor)
+                    Image(systemName: "play").font(.system(size: UIScreen.card_width*0.5, weight: .medium, design: .rounded)).foregroundColor(.Appliver)//.backgroundFill(Color.AppPrimaryColor)
                 })
 //                VStack{
 //
@@ -82,8 +76,12 @@ struct clips_group_section: View {
 //
 //                }.frame(height: 201)
        
-        }.onAppear{
+        }//.onAppear{
 //            print(typeID)
+//        }
+        .onTapGesture {
+            url_play_vedio="\(AppBase)\(self.storyName.clipPath ?? "")"
+            is_play_vedio=true
         }
 //            if !storyName.isSubscribed {
 //            VStack{

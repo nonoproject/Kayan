@@ -11,20 +11,25 @@ struct PlayRelacsation:View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var play:Bool = true
+    
+    @State var url_play_vedio:String
     var body: some View{
-        ZStack{
+        ZStack(alignment:.top){
             if play{
-            Play_Relacsation(videoURL:URL(string: "\(AppBase)/ClibsPath/ed2f09aa-f15b-484c-a695-6c25623e1a43.mp4"))
+            Play_Relacsation(videoURL:URL(string: url_play_vedio))
             }
-            VStack{
+            HStack{
                 Button(action: {
                     play=false
                     self.presentationMode.dismiss()
                 }){
-                    Image(systemName: "chevron.right") // set image here
+                    
+                    Image(systemName: "chevron.left") // set image here
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.AppPrimaryColor)
-                }.frame(width: 40,height: 40).background(Color.red)
+                        .foregroundColor(.white)
+                     
+                    
+                }.frame(width: 40,height: 40).background(Color.Appliver).zIndex(10)
     //            BackButton().frame(width: 40,height: 40).background(Color.red)
                 Spacer()
             }

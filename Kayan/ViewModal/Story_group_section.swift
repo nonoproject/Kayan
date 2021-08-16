@@ -43,19 +43,21 @@ struct Story_group_section: View {
                                         }
                     )
                     
-                }.frame(width: width, height: 161, alignment: .center).cornerRadius(10).blur(radius: 2)
+                }.frame(width: UIScreen.card_width, height: UIScreen.card_heigh, alignment: .center).cornerRadius(10).blur(radius: 2)
             
                 VStack{
                     
-                    HStack(spacing:5){
-                        HStack(spacing:0){
-                            Text("سنة").font(.system(size: 12, weight: .semibold, design: .monospaced)).foregroundColor(.Appliver)
-                            Text("\(storyName.ageFrom)"+"-"+"\(storyName.ageTo)").font(.system(size: 14, weight: .semibold, design: .monospaced))
+                    HStack(spacing:UIScreen.card_width*0.03){
+                        HStack(spacing:UIScreen.card_width*0.03){
                             
-                        }.frame( height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
+                            Text("سنة").font(.system(size: UIScreen.card_width*0.05, weight: .semibold, design: .monospaced)).foregroundColor(.Appliver)
+                                
+                            Text("\(storyName.ageFrom)"+"-"+"\(storyName.ageTo)").font(.system(size: UIScreen.card_width*0.05, weight: .semibold, design: .monospaced))
+                            
+                        }.frame(width:UIScreen.card_width*0.30,height: UIScreen.card_heigh*0.18).background(Color.AppPrimaryColor).cornerRadius(10)
                         
-                        Text(storyName.name).font(.system(size: 18, weight: .semibold, design: .monospaced)).frame(width: 110, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
-                    }.padding(.top,30)
+                        Text(storyName.name).font(.system(size: UIScreen.card_width*0.05, weight: .semibold, design: .monospaced)).frame(height: UIScreen.card_heigh*0.18) .padding(.horizontal,30).background(Color.AppPrimaryColor).cornerRadius(10)
+                    }.padding(.top,UIScreen.card_width*0.03)//.opacity(0.8)
                     
                     Spacer()
                     //  it was abutton to view your data
@@ -72,7 +74,7 @@ struct Story_group_section: View {
 //                                               }.offset(y:-10)
                 
                     
-                }.frame(height: 201)
+                }.frame(height: UIScreen.card_heigh)
        
         }.onTapGesture {
             title=storyName.name

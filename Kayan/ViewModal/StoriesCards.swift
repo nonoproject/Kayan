@@ -34,7 +34,7 @@ struct StoriesCards: View {
             
         VStack{
             if !isStory{
-            Image(imageName).resizable().frame(width: width, height: 191, alignment: .center).cornerRadius(10)
+            Image(imageName).resizable().frame(width: width, height: UIScreen.card_heigh-20, alignment: .center).cornerRadius(10)
             }
             else{
                 Group{
@@ -45,13 +45,13 @@ struct StoriesCards: View {
                                         
                                     }
                                  )
-                }.frame(width: width, height: 161, alignment: .center).cornerRadius(10)
+                }.frame(width: width, height: UIScreen.card_width, alignment: .center).cornerRadius(10)
             }
             if !isStory{
 //                .font(.custom("Sukar black", size: 20))
                 Text(storyName).font(.system(size: 18,weight: .semibold, design: .monospaced))
-                    .frame(width: 145, height: 40).background(Color.AppPrimaryColor).cornerRadius(10)
-                .offset(y:-30).onTapGesture {
+                    .frame(width: UIScreen.card_width*0.5, height: UIScreen.card_heigh*0.15).background(Color.AppPrimaryColor).cornerRadius(10)
+                .offset(y:-UIScreen.card_heigh*0.08).onTapGesture {
                      title=storyName
                     print(storyID)
                     print(storyAge)
@@ -60,24 +60,24 @@ struct StoriesCards: View {
                     PlayAppSound().AppPlayAppSound()
                 }
             }
-            else{
-                VStack{
-                    HStack(spacing:5){
-                        Text(storyAge!).frame(width: 50, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
-                        
-                        Text(storyName).frame(width: 110, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
-                    }
-                    Button(action: {
-                        print(storyAge)
-                   //                                title=stories[index].name
-                   //                                id=stories[index].id
-                   //                               isSignIn=true
-                                               }) {
-                                                   Text("إشترك في الباقة").frame(width: 145, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
-                   
-                                               }.offset(y:35)
-                }.offset(y:-30)
-            }
+//            else{
+//                VStack{
+//                    HStack(spacing:5){
+//                        Text(storyAge!).frame(width: 50, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
+//
+//                        Text(storyName).frame(width: 110, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
+//                    }
+//                    Button(action: {
+//                        print(storyAge)
+//                   //                                title=stories[index].name
+//                   //                                id=stories[index].id
+//                   //                               isSignIn=true
+//                                               }) {
+//                                                   Text("إشترك في الباقة").frame(width: 145, height: 40).background(Color.blue.opacity(0.97)).foregroundColor(Color.white).cornerRadius(10)
+//
+//                                               }.offset(y:35)
+//                }.offset(y:-30)
+//            }
         }
        
             

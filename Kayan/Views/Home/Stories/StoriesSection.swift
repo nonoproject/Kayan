@@ -11,7 +11,7 @@ struct StoriesSection: View {
     @State var id=3
     @State var section_title:String=""
     @State var title:String=""
-    
+    @State var url_play_vedio:String=""
     @State var ther_are_no_data = false
     var imageName=["quran","meditation","childrenStory"]
     var storyName=["قصص براعم","قصص الابطال","قصص القادة"]
@@ -41,7 +41,7 @@ struct StoriesSection: View {
                                 .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
 //                        NavigationLink(destination: PlayVedio(selected_url:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
 //                                .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
-                        NavigationLink(destination:PlayRelacsation().navigationBarTitle(Text("Home"))
+                        NavigationLink(destination:PlayRelacsation(url_play_vedio:url_play_vedio).navigationBarTitle(Text("Home"))
                                 .navigationBarHidden(true), isActive: self.$is_play_vedio) {}.hidden()
 
                         
@@ -93,7 +93,7 @@ struct StoriesSection: View {
                                     HStack(spacing:45){
                                         ForEach(enumerating: clibs,id:\.id){ index,arg  in
                                             
-                                            clips_group_section(storyName:arg,title: $title, selectdMenuID: $selectdMenuID, is_play_vedio: $is_play_vedio).onAppear{
+                                            clips_group_section(storyName:arg,title: $title, selectdMenuID: $selectdMenuID, is_play_vedio: $is_play_vedio, url_play_vedio: $url_play_vedio).onAppear{
                                                 print(arg)
                                             }
                                         }

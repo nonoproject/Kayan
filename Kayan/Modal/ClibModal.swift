@@ -11,7 +11,7 @@ struct ClibModal: Decodable ,Hashable {
     let id: Int
     let name:String?
         let imageURL, storyText: String?
-       let storyVoicePath: String?
+       let clipPath: String?
        let storyID: Int?
        let story: String?
        let createAt: String?
@@ -20,6 +20,6 @@ struct ClibModal: Decodable ,Hashable {
        enum CodingKeys: String, CodingKey {
            case id, name
            case imageURL = "imageUrl"
-           case storyText, storyVoicePath, storyID, story, createAt, updateAt
+           case storyText, clipPath, storyID, story, createAt, updateAt
        }
    }
