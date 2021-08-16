@@ -71,11 +71,12 @@ struct SandalStoryV2View: View {
                                                             }
                                                             if self.timeRemaining > 0 {
                                                                 if is_payment_success{
-                                                                    resetViewData()
-                                                                    self.timer.upstream.connect().cancel()
                                                                     
+                                                                    self.timer.upstream.connect().cancel()
+                                                                    resetViewData()
                                                                 }
                                                                 else{
+                                                                    
                                                                     self.timeRemaining -= 1
                                                                 }
                                                                 
@@ -209,11 +210,10 @@ struct SandalStoryV2View: View {
                         
                     }
                     .onAppear{
+//                        is_payment_success = true
                          timeRemaining = 30
-//                        timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
-                        self.timer = Timer.publish (every: 1, on: .current, in:
-                                                                         .common).autoconnect()
-//                        timer.upstream.connect()
+                        self.timer = Timer.publish (every: 1, on: .current, in:.common).autoconnect()
+
                     }
                 }
             }.edgesIgnoringSafeArea(.all)
@@ -234,13 +234,15 @@ struct SandalStoryV2View: View {
         
     }
     func resetViewData(){
-        BackagePosition.removeAll()
-        BackageHight.removeAll()
-        stories.removeAll()
-        is_payment_success=false
         add_story_to_supscription_binding=false
         show_pay_modal=false
-        
+//        is_payment_succesrlse
+        is_payment_success = false
+//        CardIndecator=0
+//        stories=[]
+//        BackagePosition=[]//.removeAll()
+//        BackageHight=[]//.removeAll()
+        //.removeAll()
 //        let seconds = .0
 //        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
         GetStories()
