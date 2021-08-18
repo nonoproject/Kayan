@@ -51,6 +51,7 @@
 		FA241115265665CF0072B741 /* StoryCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA241114265665CF0072B741 /* StoryCards.swift */; };
 		FA2411172656680A0072B741 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2411162656680A0072B741 /* Stories.swift */; };
 		FA27594E26CA6020002C2F7A /* SignalRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27594D26CA6020002C2F7A /* SignalRService.swift */; };
+		FA27595026CCFBCE002C2F7A /* StopTimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27594F26CCFBCE002C2F7A /* StopTimerManager.swift */; };
 		FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630C265D2AA000EE341D /* Favorate.swift */; };
 		FA2C630F265D310F00EE341D /* VaforaiteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630E265D310F00EE341D /* VaforaiteCard.swift */; };
 		FA308A762634D8230055DF88 /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A752634D8230055DF88 /* ForgetPassword.swift */; };
@@ -143,6 +144,7 @@
 		FA241114265665CF0072B741 /* StoryCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCards.swift; sourceTree = "<group>"; };
 		FA2411162656680A0072B741 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		FA27594D26CA6020002C2F7A /* SignalRService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRService.swift; sourceTree = "<group>"; };
+		FA27594F26CCFBCE002C2F7A /* StopTimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimerManager.swift; sourceTree = "<group>"; };
 		FA2C630C265D2AA000EE341D /* Favorate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorate.swift; sourceTree = "<group>"; };
 		FA2C630E265D310F00EE341D /* VaforaiteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaforaiteCard.swift; sourceTree = "<group>"; };
 		FA308A752634D8230055DF88 /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 		B1596A802612F31D00D06B1A /* AppService */ = {
 			isa = PBXGroup;
 			children = (
+				FA27595126CCFBF2002C2F7A /* StopTimerManager */,
 				FA27594C26CA6018002C2F7A /* SignalR */,
 				FAF8829926776F7100C492FC /* shareSheet */,
 				FA241109265656BB0072B741 /* DownloadImage */,
@@ -366,6 +369,7 @@
 		B1713F46261228F600BCCCEE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA27595226CD41D7002C2F7A /* ComingSoon */,
 				FADE881D26C407F800536ED3 /* Pay_story */,
 				FADE881826C3BBD700536ED3 /* Rate */,
 				FA0E93D0267F94FB0075DCA4 /* Test_views */,
@@ -507,6 +511,21 @@
 				FA27594D26CA6020002C2F7A /* SignalRService.swift */,
 			);
 			path = SignalR;
+			sourceTree = "<group>";
+		};
+		FA27595126CCFBF2002C2F7A /* StopTimerManager */ = {
+			isa = PBXGroup;
+			children = (
+				FA27594F26CCFBCE002C2F7A /* StopTimerManager.swift */,
+			);
+			path = StopTimerManager;
+			sourceTree = "<group>";
+		};
+		FA27595226CD41D7002C2F7A /* ComingSoon */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ComingSoon;
 			sourceTree = "<group>";
 		};
 		FA2C630B265D2A7900EE341D /* Favorate */ = {
@@ -831,6 +850,7 @@
 				FA31376C26C8FCC1007E690C /* StoriesTail.swift in Sources */,
 				FAD34F5726764C1A006C73C7 /* IntroVedio.swift in Sources */,
 				FA83A73F26564DB2002F814E /* AudioPlayer.swift in Sources */,
+				FA27595026CCFBCE002C2F7A /* StopTimerManager.swift in Sources */,
 				FA4BB6CC265EB9C00064419A /* Play_Relacsation.swift in Sources */,
 				B1811D382613314F0021E0A0 /* TextVIewStyle.swift in Sources */,
 				FADD264C264752580060BA3D /* MenueModal.swift in Sources */,

@@ -12,7 +12,8 @@ import AVFoundation
 struct StoryPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // timer
-    
+    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
+    @State var timeRemaining = -1
      var uAnimationDuration: Double { return 3.0 }
     
     /// player
@@ -27,6 +28,8 @@ struct StoryPage: View {
     @State var show_no_data:Bool=false
     @State var musicSound:Bool=false
     @State var spekerSound:Bool=VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.spekerSound)
+    @State var is_auto_pay_anable:Bool=VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.is_auto_pay_anable)
+    
     @State var isPlaying:Bool=false
     
     @State var showing_image =  false
@@ -163,7 +166,7 @@ struct StoryPage: View {
                                 HStack{
                                     Spacer()
                                 if !show_no_data{
-                                    sandalLoadingIndicater().onAppear{
+                                    LoadinIndicator().onAppear{
                                         GetStoryPage()
                                     }
                                 }
@@ -207,9 +210,10 @@ struct StoryPage: View {
 //                            Spacer()
         //                    if page_indecator == 4 {
                             VStack{
-                            Image(systemName: "pause.fill").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                Image(is_auto_pay_anable ? "play" : "no-play").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
                                 .onTapGesture {
-//                                    playSound()
+                                    is_auto_pay_anable = !is_auto_pay_anable
+                                    VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.is_auto_pay_anable, Val: is_auto_pay_anable)
                                 }
                             }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5).padding(.top,35)
         //                    }
@@ -257,9 +261,62 @@ struct StoryPage: View {
                             HStack{
                                 Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").modifier(customFountCR())
                                 //.padding(5).cornerRadius(20)
+
                                     .multilineTextAlignment(.trailing)
                             }//.background(Color.white.opacity(0.6))
                             .padding(.horizontal,20).cornerRadius(20)
+                            .onReceive(timer) { _ in
+                                print(timeRemaining)
+                                if !is_auto_pay_anable || self.timeRemaining < 0{
+                                    self.timer.upstream.connect().cancel()
+                                    return
+                                }
+                                else{
+                                        if self.timeRemaining <= 0 {
+                                            self.timer.upstream.connect().cancel()
+                                            // We don't need it when we start off
+                                            if page_indecator != story_pages.count{
+                                            page_indecator += 1
+                                            
+    //                                        spekerSound=true
+    //                                        stopSound()
+//                                                    Load_data_from_DB()
+//                                                    if story_from_table?.strory_page_records ?? "" == ""{
+                                                if spekerSound{
+                                                    playSound()
+                                                }
+//                                                    }
+                                            showing_image = !showing_image
+                                            }
+                                            else{
+                                                stopSound()
+                                                is_going_to_question=true
+                                            }
+
+                                            
+                                            return
+                                        }
+                                        if self.timeRemaining > 0 {
+//                                                    if is_payment_success{
+//
+//                                                        self.timer.upstream.connect().cancel()
+////                                                        resetViewData()
+//                                                    }
+//                                                    else{
+                                                
+                                                self.timeRemaining -= 1
+//                                                    }
+                                            
+                                        }
+//                                                    else {
+//                                                    timeRemaining = 30
+////                                                                self.timer.upstream.connect().cancel()
+//                                                    self.timer = Timer.publish (every: 1, on: .current, in:
+//                                                        .common).autoconnect()
+                                            // Do the action on end of timer. Text would have been hidden by now
+//                                                }
+                                }
+                                  }
 //                            Spacer()
 //}
                             VStack(spacing:4){
@@ -406,7 +463,21 @@ struct StoryPage: View {
             self.player = try AVAudioPlayer(contentsOf: url as URL)
             player!.volume = 1.0
             player!.play()
-            
+            print(Int(player!.duration))
+//            print(Int(player!.duration)/8)
+            if is_auto_pay_anable{
+                
+//                timeRemaining = Int(player!.duration)
+//                self.timer = Timer.publish (every: 1, on: .current, in:
+//                    .common).autoconnect()
+                
+                timeRemaining = 30
+               self.timer = Timer.publish (every: 1, on: .current, in:.common).autoconnect()
+                timer = timer.upstream.autoconnect()
+                timer =  timer.upstream.autoconnect()
+                
+            }
+           
             isPlaying=true
         } catch let error as NSError {
             //self.player = nil

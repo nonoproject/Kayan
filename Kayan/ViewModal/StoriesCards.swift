@@ -128,7 +128,9 @@ struct Stories_Card_Cards: View {
                         PlayAppSound().AppPlayAppSound()
                     }
                     else{
-                        
+                        if ((player?.isPlaying) != nil) {
+                            stopSound()
+                        }
                         add_story_to_supscription_binding = true //(story_id:imageName.id)
                     }
 //                    }
@@ -139,7 +141,10 @@ struct Stories_Card_Cards: View {
                 
                 Image(systemName:"headphones.circle.fill").resizable().backgroundFill(Color.red) .clipShape(Circle()).foregroundColor(.white).frame(width: 35, height:35)
                     .onTapGesture {
+                        print(imageName.storyVoiceSample)
+                        if imageName.storyVoiceSample != nil{
                         playSound()
+                        }
 //                        add_story_to_favorit(story_id: selectd_story_page_MenuID)
 //                                isGoToFavoratePressed=true
                         
@@ -196,14 +201,15 @@ struct Stories_Card_Cards: View {
         if ((player?.isPlaying) != nil) {
             stopSound()
         }
-        let radioURL = "\(AppBase)/storyPageVoices/76508c47-f92c-4f2a-a2b1-c3ece0d28a91_11.mp3"
+//        storyVoiceSample
+        let radioURL = "\(AppBase)\(imageName.storyVoiceSample!.replacingOccurrences(of: "\\", with: ""))"
         let urlstring = radioURL
         let url = NSURL(string: urlstring)
         print("the url = \(url!)")
         downloadFileFromURL(url: url!)
     }
     func downloadFileFromURL(url:NSURL){
-
+print(url)
         var downloadTask:URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url as URL, completionHandler: {(URL, response, error) -> Void in
             self.play(url: URL as! NSURL)

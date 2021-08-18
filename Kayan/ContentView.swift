@@ -56,7 +56,7 @@ struct ContentView: View {
 ////        SamopleRecourding(audioRecorder: AudioRecorder())
 ////        }.environment(\.horizontalSizeClass, .compact)
 //        Stories()
-//        StoryPage( audioRecorder: AudioRecorder(), page_story_id: 15, storyQuestionsList: [])
+//        StoryPage( audioRecorder: AudioRecorder(), page_story_id: 2, storyQuestionsList: [])
 //        Test()//Reading Story
 //        Gift()
 //        QueestionPage()

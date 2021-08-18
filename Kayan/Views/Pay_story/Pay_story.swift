@@ -14,9 +14,15 @@ struct Pay_story: View {
     @State var phoneNumberError:Bool=false
     
     @State var name:String=""
+    @State var cobone:String="TEST2021"
+    @State var coboneError:Bool=false
     @State var checked:Bool=false
+    @State var isCobonActivated:Bool=false
     @Binding var view_story_to_supscription_binding:Bool
     @Binding var show_pay_modal:Bool
+    @State var storyPriceAfterCoupon:String=""
+    @State var storyPriceAfterCouponMessage:String=""
+    
 //    @Binding var story_pay_url:String
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -93,12 +99,48 @@ struct Pay_story: View {
                         Spacer()
                         HStack(spacing:0){
                             Text("ريال").font(.custom("Cairo-Regular", size: 11)).foregroundColor(.Appliver)
-                            Text("\(story.subscribePrice!)")//.frame(width: 50,height: 30).background(Color.AppPrimaryColor)
+                            Text(isCobonActivated ? storyPriceAfterCoupon : "\(story.subscribePrice!)")//.frame(width: 50,height: 30).background(Color.AppPrimaryColor)
                                 .padding(5).cornerRadius(8)
                         
-                        }
-                        .padding(.trailing,20)
+                        }.padding(.trailing,20)
+                       
+                        
                         Text("سعر القصة").frame(width: 100,alignment: .trailing)
+                    }.padding(.trailing,20)
+                    .overlay(
+                        VStack{
+                            Spacer()
+                            Text(isCobonActivated ?( " قيمة الكوبون "+"\(storyPriceAfterCouponMessage)") : "").font(.custom("Cairo-Regular", size: 14)).foregroundColor(.Appliver)
+                        }.frame(height:60).offset(x:-30)
+                    )
+                    HStack{
+//                        Spacer()
+//                        HStack{
+//                            Spacer()
+                        Spacer()
+                        Spacer()
+                        Button(action: {
+                            checkCobonValue()
+                        }) {
+                            HStack{
+//                            Image(systemName: "checkmark.circle.fill")
+//                                .resizable()
+//                                .frame(width: 30, height: 30)
+////                                .font( weight: .UIScreen.screenWidth*0.08)
+//                                .foregroundColor(.gray)
+                                Text("تفعيل الكوبون").foregroundColor(.white).fontWeight(.light)
+                            }.padding(5).background(isCobonActivated ? Color.green : Color.gray).cornerRadius(8)
+                        }
+                        TextField("", text: $cobone)
+                            .textFieldStyle(CTFStyleClearBackground(width:  UIScreen.screenWidth*0.15, cornerRadius: 20, height: 40, showError: $coboneError))
+                            .modifier(customFountCB())
+                            .foregroundColor(.Appliver)
+//                            .keyboardType(.)
+//                            .padding(.trailing,20)
+                        
+                        Spacer()
+                        Text(" كوبون ").frame(width: 100,alignment: .trailing)
+                        
                     }.padding(.trailing,20)
                     HStack{
                         Spacer().zIndex(10)
@@ -135,10 +177,47 @@ struct Pay_story: View {
         }
     }
 }
-    func add_story_to_supscription(story_id:Int){
+    
+    func checkCobonValue(){
         
-        let prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
-                     ,"StoryID":story_id]
+        
+        
+        if cobone != "" {
+        
+            let prams = ["CouponCode":cobone,"CustomerId":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
+                         ,"StoryID":story.id] as [String : Any]
+            print( Connection().getUrl(word: "GetCheckCoupon"))
+            print(prams)
+            RestAPI().postData(endUrl: Connection().getUrl(word: "GetCheckCoupon"), parameters: prams){ result in
+               let sectionR = JSON(result!)
+                print(sectionR)
+                
+                if sectionR["responseCode"].int == 200{
+//
+                    storyPriceAfterCoupon = sectionR["response"]["storyPriceAfterCoupon"].stringValue
+                    storyPriceAfterCouponMessage=sectionR["response"]["couponValue"].stringValue
+                        isCobonActivated=true
+                }
+                else{
+                    storyPriceAfterCoupon = ""// sectionR["response"]["storyPriceAfterCoupon"].stringValue
+                    storyPriceAfterCouponMessage=""//sectionR["response"]["couponValue"].stringValue
+                        isCobonActivated=false
+                }
+            } onError: { error in
+                print(error)
+            }
+        }
+            
+        }
+    func add_story_to_supscription(story_id:Int){
+        var prams = [String:Any]()
+        var storySubscribe = [String:Int]()
+//        if isCobonActivated{
+            storySubscribe["CustomerID"]=VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
+        storySubscribe["StoryID"]=story_id
+            prams["storySubscribe"]=storySubscribe
+        prams["IsHasCoupon"]=isCobonActivated
+        prams["CouponCode"]=cobone
         print( Connection().getUrl(word: "StorySubscribe"))
         print(prams)
         RestAPI().postData(endUrl: Connection().getUrl(word: "StorySubscribe"), parameters: prams){ result in
@@ -166,10 +245,10 @@ struct Pay_story: View {
 //                    isSignIn=true
             }
             else{
-                story_pay_url = "https://payments-dev.urway-tech.com/URWAYPGService/direct.jsp?paymentid=2122412453308233713"
+//                story_pay_url = "https://payments-dev.urway-tech.com/URWAYPGService/direct.jsp?paymentid=2122412453308233713"
 //                model.objectWillChange
 //                model.loadUrl()
-                show_pay_modal = true
+//                show_pay_modal = true
             }
         } onError: { error in
             print(error)

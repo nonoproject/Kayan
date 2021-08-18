@@ -200,14 +200,11 @@ struct SandalStoryV2View: View {
                         }.padding(.leading,5)
                             Spacer()
                         }.offset(x:63).zIndex(10)
-                        
                         payment_WebView(request:URLRequest(url: URL(string:story_pay_url)!))
-                        
                         .onTapGesture {
                         self.hideKeyboard()
             //
                         }.frame(maxWidth:600)//.padding(.horizontal,80)
-                        
                     }
                     .onAppear{
 //                        is_payment_success = true
@@ -238,13 +235,7 @@ struct SandalStoryV2View: View {
         show_pay_modal=false
 //        is_payment_succesrlse
         is_payment_success = false
-//        CardIndecator=0
-//        stories=[]
-//        BackagePosition=[]//.removeAll()
-//        BackageHight=[]//.removeAll()
-        //.removeAll()
-//        let seconds = .0
-//        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+
         GetStories()
 //        }
         

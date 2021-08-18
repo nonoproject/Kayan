@@ -19,6 +19,8 @@ struct StroryModal : Identifiable, Decodable ,Hashable{
     let storyQuestionsList: [storyQuestionsList]?
    let createAt: String?
    let updateAt: String?
+    
+    let storyVoiceSample: String?
    let storyPages: [String]?
     var x:CGFloat=0
     
@@ -27,7 +29,7 @@ struct StroryModal : Identifiable, Decodable ,Hashable{
        case id, name
     case rate
        case imageURL = "imageUrl"
-       case subscribePrice,isSubscribed,storyQuestionsList, isPaid, storyCatogryID, storyCatogry, createAt, updateAt, storyPages
+       case subscribePrice,isSubscribed,storyQuestionsList, isPaid, storyCatogryID, storyCatogry, createAt, updateAt, storyPages,storyVoiceSample
    }
 }
 struct storyQuestionsList:Hashable,Decodable {

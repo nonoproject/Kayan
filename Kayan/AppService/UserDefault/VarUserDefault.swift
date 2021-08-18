@@ -18,6 +18,8 @@ class VarUserDefault{
     var spekerSound: String = "spekerSound"
 
     var isFirestTime: String = "isFirestTime"
+    var is_auto_pay_anable: String = "is_auto_pay_anable"
+    
 //    var story_pay_url: String = "story_pay_url"
     
     func getGlobal(key:String) -> String{
