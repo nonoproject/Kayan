@@ -18,6 +18,8 @@ struct StoriesSection: View {
     var storyAge=["5-3","8-6","9-12"]
     @State var isSignIn = false
         @State var is_play_vedio = false
+    @State var is_going_to_gift = false
+    
     
 //    @Environment(\.presentationMode) var presentation
     var horizontalPaddig:CGFloat=30.0
@@ -27,8 +29,6 @@ struct StoriesSection: View {
     @State var clibs:[ClibModal]=[]
     @State var selectdMenuID:Int = 0
     var body: some View {
-//        NavigationView{
-//        GeometryReader{geo in
         ZStack{
         VStack(spacing:0){
             Navbars(x_view_to_move:AnyView(Home()), page_titel: section_title)
@@ -37,14 +37,17 @@ struct StoriesSection: View {
                            .edgesIgnoringSafeArea(.vertical)
                     
                     VStack(spacing:0){
+                        
                         NavigationLink(destination: SandalStoryV2View(selected_id:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
                                 .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
-//                        NavigationLink(destination: PlayVedio(selected_url:selectdMenuID,title: title).navigationBarTitle(Text("Home"))
-//                                .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
+                        
+                        NavigationLink(destination: GiftStory(selected_id:selectdMenuID,title: "الهدايا").navigationBarTitle(Text("Home"))
+                                .navigationBarHidden(true), isActive: self.$is_going_to_gift) {}.hidden()
+
+                        
                         NavigationLink(destination:PlayRelacsation(url_play_vedio:url_play_vedio).navigationBarTitle(Text("Home"))
                                 .navigationBarHidden(true), isActive: self.$is_play_vedio) {}.hidden()
 
-                        
                 HStack{
                     Rectangle().fill(Color.AppSecoundryColor).frame(width: 100, height: 40, alignment: .center).cornerRadius(20, corners: [.topRight, .bottomRight]).overlay(
                         HStack{
@@ -52,7 +55,9 @@ struct StoriesSection: View {
                             Text("الهدايا").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
                             Spacer()
                         }
-                    )
+                    ).onTapGesture {
+                        is_going_to_gift=true
+                    }
                     
                     Spacer()
                     
@@ -63,7 +68,8 @@ struct StoriesSection: View {
                             Spacer()
                         }
                     )
-                }.padding(.vertical,5)
+                }.padding(.top,10)
+                .padding(.vertical,5)
                         if stories.count > 0 {
                             VStack{
                                 Spacer()

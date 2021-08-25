@@ -1,15 +1,14 @@
 //
-//  SandalStoryV2View.swift
+//  GiftStory.swift
 //  Kayan
 //
-//  Created by Sandal on 09/11/1442 AH.
+//  Created by Sandal on 11/01/1443 AH.
 //
 
 import SwiftUI
 import SwiftyJSON
-struct SandalStoryV2View: View {
-    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
-    @State var timeRemaining = -1
+struct GiftStory: View {
+    
     @State var id:Int=0
     @State var ther_are_no_data = false
 //    @StateObject var model = WebViewModel()
@@ -61,41 +60,6 @@ struct SandalStoryV2View: View {
                                     }.padding(.leading,5)
                                     Spacer()
                                     
-                                    Rectangle().fill(Color.AppPrimaryColor).frame(width: 100, height: 30, alignment: .center).cornerRadius(20, corners: [.topLeft, .bottomLeft]).overlay(
-                                        HStack{
-                                            Spacer()
-                                            Text("قريبا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
-                                                .onTapGesture {
-                                                    is_go_to_comingstory_page=true
-                                                }
-                                                .onReceive(timer) { _ in
-                                                            if self.timeRemaining < 0 {
-                                                                // We don't need it when we start off
-                                                                self.timer.upstream.connect().cancel()
-                                                                return
-                                                            }
-                                                            if self.timeRemaining > 0 {
-                                                                if is_payment_success{
-                                                                    
-                                                                    self.timer.upstream.connect().cancel()
-                                                                    resetViewData()
-                                                                }
-                                                                else{
-                                                                    
-                                                                    self.timeRemaining -= 1
-                                                                }
-                                                                
-                                                            } else {
-                                                                timeRemaining = 30
-//                                                                self.timer.upstream.connect().cancel()
-                                                                self.timer = Timer.publish (every: 1, on: .current, in:
-                                                                    .common).autoconnect()
-                                                                // Do the action on end of timer. Text would have been hidden by now
-                                                            }
-                                                      }
-                                            Spacer()
-                                        }
-                                    )
                                 }.padding(.top,20)
                             
                                 Spacer()
@@ -106,7 +70,7 @@ struct SandalStoryV2View: View {
                                 ZStack(alignment: .center){
                                     ForEach(0...stories.count-1,id:\.self){ index in
                                         VStack{
-                                            Stories_Card_Cards(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page,add_story_to_supscription_binding:$add_story_to_supscription_binding).padding(.horizontal,30)
+                                            Gift_Stories_Card(imageName:stories[index],BackageHight: $BackageHight[index],width: UIScreen.screenWidth*0.4,title: $title, selectdMenuID: $id, isSignIn: $is_go_to_story_page,add_story_to_supscription_binding:$add_story_to_supscription_binding).padding(.horizontal,30)
                                                 .contentShape(Rectangle())
                                                 .offset(x:BackagePosition[index])
                                                 .gesture(
@@ -157,11 +121,7 @@ struct SandalStoryV2View: View {
                                                             })
                                                     
                                                 )
-                                            if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
-//                                                StoriesTail(isPaid: , isSubscribed: stories[CardIndecator].isSubscribed)
-                                                StoriesTail(isPaid: stories[CardIndecator].isPaid!, isSubscribed: stories[CardIndecator].isSubscribed!)
-//                                                free_payed_view(isPaid: stories[CardIndecator].isPaid!, subscribePrice: stories[CardIndecator].subscribePrice!, offsetY: 0, ViewOpacity: 0, isSubscribed: stories[CardIndecator].isSubscribed!)
-                                            }
+                                           
                                         }
                                         
                                     }
@@ -191,36 +151,6 @@ struct SandalStoryV2View: View {
                     }
                 }
             
-                if  add_story_to_supscription_binding {//|| !show_pay_modal{
-                Pay_story(story: stories[CardIndecator], view_story_to_supscription_binding: $add_story_to_supscription_binding,show_pay_modal:$show_pay_modal)//,story_pay_url:$story_pay_url)
-//                Pay_story(view_story_to_supscription_binding:,story:)
-              }
-                if show_pay_modal{
-                    ZStack(alignment: .top){
-                        HStack{
-                        Image("close_button").resizable().padding(5).frame(width: 50, height: 40)
-                            .onTapGesture {
-                                add_story_to_supscription_binding=false
-                                show_pay_modal=false
-                        }.padding(.leading,5)
-                            Spacer()
-                        }.offset(x:63).zIndex(10)
-                        
-                        payment_WebView(request:URLRequest(url: URL(string:story_pay_url)!))
-                        
-                        .onTapGesture {
-                        self.hideKeyboard()
-            //
-                        }.frame(maxWidth:600)//.padding(.horizontal,80)
-                        
-                    }
-                    .onAppear{
-//                        is_payment_success = true
-                         timeRemaining = 30
-                        self.timer = Timer.publish (every: 1, on: .current, in:.common).autoconnect()
-
-                    }
-                }
             }.edgesIgnoringSafeArea(.all)
             .fullScreenCover(isPresented:  self.$is_go_to_story_page ){
                 StoryPage( audioRecorder: AudioRecorder(), page_story_id: selectd_story_page_MenuID,storyQuestionsList:story_Questions_List)//,storyQuestionsList:storyQuestionsList)
@@ -251,7 +181,6 @@ struct SandalStoryV2View: View {
 //        }
         
     }
-    
     func resetView(direction:Int?=1){
         BackageHight[CardIndecator]=UIScreen.screenHeight*0.5
         BackagePosition[CardIndecator] = 0//(UIScreen.screenWidth/2)
@@ -319,9 +248,9 @@ struct SandalStoryV2View: View {
     }
     func GetStories(){
         //        https://kayanapp.ibtikar-soft.sa/api/Story/GetStories/2
-        print( Connection().getUrl(word: "GetStories")+"\(selected_id)")
+        print( Connection().getUrl(word: "GetGiftStory"))
         //        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStories")+"\(id)", parameters: [:])
-        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStories")+"\(selected_id)/\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))", parameters: [:]){ result in
+        RestAPI().getData(endUrl: Connection().getUrl(word: "GetGiftStory"), parameters: [:]){ result in
             
             let sectionR = JSON(result!)
             print(sectionR)

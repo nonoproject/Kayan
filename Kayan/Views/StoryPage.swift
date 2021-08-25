@@ -12,8 +12,7 @@ import AVFoundation
 struct StoryPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // timer
-    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
-    @State var timeRemaining = -1
+    
      var uAnimationDuration: Double { return 3.0 }
     
     /// player
@@ -46,7 +45,9 @@ struct StoryPage: View {
     
     @State  var  showsAlert:Bool=false
     @State  var  message:String=""
-    
+    // timer
+    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
+    @State var timeRemaining = -10
     var body: some View {
         ZStack{
 //            if story_pages.count > 0{
@@ -128,7 +129,7 @@ struct StoryPage: View {
                                             paus_audio_from_DB()
                                             }
                                             stopSound()
-                                                playSound()
+                                            playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
                                         }
                                         else{
                                             message="الرجاء تفعيل الصوت ثم المحاولة مرة اخرى"
@@ -146,10 +147,13 @@ struct StoryPage: View {
                         
                         if story_pages.count>0{
                         if showing_image {
+//                            showImage(url: "\(self.story_pages[page_indecator-1].imageURL)")
+                            
                             self.story_pages[page_indecator-1].selected_image
                             }
                         else{
                             self.story_pages[page_indecator-1].selected_image
+//                            showImage(url: "\(self.story_pages[page_indecator-1].imageURL)")
                         }
                         
                         }
@@ -195,6 +199,18 @@ struct StoryPage: View {
                             enable_disableBtn(imageName: "music.quarternote.3", isEnabel: $musicSound).onTapGesture {
 
                                 musicSound.toggle()
+                                if musicSound{
+//                                    changeUsingSound()
+                                    if spekerSound{
+                                        stopSound()
+                                        if story_pages[page_indecator-1].storyVoiceWithMusicPath != nil{
+                                            playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoiceWithMusicPath!)
+                                        }
+                                    }
+                                }
+                                else{
+                                    
+                                }
                             }
                             enable_disableBtn(imageName: "speaker.wave.2.fill", isEnabel: $spekerSound )
                             .onTapGesture {
@@ -246,7 +262,7 @@ struct StoryPage: View {
                                 Load_data_from_DB()
                                 if story_from_table?.strory_page_records ?? "" == ""{
                                     if spekerSound{
-                                    playSound()
+                                        playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
                                     }
 //                                playSound()
                                 }
@@ -260,86 +276,72 @@ struct StoryPage: View {
                             Spacer()
                             HStack{
                                 Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").modifier(customFountCR())
+                                    
                                 //.padding(5).cornerRadius(20)
 
                                     .multilineTextAlignment(.trailing)
                             }//.background(Color.white.opacity(0.6))
                             .padding(.horizontal,20).cornerRadius(20)
-                            .onReceive(timer) { _ in
-                                print(timeRemaining)
-                                if !is_auto_pay_anable || self.timeRemaining < 0{
-                                    self.timer.upstream.connect().cancel()
-                                    return
-                                }
-                                else{
-                                        if self.timeRemaining <= 0 {
-                                            self.timer.upstream.connect().cancel()
-                                            // We don't need it when we start off
-                                            if page_indecator != story_pages.count{
-                                            page_indecator += 1
-                                            
-    //                                        spekerSound=true
-    //                                        stopSound()
-//                                                    Load_data_from_DB()
-//                                                    if story_from_table?.strory_page_records ?? "" == ""{
-                                                if spekerSound{
-                                                    playSound()
-                                                }
-//                                                    }
-                                            showing_image = !showing_image
-                                            }
-                                            else{
-                                                stopSound()
-                                                is_going_to_question=true
-                                            }
-
-                                            
-                                            return
-                                        }
-                                        if self.timeRemaining > 0 {
-//                                                    if is_payment_success{
+//                            dsadasdas
+//                            .onReceive(timer) { _ in
+//                                print(timeRemaining)
+//                                if !is_auto_pay_anable || self.timeRemaining < 0{
+//                                    self.timer.upstream.connect().cancel()
+//                                    return
+//                                }
+//                                else{
+//                                        if self.timeRemaining <= 0 {
+//                                            self.timer.upstream.connect().cancel()
+//                                            // We don't need it when we start off
+//                                            if page_indecator != story_pages.count{
+//                                            page_indecator += 1
 //
-//                                                        self.timer.upstream.connect().cancel()
-////                                                        resetViewData()
-//                                                    }
-//                                                    else{
-                                                
-                                                self.timeRemaining -= 1
-//                                                    }
-                                            
-                                        }
-//                                                    else {
-//                                                    timeRemaining = 30
-////                                                                self.timer.upstream.connect().cancel()
-//                                                    self.timer = Timer.publish (every: 1, on: .current, in:
-//                                                        .common).autoconnect()
-                                            // Do the action on end of timer. Text would have been hidden by now
+//    //                                        spekerSound=true
+//    //                                        stopSound()
+////                                                    Load_data_from_DB()
+////                                                    if story_from_table?.strory_page_records ?? "" == ""{
+//                                                if spekerSound{
+//                                                    playSound()
 //                                                }
-                                }
-                                  }
+////                                                    }
+//                                            showing_image = !showing_image
+//                                            }
+//                                            else{
+//                                                stopSound()
+//                                                is_going_to_question=true
+//                                            }
+//
+//
+//                                            return
+//                                        }
+//                                        if self.timeRemaining > 0 {
+////                                                    if is_payment_success{
+////
+////                                                        self.timer.upstream.connect().cancel()
+//////                                                        resetViewData()
+////                                                    }
+////                                                    else{
+//
+//                                                self.timeRemaining -= 1
+////                                                    }
+//
+//                                        }
+////                                                    else {
+////                                                    timeRemaining = 30
+//////                                                                self.timer.upstream.connect().cancel()
+////                                                    self.timer = Timer.publish (every: 1, on: .current, in:
+////                                                        .common).autoconnect()
+//                                            // Do the action on end of timer. Text would have been hidden by now
+////                                                }
+//                                }
+//                                  }
 //                            Spacer()
 //}
                             VStack(spacing:4){
                                 Spacer()
 //                                if page_indecator != story_pages.count || story_Questions_List.count > 0{
                                     Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
-                                        if page_indecator != story_pages.count{
-                                        page_indecator += 1
-                                        
-//                                        spekerSound=true
-//                                        stopSound()
-                                        Load_data_from_DB()
-                                        if story_from_table?.strory_page_records ?? "" == ""{
-                                            if spekerSound{
-                                                playSound()
-                                            }
-                                        }
-                                        showing_image = !showing_image
-                                        }
-                                        else{
-                                            stopSound()
-                                            is_going_to_question=true
-                                        }
+                                        go_to_next_page()
 //                                        Load_data_from_DB()
                                     }
 
@@ -355,13 +357,33 @@ struct StoryPage: View {
                     }.padding(.vertical,20).onAppear{
                        if story_from_table?.strory_page_records ?? "" == ""{
                         if spekerSound{
-                        playSound()
+                            playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
                         }
                         }
                         }
                 }
                     
                     // Story Text Controller Starting
+                }.onReceive(timer) { _ in
+                    if is_auto_pay_anable{
+                    if self.timeRemaining > 0 {
+                        self.timeRemaining -= 1
+                    } else{
+                        self.timer.upstream.connect().cancel()
+                        if timeRemaining != -10{
+                            go_to_next_page()
+                        }
+                        
+//                        GoToNextStory()
+                        
+                        // Do the action on end of timer. Text would  have been hidden by now
+                        
+                    }
+                    }
+                    else {
+                        self.timer.upstream.connect().cancel()
+                    }
+                    
                 }
 //            }
 
@@ -379,6 +401,25 @@ struct StoryPage: View {
         .fullScreenCover(isPresented:  self.$is_going_to_question ){
             QueestionPage(story_pages_count:story_pages.count,page_story_id:page_story_id).navigationBarTitle(Text("Home"))
                 .navigationBarHidden(true)
+        }
+    }
+    func go_to_next_page(){
+        if page_indecator != story_pages.count{
+        page_indecator += 1
+        
+//                                        spekerSound=true
+//                                        stopSound()
+        Load_data_from_DB()
+        if story_from_table?.strory_page_records ?? "" == ""{
+            if spekerSound{
+                playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
+            }
+        }
+        showing_image = !showing_image
+        }
+        else{
+            stopSound()
+            is_going_to_question=true
         }
     }
     func changeUsingSound(){
@@ -431,12 +472,12 @@ struct StoryPage: View {
             isPlaying=false
         }
     }
-    func playSound(){
+    func playSound(radioURL:String){
         
         if ((player?.isPlaying) != nil || isPlaying) {
             stopSound()
         }
-        let radioURL = AppBase+story_pages[page_indecator-1].storyVoicePath!
+//        let radioURL = AppBase+story_pages[page_indecator-1].storyVoicePath!
         let urlstring = radioURL
         let url = NSURL(string: urlstring)
         print("the url = \(url!)")
@@ -445,6 +486,7 @@ struct StoryPage: View {
 //        else{
 //            stopSound()
 //        }
+        
     }
     func downloadFileFromURL(url:NSURL){
 
@@ -459,6 +501,7 @@ struct StoryPage: View {
     func play(url:NSURL) {
         print("playing \(url)")
         
+       
         do {
             self.player = try AVAudioPlayer(contentsOf: url as URL)
             player!.volume = 1.0
@@ -467,14 +510,20 @@ struct StoryPage: View {
 //            print(Int(player!.duration)/8)
             if is_auto_pay_anable{
                 
-//                timeRemaining = Int(player!.duration)
+                
 //                self.timer = Timer.publish (every: 1, on: .current, in:
 //                    .common).autoconnect()
-                
-                timeRemaining = 30
-               self.timer = Timer.publish (every: 1, on: .current, in:.common).autoconnect()
-                timer = timer.upstream.autoconnect()
-                timer =  timer.upstream.autoconnect()
+//
+//                timeRemaining = 30
+//               self.timer = Timer.publish (every: 1, on: .current, in:.common).autoconnect()
+//                timer = timer.upstream.autoconnect()
+//                timer =  timer.upstream.autoconnect()
+                DispatchQueue.main.async {
+//                    self.timeRemaining = Int(3)
+                    self.timeRemaining = Int(player!.duration)
+                    self.timer = Timer.publish (every: 1, on: .current, in:
+                                                       .common).autoconnect()
+                }
                 
             }
            
@@ -565,15 +614,17 @@ struct StoryPage: View {
 //}
 
 struct showImage : View {
-    @State var url:String
+    @Binding var url:String
     var body : some View{
         
         AsyncImage(
-            url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(url)" )! ),
+            url: (URL(string:"\(AppBase)/storyPageImages/966b408a-8777-4056-a9bd-aef07d8956f2.jpg)")!),
                             placeholder: { Image("kayan_logo").resizable()},
                             image: { Image(uiImage: $0).resizable()
                             }
-        )
+        ).onAppear{
+            print(url)
+        }
     }
     
 }

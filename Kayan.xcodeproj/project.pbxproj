@@ -52,6 +52,8 @@
 		FA2411172656680A0072B741 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2411162656680A0072B741 /* Stories.swift */; };
 		FA27594E26CA6020002C2F7A /* SignalRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27594D26CA6020002C2F7A /* SignalRService.swift */; };
 		FA27595026CCFBCE002C2F7A /* StopTimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27594F26CCFBCE002C2F7A /* StopTimerManager.swift */; };
+		FA27595426CD42FD002C2F7A /* ComingSoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27595326CD42FD002C2F7A /* ComingSoon.swift */; };
+		FA27595626CD46CC002C2F7A /* ComingSoon_Card_Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA27595526CD46CC002C2F7A /* ComingSoon_Card_Cards.swift */; };
 		FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630C265D2AA000EE341D /* Favorate.swift */; };
 		FA2C630F265D310F00EE341D /* VaforaiteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C630E265D310F00EE341D /* VaforaiteCard.swift */; };
 		FA308A762634D8230055DF88 /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA308A752634D8230055DF88 /* ForgetPassword.swift */; };
@@ -92,6 +94,8 @@
 		FAEDF90F263B3C5F00D9593F /* SendVarificationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEDF90E263B3C5F00D9593F /* SendVarificationCode.swift */; };
 		FAEDF914263B3DA200D9593F /* sandalLoadingIndicater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEDF913263B3DA200D9593F /* sandalLoadingIndicater.swift */; };
 		FAEEEA0726877A8700B944A6 /* PlayAppSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEEEA0626877A8700B944A6 /* PlayAppSound.swift */; };
+		FAF271B726CE4C0900F75AEB /* GiftStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF271B626CE4C0900F75AEB /* GiftStory.swift */; };
+		FAF271B926CE4E5100F75AEB /* Gift_Stories_Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF271B826CE4E5100F75AEB /* Gift_Stories_Card.swift */; };
 		FAF41168263F63730056EF70 /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF41167263F63730056EF70 /* HideKeyboard.swift */; };
 		FAF8829B26776F8900C492FC /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF8829A26776F8900C492FC /* ShareSheet.swift */; };
 /* End PBXBuildFile section */
@@ -145,6 +149,8 @@
 		FA2411162656680A0072B741 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		FA27594D26CA6020002C2F7A /* SignalRService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRService.swift; sourceTree = "<group>"; };
 		FA27594F26CCFBCE002C2F7A /* StopTimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimerManager.swift; sourceTree = "<group>"; };
+		FA27595326CD42FD002C2F7A /* ComingSoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoon.swift; sourceTree = "<group>"; };
+		FA27595526CD46CC002C2F7A /* ComingSoon_Card_Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoon_Card_Cards.swift; sourceTree = "<group>"; };
 		FA2C630C265D2AA000EE341D /* Favorate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorate.swift; sourceTree = "<group>"; };
 		FA2C630E265D310F00EE341D /* VaforaiteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaforaiteCard.swift; sourceTree = "<group>"; };
 		FA308A752634D8230055DF88 /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
@@ -185,6 +191,8 @@
 		FAEDF90E263B3C5F00D9593F /* SendVarificationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendVarificationCode.swift; sourceTree = "<group>"; };
 		FAEDF913263B3DA200D9593F /* sandalLoadingIndicater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sandalLoadingIndicater.swift; sourceTree = "<group>"; };
 		FAEEEA0626877A8700B944A6 /* PlayAppSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAppSound.swift; sourceTree = "<group>"; };
+		FAF271B626CE4C0900F75AEB /* GiftStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftStory.swift; sourceTree = "<group>"; };
+		FAF271B826CE4E5100F75AEB /* Gift_Stories_Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift_Stories_Card.swift; sourceTree = "<group>"; };
 		FAF41167263F63730056EF70 /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 		FAF8829A26776F8900C492FC /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +262,8 @@
 				FA4BB6C4265E88580064419A /* Story_group_section.swift */,
 				FA4BB6C8265EB7110064419A /* clips_group_section.swift */,
 				FADE881B26C3C38500536ED3 /* RatingView.swift */,
+				FA27595526CD46CC002C2F7A /* ComingSoon_Card_Cards.swift */,
+				FAF271B826CE4E5100F75AEB /* Gift_Stories_Card.swift */,
 			);
 			path = ViewModal;
 			sourceTree = "<group>";
@@ -280,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				B15B0AF5261B161C009A591C /* Gift.swift */,
+				FAF271B626CE4C0900F75AEB /* GiftStory.swift */,
 			);
 			path = Gift;
 			sourceTree = "<group>";
@@ -524,6 +535,7 @@
 		FA27595226CD41D7002C2F7A /* ComingSoon */ = {
 			isa = PBXGroup;
 			children = (
+				FA27595326CD42FD002C2F7A /* ComingSoon.swift */,
 			);
 			path = ComingSoon;
 			sourceTree = "<group>";
@@ -822,6 +834,7 @@
 				B1678AE92615B462001B0A9C /* RoundedCorner.swift in Sources */,
 				FA2411172656680A0072B741 /* Stories.swift in Sources */,
 				FA2411112656581C0072B741 /* ImageCacheKey.swift in Sources */,
+				FA27595626CD46CC002C2F7A /* ComingSoon_Card_Cards.swift in Sources */,
 				B1811D3426130E4E0021E0A0 /* SignIn.swift in Sources */,
 				B1713F2F2611C6BD00BCCCEE /* AppDelegate.swift in Sources */,
 				FADE881C26C3C38500536ED3 /* RatingView.swift in Sources */,
@@ -832,12 +845,14 @@
 				FA83A73826564C4C002F814E /* RecordingDataModel.swift in Sources */,
 				FA1FF0F32648752400233FFF /* StoriesModal.swift in Sources */,
 				FA4BB6C9265EB7110064419A /* clips_group_section.swift in Sources */,
+				FA27595426CD42FD002C2F7A /* ComingSoon.swift in Sources */,
 				FA0220DF2638D1B80088C93A /* TextBindingManager.swift in Sources */,
 				FA4BB6C7265EB59A0064419A /* ClibModal.swift in Sources */,
 				FA2C630D265D2AA000EE341D /* Favorate.swift in Sources */,
 				FA1185A3267E465C00359713 /* SandalStoryV2View.swift in Sources */,
 				FAB56379265A8CBE009C7D55 /* stories_table.swift in Sources */,
 				B1713F312611C6BD00BCCCEE /* SceneDelegate.swift in Sources */,
+				FAF271B726CE4C0900F75AEB /* GiftStory.swift in Sources */,
 				FA24110F2656573D0072B741 /* TemporaryImageCache.swift in Sources */,
 				B145D56C26148B8F00FAFAA1 /* StoriesSection.swift in Sources */,
 				FA4F54A026C53BC000E48AB6 /* WebViewModel.swift in Sources */,
@@ -885,6 +900,7 @@
 				FA963A4F267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift in Sources */,
 				B1596A882612F72000D06B1A /* Home.swift in Sources */,
 				B15B0AF6261B161C009A591C /* Gift.swift in Sources */,
+				FAF271B926CE4E5100F75AEB /* Gift_Stories_Card.swift in Sources */,
 				FA4F549E26C53BA200E48AB6 /* payment_WebView.swift in Sources */,
 				FA24110D265657070072B741 /* ImageLoader.swift in Sources */,
 			);

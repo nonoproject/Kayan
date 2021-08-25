@@ -28,6 +28,7 @@ struct Navbars: View {
         HStack(spacing:15){
             
             Image("logout").resizable().frame(width: 46, height: 46).padding(.leading,20).onTapGesture {
+                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.isLogin, Val: false)
                 isLogin = false
             }
             if !isFavorate{
@@ -35,6 +36,7 @@ struct Navbars: View {
                     .navigationBarHidden(true), isActive: self.$isGoToFavoratePressed) {}.hidden()
             }
             if !isProfile{
+                
             NavigationLink(destination: profile_view_to_move.navigationBarTitle(Text("Home"))
                     .navigationBarHidden(true), isActive: self.$isGoToProfilePressed) {}.hidden()
             }
@@ -62,7 +64,8 @@ struct Navbars: View {
             Image(systemName:"heart.circle.fill").resizable().backgroundFill(Color.red) .clipShape(Circle()).foregroundColor(.white).frame(width: 46, height:46)
                 .onTapGesture {
                     PlayAppSound().AppPlayAppSound()
-                    self.presentationMode.wrappedValue.dismiss()
+//                    self.presentationMode.wrappedValue.dismiss()
+//                    isBackPressed=true
                     isGoToFavoratePressed=true
                     
                 }
@@ -71,7 +74,8 @@ struct Navbars: View {
                 Image("profile").resizable().frame(width: 46, height: 46).padding(.trailing,20)
                 .onTapGesture {
                     PlayAppSound().AppPlayAppSound()
-                    self.presentationMode.wrappedValue.dismiss()
+//                    self.presentationMode.wrappedValue.dismiss()
+//                    isBackPressed=true
                     isGoToProfilePressed=true
                     
                 }

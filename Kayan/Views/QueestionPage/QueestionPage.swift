@@ -165,7 +165,7 @@ struct QueestionPage: View {
 //    }
 //    }
         .fullScreenCover(isPresented: self.$is_go_to_Gift){
-            Gift()
+            Gift( story_id: page_story_id)
         }
         .fullScreenCover(isPresented: self.$show_rate){
             Rate(page_story_id: page_story_id)
@@ -174,6 +174,9 @@ struct QueestionPage: View {
         }.navigationBarTitle(Text("Home"))
         .navigationBarHidden(true).alert(isPresented: $showing_alert) {
             Alert(title: Text("الحالة"), message: Text(alert_message), dismissButton: .default(Text("حسنا")))
+        }
+        .onAppear{
+            print(page_story_id)
         }
 
 //        }

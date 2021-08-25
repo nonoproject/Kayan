@@ -57,6 +57,10 @@ class Connection:NSData
         case "GetStoryPages":
             link = baseUrl+"Story/GetStoryPages/"
             break
+        case "GetComingSoonStories":
+            link = baseUrl+"Story/GetComingSoonStories"
+            break
+            
         case "AddToFavourite":
             link = baseUrl+"Story/AddToFavourite/"
             break
@@ -69,6 +73,14 @@ class Connection:NSData
         case "StorySubscribe":
             link = baseUrl+"Story/StorySubscribe"
             break
+        case "StoryGift":
+            link = baseUrl+"Story/StoryGift"
+            break
+        case "GetGiftStory":
+            link = baseUrl+"Story/GetGiftStory/\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))"
+            break
+            
+            
             
             
             

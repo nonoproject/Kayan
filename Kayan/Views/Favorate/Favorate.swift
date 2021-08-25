@@ -9,15 +9,9 @@ import SwiftUI
 import SwiftyJSON
 struct Favorate: View {
     @State var id:Int=0
-//    @State var selected_id=2
     @State var title:String=""
-//    var imageName=["quran","meditation","childrenStory"]
-//    var storyName=["قصص براعم","قصص الابطال","قصص القادة"]
-//    var storyAge=["5-3","8-6","9-12"]
     @State var is_go_to_story_page:Bool=false
-//    @Environment(\.presentationMode) var presentation
-//    var horizontalPaddig:CGFloat=30.0
-//    @Environment(\.presentationMode) var presentationModeEdit: Binding<PresentationMode>
+
     @State var stories:[StroryModal]=[]
     var body: some View {
         GeometryReader{geo in

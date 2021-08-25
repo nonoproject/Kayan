@@ -16,13 +16,14 @@ struct Story_Page_Modal: Decodable ,Hashable {
     let id: Int?
     let name, imageURL, storyText: String?
     let storyVoicePath: String?
+    let storyVoiceWithMusicPath: String?
     let storyID: Int?
     let story: String?
     let createAt: String?
     let updateAt: String?
     var selected_image: AsyncImage< Image >  {
         return  AsyncImage(
-            url: (URL(string:"https://kayanapp.ibtikar-soft.sa\(imageURL ?? "")" )! ),
+            url: (URL(string:"\(AppBase)\(imageURL ?? "")" )! ),
                             placeholder: { Image("kayan_logo").resizable()},
                             image: { Image(uiImage: $0).resizable()
                             }
@@ -31,7 +32,7 @@ struct Story_Page_Modal: Decodable ,Hashable {
     enum CodingKeys: String, CodingKey {
         case id, name
         case imageURL = "imageUrl"
-        case storyText, storyVoicePath, storyID, story, createAt, updateAt
+        case storyText, storyVoicePath,storyVoiceWithMusicPath, storyID, story, createAt, updateAt
     }
    
 }

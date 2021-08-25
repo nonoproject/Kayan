@@ -14,7 +14,7 @@ struct Pay_story: View {
     @State var phoneNumberError:Bool=false
     
     @State var name:String=""
-    @State var cobone:String="TEST2021"
+    @State var cobone:String=""
     @State var coboneError:Bool=false
     @State var checked:Bool=false
     @State var isCobonActivated:Bool=false

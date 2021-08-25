@@ -9,7 +9,7 @@ import SwiftUI
 
 import SwiftyJSON
 struct SignIn: View {
-    @State var password="4324323"
+    @State var password="123456"
     @State var passwordError:Bool=false
     @State var phoneNumber=""
     @State var phoneNumberError:Bool=false
@@ -22,7 +22,6 @@ struct SignIn: View {
 //    @State private var  isForgetPassword=false
     @State  var  showsAlert:Bool=false
     @State  var  view_loading:Bool=false
-    
     @State  var  message:String=""
     @ObservedObject var textBindingManager = TextBindingManager(limit: 10)
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
@@ -67,7 +66,8 @@ struct SignIn: View {
                         }
                         Spacer()
                     }
-                }
+                
+                Spacer()
                 VStack{
                 Spacer()
             HStack{
@@ -131,9 +131,10 @@ struct SignIn: View {
 //                    Spacer()
                 }
                 Spacer()
-                Image("kayanSide").resizable().frame(width: 220,height: geo.size.height)
+                Image("kayanSide").resizable().frame(width: 220,height: UIScreen.screenHeight)
             }
                 Spacer()
+                }
                 if view_loading{
                     ZStack{
                         Color.Appliver
@@ -144,7 +145,7 @@ struct SignIn: View {
                 
             }
                 }
-                
+//                Spacer()
         }.edgesIgnoringSafeArea(.all)
     }.alert(isPresented: self.$showsAlert) {
         Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )

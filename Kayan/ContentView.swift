@@ -10,11 +10,15 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
     
+    @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
+    @State var timeRemaining = -1
     var body: some View {
-        
+//
         SplashScreen().edgesIgnoringSafeArea(.all)
+//
+//        Gift()
 //            .statusBar(hidden: true)
-//        SandalStoryV2View(id:3)
+//        GiftStory(id:3)
         
 //        payment_WebView(webView: model.webView)
 //            Pay_story()
@@ -58,7 +62,7 @@ struct ContentView: View {
 //        Stories()
 //        StoryPage( audioRecorder: AudioRecorder(), page_story_id: 2, storyQuestionsList: [])
 //        Test()//Reading Story
-//        Gift()
+        
 //        QueestionPage()
 //        
 ////        SignIn()

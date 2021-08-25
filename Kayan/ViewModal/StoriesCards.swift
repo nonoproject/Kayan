@@ -143,11 +143,8 @@ struct Stories_Card_Cards: View {
                     .onTapGesture {
                         print(imageName.storyVoiceSample)
                         if imageName.storyVoiceSample != nil{
-                        playSound()
+                            playSound()
                         }
-//                        add_story_to_favorit(story_id: selectd_story_page_MenuID)
-//                                isGoToFavoratePressed=true
-                        
                     }
             }
 //            Text(imageName.name!).frame(width: width-100, height: 60).background(Color.AppPrimaryColor).foregroundColor(Color.black).cornerRadius(10)
