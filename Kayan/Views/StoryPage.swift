@@ -12,7 +12,10 @@ import AVFoundation
 struct StoryPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // timer
-    
+    @State var isAtMaxScale = false
+   
+      private let animation = Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)
+    private let maxScale: CGFloat = 1.3
      var uAnimationDuration: Double { return 3.0 }
     
     /// player
@@ -85,10 +88,18 @@ struct StoryPage: View {
                                                 Image(systemName: "record.circle.fill")
                                                     .resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
                                             }
+                                            
                                         }
                                     }
                                     else{
-                                        Image(systemName: "play.fill").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).onTapGesture {
+                                        Image(systemName: "play.fill").resizable().frame(width: 25, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                            .scaleEffect(isAtMaxScale ? maxScale : 1)
+                                                        .onAppear {
+                                                            withAnimation(self.animation, {
+                                                                self.isAtMaxScale.toggle()
+                                                            })
+                                                        }
+                                            .onTapGesture {
                                             if spekerSound{
                                                 play_audio_from_local()
                                             }
@@ -139,7 +150,31 @@ struct StoryPage: View {
                                 Spacer()
                                 Spacer()
                                     Spacer()
-                                
+//                                play previs
+                                VStack{
+                                    Spacer()
+                                                    if page_indecator > 1 {
+                                Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
+                                    page_indecator -= 1
+                                    
+    //                                spekerSound=true
+                                    if spekerSound{
+                                    stopSound()
+                                }
+                                    Load_data_from_DB()
+                                    if story_from_table?.strory_page_records ?? "" == ""{
+                                        if spekerSound{
+                                            playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
+                                        }
+    //                                playSound()
+                                    }
+                                    showing_image = !showing_image
+                                }
+                                                    }
+                                }.frame(width: 40,height: 15)//.offset(y:10)
+//                                .padding(.bottom,20)
+                                .padding(.bottom,40)
+
                             }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
                         
                         
@@ -157,13 +192,6 @@ struct StoryPage: View {
                         }
                         
                         }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                         else{
 
                             ZStack{
@@ -236,107 +264,8 @@ struct StoryPage: View {
                             Spacer()
                             Spacer()
                                 Spacer()
-                        }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
-                        
-                        // Right Controller End
-                        
-
-                    }
-                    // Story Text Controller Starting
-                    
-                    if story_pages.count > 0{
-                    VStack(alignment: .leading){
-
-                        Spacer()
-                        HStack( spacing: 0){
-                            VStack{
-                                Spacer()
-                                                if page_indecator > 1 {
-                            Image(systemName: "play.fill").resizable().frame(width: 35, height: 25).padding(5).background(Color.Appliver).foregroundColor(.white).cornerRadius(5).rotationEffect(Angle(degrees: 180)).onTapGesture {
-                                page_indecator -= 1
-                                
-//                                spekerSound=true
-                                if spekerSound{
-                                stopSound()
-                            }
-                                Load_data_from_DB()
-                                if story_from_table?.strory_page_records ?? "" == ""{
-                                    if spekerSound{
-                                        playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)
-                                    }
-//                                playSound()
-                                }
-                                showing_image = !showing_image
-                            }
-                                                }
-                            }.frame(width: 40,height: 15)//.offset(y:10)
-                            .padding(.bottom,20)
-//                            ZStack{
-                         //   Color.blue
-                            Spacer()
-                            HStack{
-                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى").modifier(customFountCR())
-                                    
-                                //.padding(5).cornerRadius(20)
-
-                                    .multilineTextAlignment(.trailing)
-                            }//.background(Color.white.opacity(0.6))
-                            .padding(.horizontal,20).cornerRadius(20)
-//                            dsadasdas
-//                            .onReceive(timer) { _ in
-//                                print(timeRemaining)
-//                                if !is_auto_pay_anable || self.timeRemaining < 0{
-//                                    self.timer.upstream.connect().cancel()
-//                                    return
-//                                }
-//                                else{
-//                                        if self.timeRemaining <= 0 {
-//                                            self.timer.upstream.connect().cancel()
-//                                            // We don't need it when we start off
-//                                            if page_indecator != story_pages.count{
-//                                            page_indecator += 1
-//
-//    //                                        spekerSound=true
-//    //                                        stopSound()
-////                                                    Load_data_from_DB()
-////                                                    if story_from_table?.strory_page_records ?? "" == ""{
-//                                                if spekerSound{
-//                                                    playSound()
-//                                                }
-////                                                    }
-//                                            showing_image = !showing_image
-//                                            }
-//                                            else{
-//                                                stopSound()
-//                                                is_going_to_question=true
-//                                            }
-//
-//
-//                                            return
-//                                        }
-//                                        if self.timeRemaining > 0 {
-////                                                    if is_payment_success{
-////
-////                                                        self.timer.upstream.connect().cancel()
-//////                                                        resetViewData()
-////                                                    }
-////                                                    else{
-//
-//                                                self.timeRemaining -= 1
-////                                                    }
-//
-//                                        }
-////                                                    else {
-////                                                    timeRemaining = 30
-//////                                                                self.timer.upstream.connect().cancel()
-////                                                    self.timer = Timer.publish (every: 1, on: .current, in:
-////                                                        .common).autoconnect()
-//                                            // Do the action on end of timer. Text would have been hidden by now
-////                                                }
-//                                }
-//                                  }
-//                            Spacer()
-//}
+                            
+                            
                             VStack(spacing:4){
                                 Spacer()
 //                                if page_indecator != story_pages.count || story_Questions_List.count > 0{
@@ -351,10 +280,45 @@ struct StoryPage: View {
                                         Text("\(story_pages.count)").frame(width: 18, height: 20).background(Color.Appliver).foregroundColor(Color.white).cornerRadius(2)
                                     }.frame(width: 40,height: 15).padding(.bottom,20)
 //                            }
-                        }.frame(width: 40,height: 15)
-                        }.padding(.horizontal,10)//.padding(.bottom,20)
+                            }.frame(width: 40,height: 15).padding(.bottom,30)
 
-                    }.padding(.vertical,20).onAppear{
+                        }.padding(10).background(Color.AppPrimaryColor.opacity(0.2))
+                        
+                        // Right Controller End
+                        
+
+                    }
+                    // Story Text Controller Starting
+                    
+                    if story_pages.count > 0{
+                    
+
+                        Spacer()
+                        HStack( spacing: 0){
+//                            ZStack{
+                         //   Color.blue
+                            
+                            VStack{
+                                Spacer()
+                                Text(story_pages[page_indecator-1].storyText ?? "عفوا لايوجد محتوى")//
+                                    .font(.custom("Cairo-Black", size: 14))
+                                    .multilineTextAlignment(.trailing)
+                                    .lineSpacing(1)
+//                                    .lineSpacing(4)
+//                                    .modifier(customFountCR())
+                                    .padding(.bottom,8)
+                            }
+                                //.padding(5).cornerRadius(20)
+
+                                    
+                            //.background(Color.white.opacity(0.6))
+                            
+//
+
+
+                        }.frame(width: UIScreen.screenWidth*0.8)
+                        
+                        .padding(.horizontal,20).cornerRadius(20).onAppear{
                        if story_from_table?.strory_page_records ?? "" == ""{
                         if spekerSound{
                             playSound(radioURL: AppBase+story_pages[page_indecator-1].storyVoicePath!)

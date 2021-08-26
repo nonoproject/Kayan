@@ -10,7 +10,7 @@ import SwiftUI
 struct customFountCR : ViewModifier {
         func body(content: Content) -> some View {
             content
-                .font(.custom("Cairo-Regular", size: 17))
+                .font(.custom("Cairo-Regular", size: 20))
         }
     }
 struct customFountCB : ViewModifier {

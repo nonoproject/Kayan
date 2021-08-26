@@ -16,7 +16,7 @@ struct SignIn: View {
     @State var isSignUp = false
     @State var isHomeView = false
     @State var isForgetPassword = false
-    
+    @State private var  displayItem = -1
 //    @State private var ErrorMessage="123456"
 //    @State private var IsError=false
 //    @State private var  isForgetPassword=false
@@ -77,7 +77,7 @@ struct SignIn: View {
 //            }
                 Spacer()
                 VStack{
-//                    Spacer()
+                    Spacer()
                     
                     VStack{
 //                        Spacer()
@@ -126,26 +126,45 @@ struct SignIn: View {
                             })
                             
                         }
-//                        Spacer()
+                        Spacer()
                     }.frame(width:370,height: 250).padding(.bottom,30)
-//                    Spacer()
+                    Spacer()
                 }
                 Spacer()
-                Image("kayanSide").resizable().frame(width: 220,height: UIScreen.screenHeight)
-            }
-                Spacer()
-                }
-                if view_loading{
-                    ZStack{
-                        Color.Appliver
-                            .opacity(0.66)
-                LoadinIndicator()
-                        
-                    }.edgesIgnoringSafeArea(.all)
                 
-            }
+            }.padding(.trailing,UIScreen.screenWidth*0.3)
+                Spacer()
                 }
-//                Spacer()
+//
+                }
+                HStack{
+                
+                    Spacer()
+                    Image("kayanSide").resizable().frame(width: UIScreen.screenWidth*0.3,height: UIScreen.screenHeight)
+                }
+                
+                
+                
+                if (displayItem != -1) {
+                    SendVarificationCode(completeSignUpPassed: $isLogin, path:"is_come_form_login_operation", displayItem: $displayItem, phoneNumber: StringFunction().numberStrToEnglish(numberStr:textBindingManager.text))
+             
+                                        }
+                             if view_loading{
+                                 ZStack{
+                                     Color.Appliver
+                                         .opacity(0.66)
+                             LoadinIndicator()
+                                     
+                                 }.edgesIgnoringSafeArea(.all)
+                             
+                         }
+                
+                
+                
+                
+                
+                
+                
         }.edgesIgnoringSafeArea(.all)
     }.alert(isPresented: self.$showsAlert) {
         Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )
@@ -191,6 +210,8 @@ struct SignIn: View {
             print(sectionR)
             view_loading=false
             if sectionR["responseCode"].int == 200{
+                if sectionR["response"]["isVerfiy"].boolValue{
+                
 //
 ////                print(sectionR["response"]["userId"].int)
 //                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.mobileNo, Val:sectionR["response"]["customer"]["phone"].stringValue)
@@ -205,7 +226,11 @@ struct SignIn: View {
 //
                 isLogin = true
             
-                
+                }
+                else{
+                    
+                    displayItem = 2
+                }
             }
             else if sectionR["responseCode"].int == 405{ // user not active
 //                displayItem=1

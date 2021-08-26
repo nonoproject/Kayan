@@ -264,7 +264,7 @@ struct SignUp: View {
     }
     func FormValidation() -> Bool {
         self.fullnameError = (self.fullname.isEmpty || self.fullname.count < 3) ? true : false
-        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 10 || !self.phoneNumber.hasPrefix("05")) ? true : false
+        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 10 )//|| self.phoneNumber.hasPrefix("05")) ? true : false
 //        self.PassWordError = self.PassWord.isEmpty ? true : false
 //        self.RePassWordError = self.RePassWord.isEmpty ? true : false
         if  self.PassWord.isEmpty || PassWord != RePassWord {//||
@@ -275,13 +275,21 @@ struct SignUp: View {
             self.PassWordError = false
             self.RePassWordError=false
         }
-         if phoneNumberError{
+        if phoneNumberError{
             message=" خطاء في رقم الجوال"
             showsAlert=true
         }
-        else if fullnameError{
+        else {
+            self.phoneNumberError = false
+            self.phoneNumberError=false
+        }
+        if fullnameError {
             message="الاسم غير صحيح"
             showsAlert=true
+        }
+        else {
+            self.fullnameError = false
+            self.fullnameError=false
         }
 //        else  if RePassWordError{
 //            message="كلمة المرور يجب ان تكوت متطابقة وغير خالية"

@@ -51,14 +51,7 @@ struct StoriesCards: View {
 //                .font(.custom("Sukar black", size: 20))
                 Text(storyName).font(.system(size: 18,weight: .semibold, design: .monospaced))
                     .frame(width: UIScreen.card_width*0.5, height: UIScreen.card_heigh*0.15).background(Color.AppPrimaryColor).cornerRadius(10)
-                .offset(y:-UIScreen.card_heigh*0.08).onTapGesture {
-                     title=storyName
-                    print(storyID)
-                    print(storyAge)
-                    selectdMenuID=storyID
-                    isSignIn=true
-                    PlayAppSound().AppPlayAppSound()
-                }
+                .offset(y:-UIScreen.card_heigh*0.08)
             }
 //            else{
 //                VStack{
@@ -79,7 +72,14 @@ struct StoriesCards: View {
 //                }.offset(y:-30)
 //            }
         }
-       
+        .onTapGesture {
+             title=storyName
+            print(storyID)
+            print(storyAge)
+            selectdMenuID=storyID
+            isSignIn=true
+            PlayAppSound().AppPlayAppSound()
+        }
             
        
         }
