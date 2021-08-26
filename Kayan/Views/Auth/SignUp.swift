@@ -67,7 +67,7 @@ struct SignUp: View {
                     Spacer()
 //                    VStack{
                         
-                        VStack(spacing:25){
+                        VStack(spacing:10){
                             Spacer()
                         HStack{
                             TextField("اسم المستخدم", text: $fullname).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
@@ -83,11 +83,17 @@ struct SignUp: View {
                         }
 //                        Spacer()
                         HStack{
-                            SecureField("*****", text: $PassWord).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            SecureField("*****", text: $PassWord).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $PassWordError))
                             Spacer()
                             Text("كلمة المرور")
                             
                         }
+                            HStack{
+                                SecureField("*****", text: $RePassWord).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $RePassWordError))
+                                Spacer()
+                                Text(" إعادة كلمة المرور")
+                                
+                            }
 //                        }
 //                        Spacer()
                         HStack(spacing:20){
@@ -261,7 +267,7 @@ struct SignUp: View {
         self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 10 || !self.phoneNumber.hasPrefix("05")) ? true : false
 //        self.PassWordError = self.PassWord.isEmpty ? true : false
 //        self.RePassWordError = self.RePassWord.isEmpty ? true : false
-        if  self.PassWord.isEmpty{//PassWord != RePassWord {//||
+        if  self.PassWord.isEmpty || PassWord != RePassWord {//||
             self.PassWordError = true
             self.RePassWordError=true
         }
