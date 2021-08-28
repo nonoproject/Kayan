@@ -33,6 +33,13 @@ class Connection:NSData
         case "RestChangePassword":
             link = baseUrl+"Customer/RestChangePassword"
             break
+        case "ChangePassword":
+            link = baseUrl+"Customer/ChangePassword"
+            break
+        case "GetCustomerInfo":
+            link = baseUrl+"Customer/GetCustomerInfo/\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))"
+            break
+            
             
 // Story
         case "GetMenu":

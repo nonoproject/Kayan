@@ -12,6 +12,7 @@ public struct CTFStyleClearBackground : TextFieldStyle {
     var cornerRadius:CGFloat=20
     var height:CGFloat=50
     var lineWidth:CGFloat=0.6
+    var foregroundColor=Color.white
     
     @Binding var showError:Bool
    public func _body(configuration: TextField<Self._Label>) -> some View {
@@ -22,7 +23,7 @@ public struct CTFStyleClearBackground : TextFieldStyle {
            .frame(width: width, height:height)
            .background(
                RoundedRectangle(cornerRadius: 5)
-               .foregroundColor(Color.white)
+               .foregroundColor(foregroundColor)
                .background(RoundedRectangle(cornerRadius: 5)
                             .stroke((showError ) ? Color(#colorLiteral(red: 0.8172891695, green: 0.3017711901, blue: 0.3019049658, alpha: 0.9075610017)) : Color.gray, lineWidth:showError  ? 1.5 : lineWidth)
                )

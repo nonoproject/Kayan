@@ -154,6 +154,7 @@ var body: some View {
                     isLogin = true
                 }
                 else {
+                    VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.fullName, Val:sectionR["response"]["name"].stringValue)
                     
                     VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userVarifyId, Val:sectionR["response"]["id"].intValue)
                     completeSignUpPassed=true

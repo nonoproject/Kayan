@@ -10,8 +10,7 @@ import SwiftyJSON
 import SwiftUIX
 import Combine
 struct Home: View {
-    
-    var imageName=["quran","meditation","childrenStory"]
+    var imageName=["childrenStory","meditation","quran"]
     var storyName=["تلاوة قرآنية","مقاطع إسترخاء","قصص"]
     @State var isSignIn = false
     @State var title = ""
@@ -20,7 +19,6 @@ struct Home: View {
     var body: some View {
         NavigationView{
             GeometryReader{geo in
-                
                     NavigationLink(destination: StoriesSection(id: selectdMenuID, section_title: title).navigationBarTitle(Text("Home"))
                             .navigationBarHidden(true), isActive: self.$isSignIn) {}.hidden()
 

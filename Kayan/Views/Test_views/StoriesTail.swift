@@ -11,8 +11,8 @@ struct StoriesTail: View {
     
     @State var isPaid:Bool
     var subscribePrice:String=""
-    @State var offsetY:CGFloat=0.0
-    @State var ViewOpacity:Double=0.0
+    @State var offsetY:CGFloat=0
+    @State var ViewOpacity:Double=0
     @State var isSubscribed:Bool
     var body: some View {
         HStack(spacing:10){
@@ -45,11 +45,6 @@ struct StoriesTail: View {
         }.frame(width:170).offset(x:40,y:-offsetY)
      .opacity(ViewOpacity)
      .onAppear{
-//         print("dsds")
-//         kkkkkdsds=0
-//         kkkkk=0
-        
-//                                                    kkkkkd=0
          withAnimation(.easeIn(duration: 0.5)) {
             offsetY+=8
          }

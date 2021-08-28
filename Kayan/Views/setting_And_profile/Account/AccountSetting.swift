@@ -6,11 +6,20 @@
 //
 
 import SwiftUI
-
+import SwiftyJSON
 struct AccountSetting: View {
     @State var phoneNumber=""
     @State var phoneNumberError:Bool=false
+    @State var user_name=""
+    @State var user_nameError:Bool=false
+    @State var password=""
+    @State var rePasswordError:Bool=false
+    @State var rePassword=""
+    @State var passwordError:Bool=false
     @State var isSignUp = false
+    @State  var  showsAlert:Bool=false
+    @State  var  view_loading:Bool=false
+    @State  var  message:String=""
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
           
@@ -34,20 +43,20 @@ struct AccountSetting: View {
                             Spacer()
                             VStack(spacing:0){
                                 HStack(spacing:100){
-                                Rectangle().fill(Color.AppPrimaryColor).frame(width:5,height: 17)
-                                    Rectangle().fill(Color.AppPrimaryColor).frame(width:5,height: 17)
-                            }.frame(width: 220)
-                                Rectangle().fill(Color.AppPrimaryColor).frame(width: 220,height: 80).overlay(
+                                Rectangle().fill(Color.AppPrimaryColor).frame(width:5,height: 12)
+                                    Rectangle().fill(Color.AppPrimaryColor).frame(width:5,height: 12)
+                                }.frame(width: 220).cornerRadius(20)
+                                Rectangle().fill(Color.AppPrimaryColor).frame(width: 190,height: 70).overlay(
                                     VStack{
                                         Text(" إعدادت الحساب")
                                     }.foregroundColor(.black).font(.system(size: 15), weight: .bold)
-                                )
+                                ).cornerRadius(10)
                                 Spacer()
                             }
                             Spacer()
                         }
                     }
-            HStack(spacing:30){
+            HStack(spacing:10){
                 VStack{
                     
                 
@@ -58,31 +67,33 @@ struct AccountSetting: View {
     Spacer()
                 }.padding([.top,.leading],50)
                 Spacer()
+                Spacer()
                     
-                    
-                    VStack(spacing:15){
+                    VStack(spacing:8){
                         Spacer()
                         HStack{
-                            TextField("", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            TextField("", text: $user_name).textFieldStyle(CTFStyleClearBackground(width: 350, cornerRadius: 20, height: 50,foregroundColor:.AppPrimaryColor, showError: $user_nameError)).disabled(true)
                             Spacer()
                             HStack{
                                 Spacer()
                                 Text("الاسم")
                             }.frame(width:130)
+                        
                         }
                         
                         HStack{
-                            TextField("", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            TextField("", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 350, cornerRadius: 20, height: 50,foregroundColor:.AppPrimaryColor, showError: $phoneNumberError)).disabled(true)
                             Spacer()
                             HStack{
                                 Spacer()
                                 Text("رقم الهاتف")
                             }.frame(width:130)
+                            
                         }
                         
                         HStack{
                             
-                            SecureField("", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            SecureField("", text: $password).textFieldStyle(CTFStyleClearBackground(width: 350, cornerRadius: 20, height: 50, showError: $passwordError))
                             
                             Spacer()
                             
@@ -93,7 +104,7 @@ struct AccountSetting: View {
                             
                         }
                         HStack{
-                            SecureField("", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            SecureField("", text: $rePassword).textFieldStyle(CTFStyleClearBackground(width: 350, cornerRadius: 20, height: 50, showError: $rePasswordError))
                             Spacer()
                             HStack{
                                 Spacer()
@@ -101,17 +112,87 @@ struct AccountSetting: View {
                             }.frame(width:130)
                         }
                         HStack{
-                            Text("حفظ التغييرات").frame(width: 255,height: 40).background(Color.AppPrimaryColor).cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
+                            Text("حفظ التغييرات").frame(width: 255,height: 40).background(Color.AppPrimaryColor).cornerRadius(10).font(.system(size: 15)).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))).onTapGesture {
+                                if passFIledValidation(){
+                                    updateProfileChangePassword()
+                                }
+                            }
                             Spacer()
                         }
                         
-                    }.frame(width:400).padding(.bottom,20)
+                    }.frame(width:400).padding(.bottom,20).padding(.trailing,50)
                 Spacer()
                 Image("kayanSide").resizable().frame(width: 220,height: geo.size.height)
                 }
                 
+            }.onAppear{
+                getProfile()
+                user_name = VarUserDefault.SysGlobalData.getGlobal(key: VarUserDefault.SysGlobalData.fullName)
+                
+            }
+            .alert(isPresented: self.$showsAlert) {
+                Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )
             }
             
-    }.environment(\.horizontalSizeClass, .compact)
+        }.environment(\.horizontalSizeClass, .compact).onTapGesture {
+            hideKeyboard()
+        }
     }
+    func passFIledValidation()->Bool{
+        passwordError = password.count < 4
+        rePasswordError = rePassword.count < 4
+        
+        if rePasswordError{
+            message = " الرجاء كتابة كلمة السر الجديدة "
+//            showsAlert=true
+            
+        }
+        if passwordError{
+            message = " الرجاء كتابة كلمة السر القديمة "
+//            showsAlert=true
+            
+        }
+        showsAlert = passwordError || rePasswordError
+        return !showsAlert
+    }
+    func getProfile(){
+        
+            print( Connection().getUrl(word: "GetCustomerInfo"))
+            //        RestAPI().getData(endUrl: Connection().getUrl(word: "GetStories")+"\(id)", parameters: [:])
+            RestAPI().getData(endUrl: Connection().getUrl(word: "GetCustomerInfo"), parameters: [:]){ result in
+                
+                let sectionR = JSON(result!)
+                print(sectionR)
+                if sectionR["responseCode"].int == 200{
+                    phoneNumber = "0"+sectionR["response"]["phoneNo"].stringValue
+                }
+                
+            } onError: { error in
+                print(error)
+            }
+        }
+    func updateProfileChangePassword(){
+        let prams = ["UserID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"NewPassword":rePassword,"CurrentPassword":password] as [String : Any]
+
+            print( Connection().getUrl(word: "ChangePassword"))
+        print( prams)
+            
+            RestAPI().postData(endUrl: Connection().getUrl(word: "ChangePassword"), parameters:prams){ result in
+                
+                let sectionR = JSON(result!)
+                print(sectionR)
+                if sectionR["responseCode"].int == 200{
+                    message = "تم التعديل بنجاح"
+                    showsAlert=true
+//                    phoneNumber = "0"+sectionR["response"]["phoneNo"].stringValue
+                }
+                else{
+                    message = sectionR["responseMasg"].stringValue
+                    showsAlert=true
+                }
+                
+            } onError: { error in
+                print(error)
+            }
+        }
 }

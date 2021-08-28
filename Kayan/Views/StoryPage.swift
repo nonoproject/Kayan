@@ -224,7 +224,8 @@ struct StoryPage: View {
                         VStack( spacing: 15){
                             Spacer()
                             VStack(spacing:6){
-                            enable_disableBtn(imageName: "music.quarternote.3", isEnabel: $musicSound).onTapGesture {
+                                
+                                enable_disableBtn(imageName: "music.quarternote.3", isEnabel: $musicSound,image_sourse: "rington").onTapGesture {
 
                                 musicSound.toggle()
                                 if musicSound{
@@ -254,12 +255,15 @@ struct StoryPage: View {
 //                            Spacer()
         //                    if page_indecator == 4 {
                             VStack{
-                                Image(is_auto_pay_anable ? "play" : "no-play").resizable().frame(width: 12, height: 12).padding(10).background(Color.Appliver).foregroundColor(.white).cornerRadius(5)
+                                Image(is_auto_pay_anable ? "play" : "no-play").resizable().frame(width: 40, height: 40)//.padding(10)
+//                                    .background(Color.Appliver)
+                                    .foregroundColor(.white).cornerRadius(5)
                                 .onTapGesture {
                                     is_auto_pay_anable = !is_auto_pay_anable
                                     VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.is_auto_pay_anable, Val: is_auto_pay_anable)
                                 }
-                            }.frame(width: 40,height: 40).background(Color.AppPrimaryColor).cornerRadius(5).padding(.top,35)
+                            }.frame(width: 40,height: 40)//.background(Color.AppPrimaryColor)
+                            .cornerRadius(5).padding(.top,35)
         //                    }
                             Spacer()
                             Spacer()
@@ -382,7 +386,10 @@ struct StoryPage: View {
         showing_image = !showing_image
         }
         else{
-            stopSound()
+//            if ((player?.isPlaying) != nil) {
+                player!.stop()
+                isPlaying=false
+//            }
             is_going_to_question=true
         }
     }

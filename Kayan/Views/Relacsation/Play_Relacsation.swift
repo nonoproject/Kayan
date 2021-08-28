@@ -23,7 +23,6 @@ struct PlayRelacsation:View {
                     play=false
                     self.presentationMode.dismiss()
                 }){
-                    
                     Image(systemName: "chevron.left") // set image here
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(.white)
@@ -36,6 +35,7 @@ struct PlayRelacsation:View {
         }.ignoresSafeArea().ignoresSafeArea(.all, edges: .all)
     }
 }
+
 struct Play_Relacsation: UIViewControllerRepresentable {
     var videoURL: URL?
     private var player: AVPlayer {
@@ -48,10 +48,7 @@ struct Play_Relacsation: UIViewControllerRepresentable {
         controller.modalPresentationStyle = .fullScreen
         controller.player = player
         controller.showsPlaybackControls=true
-        
         controller.player?.play()
-        
-        
         return controller
     }
 
@@ -59,4 +56,5 @@ struct Play_Relacsation: UIViewControllerRepresentable {
 
     }
 }
+
 

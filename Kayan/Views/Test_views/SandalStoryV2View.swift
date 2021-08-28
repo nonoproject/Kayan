@@ -158,9 +158,8 @@ struct SandalStoryV2View: View {
                                                     
                                                 )
                                             if self.BackagePosition[self.CardIndecator] == BackagePosition[index]{
-//                                                StoriesTail(isPaid: , isSubscribed: stories[CardIndecator].isSubscribed)
+
                                                 StoriesTail(isPaid: stories[CardIndecator].isPaid!, isSubscribed: stories[CardIndecator].isSubscribed!)
-//                                                free_payed_view(isPaid: stories[CardIndecator].isPaid!, subscribePrice: stories[CardIndecator].subscribePrice!, offsetY: 0, ViewOpacity: 0, isSubscribed: stories[CardIndecator].isSubscribed!)
                                             }
                                         }
                                         
@@ -297,13 +296,15 @@ struct SandalStoryV2View: View {
 //        withAnimation(.easeIn(duration: 0.5)) {//1.5
             
             BackageHight[CardIndecator] =   CGFloat(UIScreen.screenHeight*0.4)
-            BackagePosition[CardIndecator] = (UIScreen.screenWidth*0.4)+50
+//            BackagePosition[CardIndecator] = (UIScreen.screenWidth*0.4)+50
             
             CardIndecator -= 1
             
             BackagePosition[CardIndecator] = 0
             BackageHight[CardIndecator] =   UIScreen.screenHeight*0.5
 //        }
+        
+        
         for i in 1...stories.count-1{
                     if i != CardIndecator{
                         if i > CardIndecator{
@@ -314,6 +315,9 @@ struct SandalStoryV2View: View {
                         }
                         BackageHight[i]=UIScreen.screenHeight*0.4
                     }
+            if CardIndecator == stories.count-2{
+                BackageHight[i]=UIScreen.screenHeight*0.5
+            }
             
         }
     }

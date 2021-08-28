@@ -94,10 +94,18 @@ struct ContentView_Previews: PreviewProvider {
 struct enable_disableBtn : View {
     var imageName:String
    @Binding var isEnabel:Bool
+    var image_sourse:String = ""
+    
     var body: some View{
         ZStack{
+            if image_sourse == "" {
             Image(systemName: imageName).resizable().frame(width: 25, height: 25)
             Image(systemName: "nosign").resizable().foregroundColor(.red.opacity(0.6)).frame(width: 34, height: 34).opacity(isEnabel ? 0 : 10)
+            }
+            else{
+                Image(image_sourse).resizable().frame(width: 35, height: 35)
+                Image(systemName: "nosign").resizable().foregroundColor(.red.opacity(0.6)).frame(width: 34, height: 34).opacity(isEnabel ? 0 : 10)
+            }
         }
         
     }

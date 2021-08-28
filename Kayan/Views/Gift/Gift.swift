@@ -32,8 +32,9 @@ struct Gift: View {
         
       GeometryReader{ geo in
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color.init(hex:"F167BF"), Color.init(hex: "3068BD")]), startPoint: .topTrailing, endPoint: .bottomLeading)
-                   .edgesIgnoringSafeArea(.vertical)
+//            LinearGradient(gradient: Gradient(colors: [Color.init(hex:"F167BF"), Color.init(hex: "3068BD")]), startPoint: .topTrailing, endPoint: .bottomLeading)
+            Color.gray.opacity(0.4)
+                   .edgesIgnoringSafeArea(.all)
             VStack{
           HStack{
             VStack{
