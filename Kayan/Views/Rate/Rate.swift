@@ -11,7 +11,6 @@ struct Rate: View {
 //    var body: some View {
         @State var phoneNumber=""
         @State var phoneNumberError:Bool=false
-        
         @State var name:String=""
     @State var comment:String=""
     
@@ -106,6 +105,8 @@ struct Rate: View {
                     self.presentationMode.wrappedValue.dismiss()
                 })
                        )
+        }.onTapGesture {
+            hideKeyboard()
         }
             
     }

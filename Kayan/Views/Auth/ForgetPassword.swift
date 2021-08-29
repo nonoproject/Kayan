@@ -64,6 +64,15 @@ struct ForgetPassword: View {
                       HStack{
                           TextField("5xxxxxxxx", text:  $textBindingManager.text).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
                             .keyboardType(.numberPad)
+                            .overlay(
+                                HStack{
+                                    Text(cantry_code)
+                                        .frame(width: 40, height: 30, alignment:.center)
+                                        .padding(.horizontal,10)
+                                    Spacer()
+                                    Image(systemName: "candybarphone").frame(width: 40, height: 30, alignment: .center).padding(.horizontal,10)
+                                }
+                            )
                           Spacer()
                           HStack{
                               

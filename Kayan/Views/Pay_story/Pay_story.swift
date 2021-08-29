@@ -29,6 +29,10 @@ struct Pay_story: View {
     
 //    WebViewModel
 //    @StateObject var model = WebViewModel()
+    
+    @State  var  showsAlert:Bool=false
+    @State  var  view_loading:Bool=false
+    @State  var  message:String=""
     var body: some View {
         
       GeometryReader{ geo in
@@ -123,13 +127,14 @@ struct Pay_story: View {
                             checkCobonValue()
                         }) {
                             HStack{
-//                            Image(systemName: "checkmark.circle.fill")
-//                                .resizable()
-//                                .frame(width: 30, height: 30)
-////                                .font( weight: .UIScreen.screenWidth*0.08)
-//                                .foregroundColor(.gray)
-                                Text("تفعيل الكوبون").foregroundColor(.white).fontWeight(.light)
-                            }.padding(5).background(isCobonActivated ? Color.green : Color.gray).cornerRadius(8)
+                                Text("إختبار").foregroundColor(.white).fontWeight(.light)
+                                
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.orange).opacity(isCobonActivated ? 1 : 0)
+                                
+                            }.padding(5).background(isCobonActivated ? Color.green : Color.orange).cornerRadius(8)
                         }
                         TextField("", text: $cobone)
                             .textFieldStyle(CTFStyleClearBackground(width:  UIScreen.screenWidth*0.15, cornerRadius: 20, height: 40, showError: $coboneError))
@@ -174,6 +179,8 @@ struct Pay_story: View {
                              .stroke( Color.gray, lineWidth: 1.5 )
                 )
             ).padding(.vertical,20)
+        }.alert(isPresented: self.$showsAlert) {
+            Alert(title: Text(message).font(.custom("Cairo-Black", size: 16)) )
         }
     }
 }
@@ -183,7 +190,7 @@ struct Pay_story: View {
         
         
         if cobone != "" {
-        
+            coboneError=false
             let prams = ["CouponCode":cobone,"CustomerId":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId)
                          ,"StoryID":story.id] as [String : Any]
             print( Connection().getUrl(word: "GetCheckCoupon"))
@@ -197,8 +204,15 @@ struct Pay_story: View {
                     storyPriceAfterCoupon = sectionR["response"]["storyPriceAfterCoupon"].stringValue
                     storyPriceAfterCouponMessage=sectionR["response"]["couponValue"].stringValue
                         isCobonActivated=true
+                    
+                    message = "تم تفعيل الكوبون قيمة الكوبون هي \(storyPriceAfterCouponMessage)"
+                    showsAlert = true
                 }
                 else{
+                    message = "عفوا تاكد من الكوبون"
+                    showsAlert = true
+                    coboneError=true
+                    
                     storyPriceAfterCoupon = ""// sectionR["response"]["storyPriceAfterCoupon"].stringValue
                     storyPriceAfterCouponMessage=""//sectionR["response"]["couponValue"].stringValue
                         isCobonActivated=false
@@ -207,7 +221,10 @@ struct Pay_story: View {
                 print(error)
             }
         }
-            
+        else{
+            message = "قيمة الكوبون خالية"
+            showsAlert = true
+        }
         }
     func add_story_to_supscription(story_id:Int){
         var prams = [String:Any]()

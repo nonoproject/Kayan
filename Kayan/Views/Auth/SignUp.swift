@@ -76,8 +76,17 @@ struct SignUp: View {
                         }
 //                        Spacer()
                         HStack{
-                            TextField("05xxxxxxxx", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
+                            TextField("5xxxxxxxx", text: $phoneNumber).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
                                 .keyboardType(.phonePad)
+                                .overlay(
+                                    HStack{
+                                        Text(cantry_code)
+                                            .frame(width: 40, height: 30, alignment:.center)
+                                            .padding(.horizontal,10)
+                                        Spacer()
+                                        Image(systemName: "candybarphone").frame(width: 40, height: 30, alignment: .center).padding(.horizontal,10)
+                                    }
+                                )
                             Spacer()
                             Text("رقم الهاتف")
                         }
@@ -264,7 +273,7 @@ struct SignUp: View {
     }
     func FormValidation() -> Bool {
         self.fullnameError = (self.fullname.isEmpty || self.fullname.count < 3) ? true : false
-        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 10 )//|| self.phoneNumber.hasPrefix("05")) ? true : false
+        self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 9 )//|| self.phoneNumber.hasPrefix("05")) ? true : false
 //        self.PassWordError = self.PassWord.isEmpty ? true : false
 //        self.RePassWordError = self.RePassWord.isEmpty ? true : false
         if  self.PassWord.isEmpty || PassWord != RePassWord {//||

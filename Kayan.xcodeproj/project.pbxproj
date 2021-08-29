@@ -75,6 +75,7 @@
 		FA83A73B26564CD3002F814E /* HelperFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73A26564CD3002F814E /* HelperFunction.swift */; };
 		FA83A73D26564D07002F814E /* RecordingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73C26564D07002F814E /* RecordingsList.swift */; };
 		FA83A73F26564DB2002F814E /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A73E26564DB2002F814E /* AudioPlayer.swift */; };
+		FA9341DB26DA77B4009E56A6 /* AppString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9341DA26DA77B4009E56A6 /* AppString.swift */; };
 		FA963A4F267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA963A4E267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift */; };
 		FA963A51267E22E400CAAEFF /* TestScroolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA963A50267E22E400CAAEFF /* TestScroolView.swift */; };
 		FA9AD0702659339700E9A221 /* Story_Page_Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AD06F2659339700E9A221 /* Story_Page_Modal.swift */; };
@@ -172,6 +173,7 @@
 		FA83A73A26564CD3002F814E /* HelperFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunction.swift; sourceTree = "<group>"; };
 		FA83A73C26564D07002F814E /* RecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsList.swift; sourceTree = "<group>"; };
 		FA83A73E26564DB2002F814E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		FA9341DA26DA77B4009E56A6 /* AppString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		FA963A4E267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollViewLoadingButtom.swift; sourceTree = "<group>"; };
 		FA963A50267E22E400CAAEFF /* TestScroolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScroolView.swift; sourceTree = "<group>"; };
 		FA9AD06F2659339700E9A221 /* Story_Page_Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story_Page_Modal.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 		B1713F2D2611C6BD00BCCCEE /* Kayan */ = {
 			isa = PBXGroup;
 			children = (
+				FA9341D926DA779C009E56A6 /* AppString */,
 				FA4F549C26C53B8800E48AB6 /* payment_WebView */,
 				FAAD330626C2879C00BCE7AA /* kayan_gif.gif */,
 				FA56296C26C16F6B00291727 /* Kyan.gif */,
@@ -596,6 +599,14 @@
 				FA83A73A26564CD3002F814E /* HelperFunction.swift */,
 			);
 			path = Function;
+			sourceTree = "<group>";
+		};
+		FA9341D926DA779C009E56A6 /* AppString */ = {
+			isa = PBXGroup;
+			children = (
+				FA9341DA26DA77B4009E56A6 /* AppString.swift */,
+			);
+			path = AppString;
 			sourceTree = "<group>";
 		};
 		FAB555172666684B00B5DACD /* setting_And_profile */ = {
@@ -897,6 +908,7 @@
 				FAEEEA0726877A8700B944A6 /* PlayAppSound.swift in Sources */,
 				FA83A73226564B69002F814E /* SamopleRecourding.swift in Sources */,
 				FAE819DF26678E4B0035C01D /* ScreenEx.swift in Sources */,
+				FA9341DB26DA77B4009E56A6 /* AppString.swift in Sources */,
 				FA963A4F267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift in Sources */,
 				B1596A882612F72000D06B1A /* Home.swift in Sources */,
 				B15B0AF6261B161C009A591C /* Gift.swift in Sources */,
@@ -1044,7 +1056,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.4;
 				DEVELOPMENT_ASSET_PATHS = "\"Kayan/Preview Content\"";
 				DEVELOPMENT_TEAM = 46278RZ58D;
 				ENABLE_PREVIEWS = YES;
@@ -1069,7 +1081,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.4;
 				DEVELOPMENT_ASSET_PATHS = "\"Kayan/Preview Content\"";
 				DEVELOPMENT_TEAM = 46278RZ58D;
 				ENABLE_PREVIEWS = YES;

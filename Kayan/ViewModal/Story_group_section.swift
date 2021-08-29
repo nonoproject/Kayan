@@ -38,12 +38,10 @@ struct Story_group_section: View {
                     AsyncImage(
                         url: (URL(string:"\(AppBase)\(self.storyName.imageURL ?? "")" )! ),
                                         placeholder: { Image("kayan_logo").resizable()},
-                                        image: { Image(uiImage: $0).resizable()//
-
+                                        image: { Image(uiImage: $0).resizable()
                                         }
                     )
-                    
-                }.frame(width: UIScreen.card_width, height: UIScreen.card_heigh, alignment: .center).cornerRadius(10).blur(radius: 2)
+                }.frame(width: UIScreen.card_width, height: UIScreen.card_heigh, alignment: .center).cornerRadius(10)//.blur(radius: 2)
             
                 VStack{
                     

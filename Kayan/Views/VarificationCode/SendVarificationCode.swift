@@ -39,7 +39,7 @@ var body: some View {
                         Button(action: {
                                   self.displayItem = -1
                         }, label: {
-                            Image("Vectorclose").resizable().frame(width: 16, height: 16).padding(.horizontal,20)
+                            Image("close_button").resizable().frame(width: 16, height: 16).padding(.horizontal,20)
                         })
                         
                     }.padding(.top,20)
@@ -47,7 +47,7 @@ var body: some View {
                         .multilineTextAlignment(.center)
                         .frame(width: 290,height: 75, alignment: .center)
                         .foregroundColor(.brown)
-                    Text(phoneNumber).multilineTextAlignment(.center)
+                    Text(cantry_code+" "+phoneNumber).multilineTextAlignment(.center)
                     
                     if IsError{
                         Text(ErrorMessage)
@@ -132,7 +132,9 @@ var body: some View {
         
     }
     func verifyUser(){
-        print(Connection().getUrl(word:"verifyUser")+"/\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))")
+        print(cantry_code)
+        print(phoneNumber)
+        print(Connection().getUrl(word:"verifyUser")+"/\(cantry_code)\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))")
         
             let ds=Connection().getUrl(word:"verifyUser")+"/\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))"
         RestAPI().getData(endUrl: ds, parameters: [:]) { result in

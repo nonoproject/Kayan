@@ -9,9 +9,9 @@ import SwiftUI
 
 import SwiftyJSON
 struct SignIn: View {
-    @State var password="123456"
+    @State var password=default_password
     @State var passwordError:Bool=false
-    @State var phoneNumber=""
+    @State var phoneNumber=default_phone_number
     @State var phoneNumberError:Bool=false
     @State var isSignUp = false
     @State var isHomeView = false
@@ -23,22 +23,19 @@ struct SignIn: View {
     @State  var  showsAlert:Bool=false
     @State  var  view_loading:Bool=false
     @State  var  message:String=""
-    @ObservedObject var textBindingManager = TextBindingManager(limit: 10)
+    @ObservedObject var textBindingManager = TextBindingManager(limit: 9)
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
     var body: some View {
         NavigationView{
         GeometryReader{ geo in
             NavigationLink(destination: SignUp().navigationBarTitle(Text("Home"))
                             .navigationBarHidden(true), isActive: self.$isSignUp) {
-                
             }.hidden()
             NavigationLink(destination: ForgetPassword().navigationBarTitle(Text("Home"))
                             .navigationBarHidden(true), isActive: self.$isForgetPassword) {
-                
             }.hidden()
             NavigationLink(destination: Home().navigationBarTitle(Text("Home"))
                             .navigationBarHidden(true), isActive: self.$isHomeView) {
-                
             }.hidden()
             ZStack{
                 
@@ -82,10 +79,19 @@ struct SignIn: View {
                     VStack{
 //                        Spacer()
                         HStack{
-                            TextField("05xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                            TextField("5xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
                                 .textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $phoneNumberError))
                                 .modifier(customFountCB())
                                 .foregroundColor(.Appliver)
+                                .overlay(
+                                    HStack{
+                                        Text(cantry_code)
+                                            .frame(width: 40, height: 30, alignment:.center)
+                                            .padding(.horizontal,10)
+                                        Spacer()
+                                        Image(systemName: "candybarphone").frame(width: 40, height: 30, alignment: .center).padding(.horizontal,10)
+                                    }
+                                )
                                 .keyboardType(.phonePad)
                             Spacer()
                             Text("رقم الهاتف")
@@ -94,6 +100,7 @@ struct SignIn: View {
                         HStack{
                             SecureField("", text: $password).textFieldStyle(CTFStyleClearBackground(width: 250, cornerRadius: 20, height: 40, showError: $passwordError)).modifier(customFountCB())
                                 .foregroundColor(.Appliver)
+
                             Spacer()
                             Text("كلمة المرور")
                             
@@ -183,7 +190,7 @@ struct SignIn: View {
        }
     func FormValidation() -> Bool {
         
-        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 10 || !self.textBindingManager.text.hasPrefix("05") ) ? true : false
+        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 9 || !self.textBindingManager.text.hasPrefix("5") ) ? true : false
         self.passwordError = self.password.isEmpty ? true : false
         if phoneNumberError{
             message="خطاء في رقم الجوال"
