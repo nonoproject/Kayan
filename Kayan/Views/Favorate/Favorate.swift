@@ -52,7 +52,7 @@ struct Favorate: View {
                         Text("تقريبا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
                         Spacer()
                     }
-                )
+                ).hidden()
             }
                         VStack{
                             Spacer()

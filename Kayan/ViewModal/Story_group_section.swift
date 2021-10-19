@@ -56,6 +56,8 @@ struct Story_group_section: View {
                         
                         Text(storyName.name).font(.system(size: UIScreen.card_width*0.05, weight: .semibold, design: .monospaced)).frame(height: UIScreen.card_heigh*0.18) .padding(.horizontal,30).background(Color.AppPrimaryColor).cornerRadius(10)
                     }.padding(.top,UIScreen.card_width*0.03)//.opacity(0.8)
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .environment(\.layoutDirection, .rightToLeft)
                     
                     Spacer()
                     //  it was abutton to view your data

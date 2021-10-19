@@ -36,6 +36,7 @@
 		FA0220DF2638D1B80088C93A /* TextBindingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0220DE2638D1B80088C93A /* TextBindingManager.swift */; };
 		FA0220E32638D29D0088C93A /* VarUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0220E22638D29D0088C93A /* VarUserDefault.swift */; };
 		FA0E93D2267F951D0075DCA4 /* TestViewsSandaScroolV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E93D1267F951D0075DCA4 /* TestViewsSandaScroolV3.swift */; };
+		FA10B5EB26DCBC1300092448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA10B5EA26DCBC1300092448 /* GoogleService-Info.plist */; };
 		FA1185A1267E409500359713 /* TestCarusel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1185A0267E409500359713 /* TestCarusel.swift */; };
 		FA1185A3267E465C00359713 /* SandalStoryV2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1185A2267E465C00359713 /* SandalStoryV2View.swift */; };
 		FA118C5D2688AF2100DCFCD6 /* Cairo-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA118C5C2688AF2100DCFCD6 /* Cairo-Black.ttf */; };
@@ -134,6 +135,8 @@
 		FA0220DE2638D1B80088C93A /* TextBindingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBindingManager.swift; sourceTree = "<group>"; };
 		FA0220E22638D29D0088C93A /* VarUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarUserDefault.swift; sourceTree = "<group>"; };
 		FA0E93D1267F951D0075DCA4 /* TestViewsSandaScroolV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewsSandaScroolV3.swift; sourceTree = "<group>"; };
+		FA10B5E926DCB8BF00092448 /* KayanDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KayanDebug.entitlements; sourceTree = "<group>"; };
+		FA10B5EA26DCBC1300092448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA1185A0267E409500359713 /* TestCarusel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCarusel.swift; sourceTree = "<group>"; };
 		FA1185A2267E465C00359713 /* SandalStoryV2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandalStoryV2View.swift; sourceTree = "<group>"; };
 		FA118C5C2688AF2100DCFCD6 /* Cairo-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Black.ttf"; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		FA83A73A26564CD3002F814E /* HelperFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunction.swift; sourceTree = "<group>"; };
 		FA83A73C26564D07002F814E /* RecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsList.swift; sourceTree = "<group>"; };
 		FA83A73E26564DB2002F814E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		FA8F429226DC2C530067D3AC /* KayanRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KayanRelease.entitlements; sourceTree = "<group>"; };
 		FA9341DA26DA77B4009E56A6 /* AppString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		FA963A4E267E1CF300CAAEFF /* CustomScrollViewLoadingButtom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollViewLoadingButtom.swift; sourceTree = "<group>"; };
 		FA963A50267E22E400CAAEFF /* TestScroolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScroolView.swift; sourceTree = "<group>"; };
@@ -348,6 +352,8 @@
 		B1713F2D2611C6BD00BCCCEE /* Kayan */ = {
 			isa = PBXGroup;
 			children = (
+				FA10B5E926DCB8BF00092448 /* KayanDebug.entitlements */,
+				FA8F429226DC2C530067D3AC /* KayanRelease.entitlements */,
 				FA9341D926DA779C009E56A6 /* AppString */,
 				FA4F549C26C53B8800E48AB6 /* payment_WebView */,
 				FAAD330626C2879C00BCE7AA /* kayan_gif.gif */,
@@ -363,6 +369,7 @@
 				B1713F46261228F600BCCCEE /* Views */,
 				B1713F2E2611C6BD00BCCCEE /* AppDelegate.swift */,
 				B1713F302611C6BD00BCCCEE /* SceneDelegate.swift */,
+				FA10B5EA26DCBC1300092448 /* GoogleService-Info.plist */,
 				B1713F322611C6BD00BCCCEE /* ContentView.swift */,
 				B1713F342611C6C000BCCCEE /* Assets.xcassets */,
 				B1713F392611C6C000BCCCEE /* LaunchScreen.storyboard */,
@@ -762,6 +769,7 @@
 				B1713F382611C6C000BCCCEE /* Preview Assets.xcassets in Resources */,
 				FA01781226820FE1001D6873 /* Sukar black.ttf in Resources */,
 				FAAD330726C2879C00BCE7AA /* kayan_gif.gif in Resources */,
+				FA10B5EB26DCBC1300092448 /* GoogleService-Info.plist in Resources */,
 				B1713F352611C6C000BCCCEE /* Assets.xcassets in Resources */,
 				FA56296D26C16F6B00291727 /* Kyan.gif in Resources */,
 			);
@@ -1054,9 +1062,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Kayan/KayanDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.4;
+				CURRENT_PROJECT_VERSION = 1.0.9;
 				DEVELOPMENT_ASSET_PATHS = "\"Kayan/Preview Content\"";
 				DEVELOPMENT_TEAM = 46278RZ58D;
 				ENABLE_PREVIEWS = YES;
@@ -1079,9 +1088,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Kayan/KayanRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.4;
+				CURRENT_PROJECT_VERSION = 1.0.9;
 				DEVELOPMENT_ASSET_PATHS = "\"Kayan/Preview Content\"";
 				DEVELOPMENT_TEAM = 46278RZ58D;
 				ENABLE_PREVIEWS = YES;

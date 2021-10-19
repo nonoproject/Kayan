@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Foundation
 struct StroryModal : Identifiable, Decodable ,Hashable{
+    
     let id: Int
    let name, imageURL: String?
    let subscribePrice: Int?

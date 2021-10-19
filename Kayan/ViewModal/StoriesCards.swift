@@ -52,6 +52,9 @@ struct StoriesCards: View {
                 Text(storyName).font(.system(size: 18,weight: .semibold, design: .monospaced))
                     .frame(width: UIScreen.card_width*0.5, height: UIScreen.card_heigh*0.15).background(Color.AppPrimaryColor).cornerRadius(10)
                 .offset(y:-UIScreen.card_heigh*0.08)
+                
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .environment(\.layoutDirection, .rightToLeft)
             }
 //            else{
 //                VStack{

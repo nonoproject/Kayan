@@ -136,7 +136,7 @@ struct ForgetPassword: View {
     func checkForgtPassword(){
 //        IsError=false
         
-        let prams = ["PhoneNo": StringFunction().numberStrToEnglish(numberStr: self.textBindingManager.text)]
+        let prams = ["PhoneNo": "966"+StringFunction().numberStrToEnglish(numberStr: self.textBindingManager.text)]
 //                let prams = ["PhoneNo": self.textBindingManager.text,"Password": password]
 
         //                let prams = ["PhoneNo": "+966122222223","Password": "123456"]

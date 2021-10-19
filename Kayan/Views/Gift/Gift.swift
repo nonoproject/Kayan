@@ -10,7 +10,7 @@ import SwiftyJSON
 struct Gift: View {
     @State var user_name=""
     @State var phoneNumberError:Bool=false
-    @ObservedObject var textBindingManager = TextBindingManager(limit: 10)
+    @ObservedObject var textBindingManager = TextBindingManager(limit: 9)
     @State var name_error:Bool=false
      var story_id:Int
     @State var checked:Bool=false
@@ -89,7 +89,7 @@ struct Gift: View {
                                 HStack{
                                     Spacer()
                                     
-                                    TextField("05xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                                    TextField("5xxxxxxxx", text: $textBindingManager.text, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
                                         .textFieldStyle(CTFStyleClearBackground(width: 200, cornerRadius: 20, height: 40, showError: $phoneNumberError))
                                         .modifier(customFountCB())
                                         .foregroundColor(.Appliver)
@@ -203,7 +203,7 @@ Spacer()
 }
     func FormValidation() -> Bool {
         
-        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 10 || !self.textBindingManager.text.hasPrefix("05") ) ? true : false
+        self.phoneNumberError = (self.textBindingManager.text.isEmpty || self.textBindingManager.text.count != 9 || !self.textBindingManager.text.hasPrefix("5") ) ? true : false
         name_error = user_name.isEmpty || self.user_name.count <  4
         if phoneNumberError{
             message="خطاء في رقم الجوال"
@@ -222,7 +222,7 @@ Spacer()
            print(changed)
        }
     func add_story_to_supscription(story_id:Int){
-        var prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id,"PhoneNo":"\(textBindingManager.text)","Name":user_name] as [String : Any]
+        var prams = ["CustomerID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId),"StoryID":story_id,"PhoneNo":"966\(textBindingManager.text)","Name":user_name] as [String : Any]
 
         print( Connection().getUrl(word: "StoryGift"))
         print(prams)

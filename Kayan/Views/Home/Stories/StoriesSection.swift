@@ -67,7 +67,7 @@ struct StoriesSection: View {
                             Text("قريبا").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 14))
                             Spacer()
                         }
-                    )
+                    ).hidden()
                 }.padding(.top,10)
                 .padding(.vertical,5)
                         if stories.count > 0 {
@@ -85,6 +85,8 @@ struct StoriesSection: View {
                                     }
                                 }.padding(20)
                                 }
+                                .flipsForRightToLeftLayoutDirection(true)
+                                .environment(\.layoutDirection, .rightToLeft)
                 }//.padding(.horizontal,30)
                                 
                                 Spacer()

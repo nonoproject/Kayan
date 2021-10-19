@@ -275,7 +275,8 @@ struct GiftStory: View {
                 CardIndecator=0
                 
                 stories=menus
-                for i in 1...menus.count-1{
+                    if menus.count > 1{
+                for i in 0...menus.count{
 //                    if i != CardIndecator{
 //                        if i > CardIndecator{
                             BackagePosition[i]=BackagePosition[i-1]+(UIScreen.screenWidth*0.4)+50
@@ -286,9 +287,9 @@ struct GiftStory: View {
                         BackageHight[i]=UIScreen.screenHeight*0.4
 //                    }
                     
-                }
-                
-            }
+                }}
+                    }
+            
             }
             
         } onError: { error in

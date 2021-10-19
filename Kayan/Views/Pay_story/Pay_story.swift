@@ -94,8 +94,38 @@ struct Pay_story: View {
                     Spacer()
                     RatedView(rating: Int(story.rate!))
                         .padding(.trailing,20)
-                    Text("تقيم القصة").frame(width: 100,alignment: .trailing)
+                    Text("تقييم القصة").frame(width: 100,alignment: .trailing)
                 }.padding(.trailing,20)
+                    HStack{
+//                        Spacer()
+//                        HStack{
+//                            Spacer()
+                        Spacer()
+                        Spacer()
+                        Button(action: {
+                            checkCobonValue()
+                        }) {
+                            HStack{
+                                Text("إختبار").font(.custom("Cairo-Black", size: 15)).foregroundColor(.white)
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.white).opacity(isCobonActivated ? 1 : 0)
+                                
+                            }.padding(5).background(isCobonActivated ? Color.green : Color.orange).cornerRadius(8)
+                        }
+                        TextField("", text: $cobone)
+                            .textFieldStyle(CTFStyleClearBackground(width:  UIScreen.screenWidth*0.15, cornerRadius: 20, height: 40, showError: $coboneError))
+                            .modifier(customFountCB())
+                            .foregroundColor(.Appliver)
+//                            .keyboardType(.)
+//                            .padding(.trailing,20)
+                        
+                        Spacer()
+                        Text(" كوبون ").frame(width: 100,alignment: .trailing)
+                        
+                    }.padding(.trailing,20)
+
                     HStack{
 //                        Spacer()
 //                        HStack{
@@ -118,36 +148,6 @@ struct Pay_story: View {
                         }.frame(height:60).offset(x:-30)
                     )
                     HStack{
-//                        Spacer()
-//                        HStack{
-//                            Spacer()
-                        Spacer()
-                        Spacer()
-                        Button(action: {
-                            checkCobonValue()
-                        }) {
-                            HStack{
-                                Text("إختبار").foregroundColor(.white).fontWeight(.light)
-                                
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.orange).opacity(isCobonActivated ? 1 : 0)
-                                
-                            }.padding(5).background(isCobonActivated ? Color.green : Color.orange).cornerRadius(8)
-                        }
-                        TextField("", text: $cobone)
-                            .textFieldStyle(CTFStyleClearBackground(width:  UIScreen.screenWidth*0.15, cornerRadius: 20, height: 40, showError: $coboneError))
-                            .modifier(customFountCB())
-                            .foregroundColor(.Appliver)
-//                            .keyboardType(.)
-//                            .padding(.trailing,20)
-                        
-                        Spacer()
-                        Text(" كوبون ").frame(width: 100,alignment: .trailing)
-                        
-                    }.padding(.trailing,20)
-                    HStack{
                         Spacer().zIndex(10)
                         
                                     Button(action: {
@@ -162,17 +162,8 @@ struct Pay_story: View {
                     
                 }
                 Spacer()
-                
-                  
               }
-            
-          
-                
-                        
-                    
-                
-                
-            }.frame(width: 350).background(
+            }.frame(width: UIScreen.screenWidth*0.5).background(
                 RoundedRectangle(cornerRadius: 25)
                 .foregroundColor(Color.white)
                 .background(RoundedRectangle(cornerRadius: 25)
@@ -209,7 +200,7 @@ struct Pay_story: View {
                     showsAlert = true
                 }
                 else{
-                    message = "عفوا تاكد من الكوبون"
+                    message =  sectionR["response"].stringValue //"عفوا تاكد من الكوبون"
                     showsAlert = true
                     coboneError=true
                     

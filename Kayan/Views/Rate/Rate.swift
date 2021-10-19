@@ -70,14 +70,28 @@ struct Rate: View {
                         }.padding(.vertical,10)
                         
                 HStack{
-                    Image("facebook").resizable().frame(width: 30,height: 30)
-                    Image("instagram").resizable().frame(width: 30,height: 30)
+//                    Image("facebook").resizable().frame(width: 30,height: 30)
+                    
+                    Link(destination: URL(string: "https://www.facebook.com/kayanstories/")!) {
+                        Image("facebook").resizable().frame(width: 30,height: 30)
+            //                            .font(.largeTitle)
+                    }
+
+                    
+                    Link(destination: URL(string: "https://instagram.com/kayanstories?utm_medium=copy_link")!) {
+                        Image("instagram").resizable().frame(width: 30,height: 30)
+            //                            .font(.largeTitle)
+                    }
                     Image("snapchat").resizable().frame(width: 30,height: 30)
                     Image("twitter").resizable().frame(width: 30,height: 30)
                 }
-                    Text("KayanApp.com").foregroundColor(.white).onTapGesture {
-                        
+                    Link(destination: URL(string: "https://kayanapp.com")!) {
+                        Text("KayanApp.com").foregroundColor(.white)
+            //                            .font(.largeTitle)
                     }
+//                    Text("KayanApp.com").foregroundColor(.white).onTapGesture {
+//
+//                    }
                     Spacer()
                     
                 }.frame(width: 420,height: geo.size.height*0.8).background(

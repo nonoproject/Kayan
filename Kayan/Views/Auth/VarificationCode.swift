@@ -12,6 +12,7 @@ struct VarificationCode: View {
     @State var ActiveCodeError:Bool=false
     @State var isActiveCodePass = false
     @State var timeRemaining=50
+    
     var body: some View {
         
       GeometryReader{ geo in
@@ -27,8 +28,6 @@ struct VarificationCode: View {
               
           HStack(spacing:30){
               VStack{
-                  
-              
                   Image(systemName: "play.rectangle.fill").resizable().frame(width: 32, height: 30).foregroundColor(.brown).background(Color.white).cornerRadius(5)
   
   Spacer()
@@ -69,4 +68,5 @@ struct VarificationCode: View {
           
   }.environment(\.horizontalSizeClass, .compact)
   }
+    
 }

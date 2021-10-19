@@ -12,38 +12,26 @@ import SwiftyJSON
 var is_payment_success=false
 public class SignalRService :ObservableObject{
     private var connection: HubConnection
-//    @Published  var newOrder:Bag=Bag()
-//    @Published var chatMessage:[StroryModal] = []
     public init(url: URL) {
         connection = HubConnectionBuilder(url:url).withLogging(minLogLevel: .error).build()
-        connection.on(method: "ToNotfiyPayment", callback: { (message: JSON) in
+        connection.on(method: "ToCheckOrderStatus", callback: { (message: JSON) in
             do {
                 print(self.connection.connectionId)
                 print(message)
+                print("5467890-")
                 if message["status"].intValue == 1{
                      is_payment_success=true
                     self.setNotification(message: message["msg"].stringValue, messagetype: "")
                 }
-//                else {
-//                    therAreNewState=true
-//                    self.setNotification(message: message["msg"].stringValue, messagetype: "")
-//                }
+                if message["status"].intValue == 3{
+//                     is_payment_success=true
+                    self.setNotification(message: message["msg"].stringValue, messagetype: "")
+                }
                 print(message)
             } catch {
                 print(error)
             }
         })
-//        connection.on(method: "ToSendMsg", callback: { (message: JSON) in
-//            do {
-//                print(message)
-////                self.setNotification(message: message.stringValue)
-//                self.chatMessage.append(Message( message: message.stringValue, myMsg: true, profilePic: "logo", photo: nil))
-//                self.setNotification(message: message["msg"].stringValue,messagetype:"chatMessage")
-//            } catch {
-//                print(error)
-//            }
-//        })
-//
         connection.start()
     }
     func setNotification(message:String,messagetype:String?) -> Void {

@@ -43,9 +43,12 @@ struct Home: View {
                 ForEach(0...menue.count-1,id:\.self){ index in
                     StoriesCards(imageName:imageName[index],storyName:menue[index].name, storyID: menue[index].id,width: geo.size.width*0.4,title: $title, selectdMenuID: $selectdMenuID, isSignIn: $isSignIn,isStory:false)
                 }
-                }//.flipsForRightToLeftLayoutDirection(true)
-                .environment(\.layoutDirection, .rightToLeft)
-                        }.padding(20)
+                }//.flipsForRightToLeftLayoutDirection(true).
+            .padding(.horizontal)
+                
+                        }
+                        .flipsForRightToLeftLayoutDirection(true)
+                        .environment(\.layoutDirection, .rightToLeft)//.environment(\.layoutDirection, .rightToLeft).padding(20)
                 Spacer()
         }
             

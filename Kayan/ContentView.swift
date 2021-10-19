@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
-
+import AVFoundation
 struct ContentView: View {
     @AppStorage("isLogin") var isLogin: Bool = VarUserDefault.SysGlobalData.getGlobalBool(key: VarUserDefault.SysGlobalData.isLogin)
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @State var timer = Timer.publish (every: 1, on: .current, in: .common).autoconnect()
     @State var timeRemaining = -1
+    @State var player: AVAudioPlayer?
+    @ObservedObject var audioPlayer = BackGroundAudioPlayer()
     var body: some View {
+        
 //
+        
         SplashScreen().edgesIgnoringSafeArea(.all)
-//
+        //
 //        Gift()
 //            .statusBar(hidden: true)
 //        GiftStory(id:3)
@@ -71,11 +76,14 @@ struct ContentView: View {
 //
           } // aproved pay Ayman
             .onAppear{
-
+                playSound(radioURL: "https://www.proudmusiclibrary.com/en/file/preview_download/?did=M3ZteDBDcThhVHVGUXBMLzN5VjRpdz09")//AppBase+story_pages[page_indecator-1].storyVoicePath!)
 //                    var bgTask = UIBackgroundTaskIdentifier(rawValue: 1)
 //                                    UIApplication.shared.beginBackgroundTask { () -> Void in
-SignalRService(url:  URL(string: "\(AppBase)/NotificationHub?customerId=\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")!)
+//SignalRService(url:  URL(string: "\(AppBase)/NotificationHub?customerId=\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")!)
                 print("\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")
+                ////
+                SignalRService(url:  URL(string: "https://takuaapi.ibtikar-soft.com/NotificationHub?UserID=4&PhoneNo=+966566220639")!)
+//                                print("\(VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))")
                 
                 }
 ////        SignUp() // aproved pay Ayman
@@ -83,6 +91,52 @@ SignalRService(url:  URL(string: "\(AppBase)/NotificationHub?customerId=\(VarUse
 ////    ForgetPassword()
 ////        VarificationCode()
 //        }
+    }
+    func playSound(radioURL:String){
+        
+        if ((player?.isPlaying) != nil ) {
+            player!.stop()
+        }
+//        let radioURL = AppBase+story_pages[page_indecator-1].storyVoicePath!
+        let urlstring = radioURL
+        let url = NSURL(string: urlstring)
+        print("the url = \(url!)")
+        downloadFileFromURL(url: url!)
+//        }
+//        else{
+//            stopSound()
+//        }
+        
+    }
+    func downloadFileFromURL(url:NSURL){
+
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url as URL, completionHandler: {(URL, response, error) -> Void in
+            self.play(url: URL as! NSURL)
+        })
+            
+        downloadTask.resume()
+        
+    }
+    func play(url:NSURL) {
+        print("playing \(url)")
+        
+       
+        do {
+            self.player = try AVAudioPlayer(contentsOf: url as URL)
+            player!.volume = 1.0
+            player?.numberOfLoops = -1
+            player!.play()
+            
+                
+           
+        } catch let error as NSError {
+            //self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVAudioPlayer init failed")
+        }
+        
     }
 }
 
@@ -109,4 +163,7 @@ struct enable_disableBtn : View {
         }
         
     }
+
+    
+    
 }

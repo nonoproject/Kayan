@@ -17,6 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        if let urlContext = connectionOptions.urlContexts.first {
+
+                let sendingAppID = urlContext.options.sourceApplication
+                let url = urlContext.url
+                print("source application = \(sendingAppID ?? "Unknown")")
+                print("url = \(url)")
+
+                // Process the URL similarly to the UIApplicationDelegate example.
+            }
+        let context = (UIApplication.shared.delegate as! AppDelegate)
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView().font(.custom("Cairo-Black", size: 16)).edgesIgnoringSafeArea(.all)

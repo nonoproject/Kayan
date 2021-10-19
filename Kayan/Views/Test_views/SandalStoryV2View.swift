@@ -95,9 +95,9 @@ struct SandalStoryV2View: View {
                                                       }
                                             Spacer()
                                         }
-                                    )
+                                    ).hidden()
                                 }.padding(.top,20)
-                            
+                                
                                 Spacer()
                             
                             

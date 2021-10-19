@@ -22,7 +22,7 @@ struct StoriesTail: View {
                  Image("free_story").resizable().frame(width: 70, height: 50).overlay(
          VStack{
              Spacer()
-             Text("مدفوع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 12))
+             Text("ادفع").foregroundColor(.white).fontWeight(.heavy).font(.system(size: 12))
              
              Text(subscribePrice).foregroundColor(.white).fontWeight(.bold).font(.system(size: 11))
              Spacer()
@@ -35,7 +35,7 @@ struct StoriesTail: View {
              Image("payed_story").resizable().frame(width: 70, height: 50).overlay(
          VStack{
              Spacer()
-             Text("مجانية").foregroundColor(.white).fontWeight(.bold).font(.system(size: 12)).frame(width:50,height:10).padding(.top,3)
+             Text("افتح").foregroundColor(.white).fontWeight(.bold).font(.system(size: 12)).frame(width:50,height:10).padding(.top,3)
 //                                                        Spacer()
              Image(systemName:"gift").font(.system(size: 12, weight: .heavy)).foregroundColor(Color(#colorLiteral(red: 0.996468246, green: 0.6681806445, blue: 0.001119376859, alpha: 1))).frame(width:20,height:10).padding(.vertical,3)
              Spacer()

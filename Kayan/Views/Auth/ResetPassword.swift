@@ -113,8 +113,9 @@ struct ResetPassword: View {
                     message = ValidationMessage().getMessage(word: "fill_all_filed")
                     password_BindingManager_Error = true
                 }
-                else if (self.password_BindingManager.text.count < 4){
-                    message = "كلمة المرور قصيرة جدا"
+                else if !isValidPassword(){
+//                    message = "كلمة المرور قصيرة جدا"
+                    message="كلمة المرور لم تستوفي معاير الحماية المطلوبة "
                     password_BindingManager_Error = true
                 }
                 else if (self.password_BindingManager.text != self.repassword_textBindingManager.text){
@@ -126,13 +127,16 @@ struct ResetPassword: View {
         
         return (self.password_BindingManager_Error)
     }
+    func isValidPassword() -> Bool {
+        
+            let passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
+            return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password_BindingManager.text)
+        }
     func checkForgtPassword(){
 //        IsError=false
         
         let prams = ["UserID":VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userVarifyId) ,"NewPassword": self.password_BindingManager.text] as [String : Any]
-//                let prams = ["PhoneNo": self.textBindingManager.text,"Password": password]
-
-        //                let prams = ["PhoneNo": "+966122222223","Password": "123456"]
+        
         RestAPI().postData(endUrl: Connection().getUrl(word: "RestChangePassword"), parameters: prams) { result in
 //            showSandalLoadingIndicater=false
            let sectionR = JSON(result!)

@@ -68,10 +68,6 @@ struct SignIn: View {
                 VStack{
                 Spacer()
             HStack{
-//            VStack{
-//                Image("fllower").resizable().frame(width: 189,height: 189)
-//                Spacer()
-//            }
                 Spacer()
                 VStack{
                     Spacer()
@@ -205,7 +201,7 @@ struct SignIn: View {
     func checkUserSignIn(){
 //        IsError=false
         
-        let prams = ["PhoneNo": StringFunction().numberStrToEnglish(numberStr: self.textBindingManager.text),"Password": password]
+        let prams = ["PhoneNo": "966"+StringFunction().numberStrToEnglish(numberStr: self.textBindingManager.text),"Password": password]
 //                let prams = ["PhoneNo": self.textBindingManager.text,"Password": password]
 
         //                let prams = ["PhoneNo": "+966122222223","Password": "123456"]
@@ -264,5 +260,6 @@ struct SignIn: View {
         
 
     }
+    
 }
 

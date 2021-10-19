@@ -386,10 +386,13 @@ struct StoryPage: View {
         showing_image = !showing_image
         }
         else{
-//            if ((player?.isPlaying) != nil) {
+            if spekerSound{
+                if (player?.isPlaying != nil) {
                 player!.stop()
                 isPlaying=false
-//            }
+            }
+            
+            }
             is_going_to_question=true
         }
     }

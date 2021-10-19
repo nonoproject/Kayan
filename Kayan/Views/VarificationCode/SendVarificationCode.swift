@@ -19,9 +19,12 @@ var phoneNumber:String
     @State var confirmeCode:String=""
     @State var confirmeCodeError=false
     //////////////
-    @State private var ErrorMessage="123456"
+    @State private var ErrorMessage="الكود غير صحيح"
     @State private var IsError=false
     //////////////
+    
+    @State private var timeRemaining = 50
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 var body: some View {
     ZStack{
         Rectangle()
@@ -43,7 +46,7 @@ var body: some View {
                         })
                         
                     }.padding(.top,20)
-                    Text("للتحقق من المصادقة وتسجيل الدخول أدخل الرمز المرسل الي رقم جوالك")
+                    Text("للتحقق من المصادقة وتسجيل الدخول أدخل الرمز المرسل إلى رقم جوالك")
                         .multilineTextAlignment(.center)
                         .frame(width: 290,height: 75, alignment: .center)
                         .foregroundColor(.brown)
@@ -51,21 +54,31 @@ var body: some View {
                     
                     if IsError{
                         Text(ErrorMessage)
-                            .fontWeight(.medium)
-                            .foregroundColor(.AppPrimaryColor)
+                            .fontWeight(.bold)
+                            .foregroundColor(.Appliver)
                             .frame(width: 318, height: 20, alignment: .center)
-                            .opacity(IsError ? 0.7 : 0)
+//                            .opacity(IsError ? 0.7 : 0)
                             
                 }
                     HStack{
                         TextField("كود التفعيل", text: self.$confirmeCode)
                             .textFieldStyle(CTFStyleClearBackground(width:290, showError: self.$confirmeCodeError))
                             .keyboardType(.phonePad)
-                            
+                            .onReceive(timer) { time in
+                                if self.timeRemaining > 0 {
+                                    self.timeRemaining -= 1
+                                }
+                            }
+                        
                         
                     }.frame(width: 290)
                     if !showSandalLoadingIndicater{
                     Button(action: {
+                        if timeRemaining == 0 {
+                            timeRemaining  = 50
+                            resandActivationCode()
+                        }
+                        else{
                         showSandalLoadingIndicater=true
                         if FormValidation(){
                             if confirmeType=="user"{
@@ -81,8 +94,9 @@ var body: some View {
                             showSandalLoadingIndicater=false
 //                            self.displayItem = -1
                         }
+                    }
                     }, label: {
-                        Text("تفعيل")
+                        Text(timeRemaining != 0 ? "تفعيل \(timeRemaining)" :"أعد إرسال كود التحقق")
                             .frame(width: 290, height: 50, alignment: .center)
                             .background(Color.brown)
                     }).cornerRadius(20)
@@ -134,9 +148,10 @@ var body: some View {
     func verifyUser(){
         print(cantry_code)
         print(phoneNumber)
-        print(Connection().getUrl(word:"verifyUser")+"/\(cantry_code)\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))")
+//        print(Connection().getUrl(word:"verifyUser")+"/966\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))")
         
-            let ds=Connection().getUrl(word:"verifyUser")+"/\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))"
+            let ds=Connection().getUrl(word:"verifyUser")+"/966\(StringFunction().numberStrToEnglish(numberStr:self.phoneNumber))/\(StringFunction().numberStrToEnglish(numberStr:confirmeCode))"
+        print(ds)
         RestAPI().getData(endUrl: ds, parameters: [:]) { result in
             
            let sectionR = JSON(result!)
@@ -164,11 +179,13 @@ var body: some View {
                 
                 
             }
-            else if sectionR["responseCode"].int == 406{ // user not active
+            else if sectionR["responseCode"].int == 407{ // user not active
+                ErrorMessage = sectionR["responseMasg"].stringValue
+                IsError = true
                 
             }
             else if sectionR["responseCode"].int == 404{//VerificationCode Not Correct
-                                
+                IsError = true
             }
         } onError: { error in
             print(error)
@@ -181,6 +198,64 @@ var body: some View {
     func FormValidation() -> Bool {
         self.confirmeCodeError = self.confirmeCode.isEmpty ? true : false
         
+        IsError = confirmeCodeError
         return (!confirmeCodeError)
+    }
+    func resandActivationCode(){
+//        IsError=false
+        
+        let prams = ["PhoneNo": "966"+phoneNumber]
+//                let prams = ["PhoneNo": self.textBindingManager.text,"Password": password]
+
+        //                let prams = ["PhoneNo": "+966122222223","Password": "123456"]
+        RestAPI().getData(endUrl: Connection().getUrl(word: "GetRestPassword")+"\(StringFunction().numberStrToEnglish(numberStr: phoneNumber))", parameters: [:]) { result in
+//            showSandalLoadingIndicater=false
+           let sectionR = JSON(result!)
+//            print(Connection().getUrl(word: "login"))
+                  print(prams)
+            print(sectionR)
+         
+            if sectionR["responseCode"].int == 200{
+                
+//                displayItem = 1
+////                print(sectionR["response"]["userId"].int)
+//                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.mobileNo, Val:sectionR["response"]["customer"]["phone"].stringValue)
+//        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.fullName, Val:sectionR["response"]["username"].stringValue)
+////
+//                VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.userId, Val:sectionR["response"]["userId"].intValue)
+//        print( VarUserDefault.SysGlobalData.getGlobalInt(key: VarUserDefault.SysGlobalData.userId))
+//
+//               VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.isLogin, Val:true)
+//
+//                isHomeView=true
+//
+//                isLogin = true
+            
+                
+            }
+            else if sectionR["responseCode"].int == 405{ // user not active
+//                displayItem=1
+//                reSendVerification()
+            }
+            else if sectionR["responseCode"].int == 404{//user not found
+//                message = " هذا المستخدم غير موجود"
+//                showsAlert=true
+            }
+            else if sectionR["responseCode"].int == 406{//user not found
+//                message = "خطاء في بيانات الحساب"
+//                showsAlert=true
+            }
+            else{
+//                message = sectionR["responseMasg"].stringValue
+//                showsAlert=true
+            }
+            
+        } onError: { error in
+            print(error)
+//            showSandalLoadingIndicater=false
+        }
+
+        
+
     }
 }

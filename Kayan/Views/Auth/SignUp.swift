@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftyJSON
 struct SignUp: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var checked:Bool=false
+    @State var  checked:Int = -1 // 0=null "2" : "1"
     @State  var  view_loading:Bool=false
 //        HStack{
 //
@@ -112,20 +112,20 @@ struct SignUp: View {
                                
                                                 Button(action: {
                                                     withAnimation{
-                                                    checked = true
+                                                    checked = 1
                                                 }
                                                 }, label: {
                                                     ZStack{
                                                         Circle()
                                                             .frame(width: 24, height: 24)
-                                                            .foregroundColor(checked ?  Color.init(hex: "C7C4C4") : .gray )
+                                                            .foregroundColor(checked == 1 ?  Color.init(hex: "C7C4C4") : .gray )
 
 
                                                         Circle()
                                                             .frame(width: 20, height: 20)
                                                             .foregroundColor(.white)
 
-                                                        Circle().frame(width: 16, height: 16).foregroundColor(checked ?  Color.init(hex: "C7C4C4") : Color.white.opacity(0.5))
+                                                        Circle().frame(width: 16, height: 16).foregroundColor(checked == 1 ?  Color.init(hex: "C7C4C4") : Color.white.opacity(0.5))
 
                                                     }
                                                 })
@@ -137,20 +137,19 @@ struct SignUp: View {
                                 
                                 Button(action: {
                                     withAnimation{
-                                    checked = false
+                                    checked = 0
                                     }
                                 }, label: {
                                     ZStack{
                                         Circle()
                                             .frame(width: 24, height: 24)
-                                            .foregroundColor(!checked ?  Color.init(hex: "C7C4C4") : .gray)
-                                        
+                                            .foregroundColor(checked == 0 ?  Color.init(hex: "C7C4C4") : .gray)
                                         
                                         Circle()
                                             .frame(width: 20, height: 20)
                                             .foregroundColor(.white)
                                             
-                                        Circle().frame(width: 16, height: 16).foregroundColor(!checked ?  Color.init(hex: "C7C4C4") : Color.white.opacity(0.5))
+                                        Circle().frame(width: 16, height: 16).foregroundColor(checked == 0 ?  Color.init(hex: "C7C4C4") : Color.white.opacity(0.5))
 
                                     }
                                 })
@@ -159,7 +158,10 @@ struct SignUp: View {
                             }
 
                             Spacer()
+                            VStack(spacing:-5) {
+                                Text("\"إختياري\"").foregroundColor(.white).font(.custom("Cairo-Black", size: 11)).offset(x: -20)
                             Text("الجنس")
+                            }
                             
                         }
                         
@@ -167,15 +169,13 @@ struct SignUp: View {
                             if !showSandalLoadingIndicater{
                                 Button(action: {
                                     view_loading=true
-//                                    showSandalLoadingIndicater=true
                                     if FormValidation(){
                                         checkUserSignUp()
                                     }
                                     else{
-                                        ////
                                         view_loading=false
-//                                        showSandalLoadingIndicater=false
                                     }
+//                                    print(isValidPassword())
                                 }, label: {
                                     Text("هيا بنا").frame(width: 255,height: 40).background(Color.init(hex: "F1E6E0").opacity(0.97))
                                         .cornerRadius(10).foregroundColor(Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)))
@@ -235,7 +235,7 @@ struct SignUp: View {
     
     func checkUserSignUp(){
         
-        let prams = ["PhoneNo":StringFunction().numberStrToEnglish(numberStr: self.phoneNumber),"Password": self.PassWord,"Name":self.fullname,"GanderID":checked ? "2" : "1"]
+        let prams = ["PhoneNo":"966"+StringFunction().numberStrToEnglish(numberStr: self.phoneNumber),"Password": self.PassWord,"Name":self.fullname,"GanderID":checked ] as [String : Any]
         print(Connection().getUrl(word: "register"))
         print(prams)
         RestAPI().postData(endUrl: Connection().getUrl(word: "register"), parameters: prams) { result in
@@ -271,19 +271,42 @@ struct SignUp: View {
 //        isLogin = true
 //        VarUserDefault.SysGlobalData.setGlobal(Key: VarUserDefault.SysGlobalData.isLogin, Val:isLogin)
     }
+    func isValidPassword() -> Bool {
+        
+            let passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
+            return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: PassWord)
+        }
     func FormValidation() -> Bool {
         self.fullnameError = (self.fullname.isEmpty || self.fullname.count < 3) ? true : false
         self.phoneNumberError = (self.phoneNumber.isEmpty || self.phoneNumber.count != 9 )//|| self.phoneNumber.hasPrefix("05")) ? true : false
 //        self.PassWordError = self.PassWord.isEmpty ? true : false
 //        self.RePassWordError = self.RePassWord.isEmpty ? true : false
-        if  self.PassWord.isEmpty || PassWord != RePassWord {//||
-            self.PassWordError = true
+        
+    PassWordError = self.PassWord.isEmpty || PassWord != RePassWord || !isValidPassword()
+        
+    if  PassWordError{//||
+        
+        if PassWord.isEmpty{
+        
+            message="كلمة المرور لايمكن ان تكون خالية"
+       }
+        else if PassWord != RePassWord{
+            message="كلمة المرور غير متطابقة"
+        }
+        else if !isValidPassword(){
+            message="كلمة المرور لم تستوفي معاير الحماية المطلوبة "
+        }
+           self.PassWordError = true
             self.RePassWordError=true
-        }
-        else {
-            self.PassWordError = false
-            self.RePassWordError=false
-        }
+        
+        showsAlert=true
+    }
+    else {
+        self.PassWordError = false
+        self.RePassWordError=false
+        
+    }
+
         if phoneNumberError{
             message=" خطاء في رقم الجوال"
             showsAlert=true
@@ -304,6 +327,7 @@ struct SignUp: View {
 //            message="كلمة المرور يجب ان تكوت متطابقة وغير خالية"
 //            showsAlert=true
 //        }
+        
         return (!self.fullnameError && !self.phoneNumberError && !self.PassWordError && !self.RePassWordError)
     }
     

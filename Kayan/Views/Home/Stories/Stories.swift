@@ -62,7 +62,7 @@ struct Stories: View {
                                             Text("قريبا").foregroundColor(.white).fontWeight(.bold).font(.system(size: 14))
                                             Spacer()
                                         }
-                                    )
+                                    ).hidden()
                                 }.padding(.top,20)
                             
                              Spacer()
